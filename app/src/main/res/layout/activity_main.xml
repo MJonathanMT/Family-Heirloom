@@ -6,13 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="226dp"
+        android:layout_height="52dp"
+        android:text="Sign Up"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="396dp" />
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="226dp"
+        android:layout_height="49dp"
+        android:text="Login"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="313dp" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/launch_title"
+        android:layout_width="254dp"
+        android:layout_height="72dp"
+        android:autoText="false"
+        android:fontFamily="monospace"
+        android:text="KeepSake"
+        android:textSize="50sp"
+        tools:layout_editor_absoluteX="78dp"
+        tools:layout_editor_absoluteY="92dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
