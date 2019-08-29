@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">KeepSake</string>
+
+    <string-array name="family_names">
+        <item>Ngoh</item>
+        <item>Ng</item>
+        <item>Tirtapraja</item>
+    </string-array>
 </resources>
