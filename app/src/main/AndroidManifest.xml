@@ -12,6 +12,7 @@
         <activity android:name=".LogIn"></activity>
         <activity android:name=".NewItemUpload" />
         <activity android:name=".AccountSettings"/>
+        <activity android:name=".HomePage" />
         <activity android:name=".FamilySetup" />
         <activity android:name=".MainActivity">
             <intent-filter>
