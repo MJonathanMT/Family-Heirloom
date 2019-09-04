@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/blurredscreen"
     tools:context=".AccountSettings">
 
     <TextView
@@ -36,7 +37,7 @@
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginBottom="20dp"
-        android:text="Security & Privacy"
+        android:text="Security and Privacy"
         app:layout_constraintBottom_toTopOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
