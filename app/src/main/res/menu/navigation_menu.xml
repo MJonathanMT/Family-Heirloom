@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ButtonHomepageAccess"
+        android:title="Homepage"
+        android:icon="@drawable/home_black"
+        >
+
+    </item>
+    <item
+        android:id="@+id/ButtonFamilyItemsAccess"
+        android:title="Item"
+        android:icon="@drawable/items_black"
+        >
+
+    </item>
+    <item
+        android:id="@+id/ButtonFamilyMembersAccess"
+        android:title="Member"
+        android:icon="@drawable/family_black"
+        >
+
+    </item>
+</menu>
