@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blurredscreen"
+    android:background="@drawable/background_alt_2"
     tools:context=".NewItemUpload">
 
     <TextView
@@ -60,6 +60,8 @@
             android:id="@+id/button4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+
             android:text="Take photo/ Add picture from gallery" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

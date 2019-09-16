@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_alt_1"
     tools:context=".MainActivity">
 
     <Button
@@ -11,40 +12,76 @@
         android:layout_width="226dp"
         android:layout_height="52dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="34dp"
         android:layout_marginEnd="93dp"
-        android:layout_marginBottom="283dp"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/custom_button"
         android:text="Sign Up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_login_button" />
 
     <Button
         android:id="@+id/main_login_button"
         android:layout_width="226dp"
-        android:layout_height="49dp"
+        android:layout_height="36dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="149dp"
         android:layout_marginEnd="93dp"
+        android:background="@drawable/custom_button"
         android:text="Login"
+        app:layout_constraintBottom_toTopOf="@+id/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/launch_title" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <TextView
-        android:id="@+id/launch_title"
-        android:layout_width="254dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="78dp"
-        android:layout_marginTop="92dp"
-        android:layout_marginEnd="79dp"
-        android:autoText="false"
-        android:fontFamily="monospace"
-        android:text="KeepSake"
-        android:textSize="50sp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="226dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="93dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/login_login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.45">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User ID (Email)" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="274dp"
+        android:layout_height="302dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="69dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
