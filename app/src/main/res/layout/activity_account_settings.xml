@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_alt_1"
     tools:context=".AccountSettings">
 
     <TextView
@@ -24,6 +25,8 @@
         android:layout_height="54dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="21dp"
+        android:background="@drawable/custom_button"
+
         android:text="Update Details"
         app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +39,9 @@
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginBottom="20dp"
-        android:text="Security & Privacy"
+        android:background="@drawable/custom_button"
+
+        android:text="Security and Privacy"
         app:layout_constraintBottom_toTopOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,6 +53,8 @@
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginBottom="338dp"
+        android:background="@drawable/custom_button"
+
         android:text="Add Family"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
