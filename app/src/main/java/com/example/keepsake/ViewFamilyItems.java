@@ -1,28 +1,24 @@
 package com.example.keepsake;
 
+import android.content.Intent;
+import android.os.Bundle;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
-public class HomePage extends AppCompatActivity {
-
-
-    private Button button;
-    private Button button1;
-    private Button button2;
-
+public class ViewFamilyItems extends AppCompatActivity {
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle abdt;
@@ -30,24 +26,10 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_view_family_items);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        button = (Button) findViewById(R.id.button_to_settings);
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-
-                openActivity1();
-            }});
-        button1 = (Button) findViewById(R.id.button_to_uploads);
-        button1.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v) {
-
-                openActivity2();
-            }});
-
-        dl = (DrawerLayout)findViewById(R.id.homeDrawerLayout);
+        dl = (DrawerLayout)findViewById(R.id.itemsDrawerLayout);
         abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
         abdt.setDrawerIndicatorEnabled(true);
 
@@ -55,7 +37,7 @@ public class HomePage extends AppCompatActivity {
         abdt.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Items");
 
         NavigationView nav_view = (NavigationView) findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -70,23 +52,12 @@ public class HomePage extends AppCompatActivity {
                     openActivity4();
                 }
                 else  if (id == R.id.ButtonFamilyMembersAccess){
-                    Toast.makeText(HomePage.this, "FamilyMembers", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewFamilyItems.this, "FamilyMembers", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             }
         });
     }
-
-
-    public void openActivity1() {
-        Intent intent = new Intent(this, AccountSettings.class);
-        startActivity(intent);
-    }
-    public void openActivity2() {
-        Intent intent = new Intent(this, NewItemUpload.class);
-        startActivity(intent);
-    }
-
     public void openActivity3() {
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
@@ -100,5 +71,6 @@ public class HomePage extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return abdt.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
+
 
 }

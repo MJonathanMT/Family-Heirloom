@@ -8,6 +8,7 @@
         <item>Ng</item>
         <item>Tirtapraja</item>
     </string-array>
+    <string name="title_activity_view_family_items">ViewFamilyItems</string>
 
 
 </resources>
