@@ -52,7 +52,7 @@ public class ViewFamilyItems extends AppCompatActivity {
                     openActivity4();
                 }
                 else  if (id == R.id.ButtonFamilyMembersAccess){
-                    Toast.makeText(ViewFamilyItems.this, "FamilyMembers", Toast.LENGTH_SHORT).show();
+                    openActivity5();
                 }
                 return true;
             }
@@ -67,6 +67,10 @@ public class ViewFamilyItems extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openActivity5() {
+        Intent intent = new Intent(this, FamilyMemberPage.class);
+        startActivity(intent);
+    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return abdt.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

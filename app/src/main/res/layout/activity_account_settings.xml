@@ -16,13 +16,13 @@
         android:layout_marginEnd="68dp"
         android:text="Account Settings"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintBottom_toTopOf="@+id/button_update_details"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/button_update_details"
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginTop="24dp"
@@ -46,13 +46,13 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
         android:text="Security and Privacy"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/button_log_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/button_update_details" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_log_out"
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginStart="100dp"
@@ -60,7 +60,7 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
-        android:text="Fuck Nuts"
+        android:text="Log Out"
         app:layout_constraintBottom_toTopOf="@+id/textView_family_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,13 +75,13 @@
         android:text="Family Settings"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintBottom_toTopOf="@+id/button_change_current_family"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button_log_out" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/button_change_current_family"
         android:layout_width="210dp"
         android:layout_height="54dp"
 
@@ -90,14 +90,14 @@
         android:layout_marginEnd="101dp"
         android:background="@drawable/custom_button"
         android:text="Change Current Family"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_family"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_family_settings" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/button_add_family"
         android:layout_width="210dp"
         android:layout_height="54dp"
 
@@ -111,5 +111,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/button_change_current_family" />
 </androidx.constraintlayout.widget.ConstraintLayout>

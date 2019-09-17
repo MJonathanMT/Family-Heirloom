@@ -38,18 +38,14 @@
 
     <Button
         android:id="@+id/button_to_join_family_group"
-        android:layout_width="184dp"
+        android:layout_width="185dp"
         android:layout_height="55dp"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="114dp"
-        android:layout_marginBottom="288dp"
 
+        android:layout_marginTop="10dp"
         android:background="@drawable/custom_button"
         android:text="Join Existing Family"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_to_create_family_group" />
 

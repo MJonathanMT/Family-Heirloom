@@ -70,7 +70,7 @@ public class HomePage extends AppCompatActivity {
                     openActivity4();
                 }
                 else  if (id == R.id.ButtonFamilyMembersAccess){
-                    Toast.makeText(HomePage.this, "FamilyMembers", Toast.LENGTH_SHORT).show();
+                    openActivity5();
                 }
                 return true;
             }
@@ -93,6 +93,10 @@ public class HomePage extends AppCompatActivity {
     }
     public void openActivity4() {
         Intent intent = new Intent(this, ViewFamilyItems.class);
+        startActivity(intent);
+    }
+    public void openActivity5() {
+        Intent intent = new Intent(this, FamilyMemberPage.class);
         startActivity(intent);
     }
 
