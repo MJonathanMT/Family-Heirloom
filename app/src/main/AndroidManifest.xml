@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignUpPage"></activity>
+        <activity android:name=".UpdateDetails"></activity>
+        <activity android:name=".FamilyMemberPage" />
+        <activity android:name=".SignUpPage" />
         <activity android:name=".RequestFamilyGroup" />
         <activity android:name=".JoinFamilyGroup" />
         <activity android:name=".CreateFamilyGroup" />
