@@ -1,9 +1,14 @@
 <resources>
     <string name="app_name">KeepSake</string>
+    <string name="Open">KeepSake</string>
+    <string name="Close">KeepSake</string>
 
     <string-array name="family_names">
         <item>Ngoh</item>
         <item>Ng</item>
         <item>Tirtapraja</item>
     </string-array>
+    <string name="title_activity_view_family_items">ViewFamilyItems</string>
+
+
 </resources>

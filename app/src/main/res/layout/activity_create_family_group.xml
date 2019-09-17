@@ -7,17 +7,43 @@
     android:background="@drawable/background_alt_2"
     tools:context=".CreateFamilyGroup">
 
+
     <TextView
-        android:id="@+id/textView_create_family_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="329dp"
-        android:layout_marginEnd="141dp"
-        android:layout_marginBottom="383dp"
-        android:text="Create Family Group"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/Text_View_join_existing_family"
+        android:layout_width="296dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="180dp"
+        android:text="Create New Family"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_enter_family_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Enter Last Name / Family Name"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Text_View_join_existing_family" />
+
+    <Button
+        android:id="@+id/button_to_home_page"
+        android:layout_width="128dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_button"
+        android:text="Finish Sign Up"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id" />
 </androidx.constraintlayout.widget.ConstraintLayout>

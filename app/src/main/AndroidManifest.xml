@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateDetails"></activity>
+        <activity android:name=".ChangeFamily"></activity>
+        <activity android:name=".UpdateDetails" />
         <activity android:name=".FamilyMemberPage" />
+        <activity
+            android:name=".ViewFamilyItems"
+            android:label="@string/title_activity_view_family_items"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpPage" />
         <activity android:name=".RequestFamilyGroup" />
         <activity android:name=".JoinFamilyGroup" />
         <activity android:name=".CreateFamilyGroup" />
-        <activity android:name=".ViewItem" />
-        <activity android:name=".LogIn" />
         <activity android:name=".NewItemUpload" />
         <activity android:name=".AccountSettings" />
         <activity android:name=".HomePage" />
