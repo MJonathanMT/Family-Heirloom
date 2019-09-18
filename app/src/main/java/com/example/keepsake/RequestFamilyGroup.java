@@ -9,12 +9,12 @@ import android.widget.Button;
 
 public class RequestFamilyGroup extends AppCompatActivity {
 
-    private Button buttonHomePage = findViewById(R.id.buttonHomePage);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_family_group);
+
+        Button buttonHomePage = findViewById(R.id.buttonHomePage);
 
         buttonHomePage.setOnClickListener(new View.OnClickListener() {
             @Override

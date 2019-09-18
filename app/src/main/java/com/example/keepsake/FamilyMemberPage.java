@@ -14,14 +14,15 @@ import com.google.android.material.navigation.NavigationView;
 
 public class FamilyMemberPage extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
-    private ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member_page);
+
+        DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
