@@ -14,13 +14,13 @@
         android:layout_marginStart="105dp"
         android:layout_marginTop="176dp"
         android:layout_marginEnd="105dp"
-        android:text="Choose family to change to:"
+        android:text="@string/ChooseFamilyToChangeTo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner1"
+        android:id="@+id/spinnerFamilyNames"
         android:layout_width="201dp"
         android:layout_height="27dp"
         android:layout_marginStart="105dp"
@@ -31,15 +31,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonChange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="161dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="162dp"
-        android:text="Change"
+        android:text="@string/Change"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner1" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFamilyNames" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

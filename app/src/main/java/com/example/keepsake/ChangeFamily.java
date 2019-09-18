@@ -11,23 +11,22 @@ import android.widget.Spinner;
 
 public class ChangeFamily extends AppCompatActivity {
 
-    private Button button;
+    private Button buttonChange = findViewById(R.id.buttonChange);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_family);
 
-        Spinner mySpinner = (Spinner) findViewById(R.id.spinner1);
+        Spinner mySpinner = findViewById(R.id.spinnerFamilyNames);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.family_names));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.familyNames));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);
 
 
-        button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity();

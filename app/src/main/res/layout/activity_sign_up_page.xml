@@ -14,7 +14,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="66dp"
         android:layout_marginEnd="65dp"
-        android:text="Account Sign Up"
+        android:text="@string/AccountSignUp"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -37,8 +37,9 @@
             android:id="@+id/editText_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="Given Name"
             android:ems="10"
-            android:hint="Name (Given Name)"
+            android:hint="@string/GivenName"
             android:inputType="textPersonName" />
 
         <Space
@@ -49,8 +50,9 @@
             android:id="@+id/editText_last_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="Last Name"
             android:ems="10"
-            android:hint="Last Name"
+            android:hint="@string/LastName"
             android:inputType="textPersonName" />
 
         <Space
@@ -58,46 +60,49 @@
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editText_email_input"
+            android:id="@+id/editTextEmailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="Email"
             android:ems="10"
-            android:hint="E-mail"
-            android:inputType="textPersonName" />
+            android:hint="@string/Email"
+            android:inputType="textEmailAddress" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editText_password_input"
+            android:id="@+id/editTextPasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="Password"
             android:ems="10"
-            android:hint="Password"
-            android:inputType="textPersonName" />
+            android:hint="@string/EnterPassword"
+            android:inputType="textPassword" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editText_confirm_password_input"
+            android:id="@+id/editTextConfirmPasswordInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="Password"
             android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPersonName" />
+            android:hint="@string/ConfirmPassword"
+            android:inputType="textPassword" />
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_to_family_setup"
+        android:id="@+id/buttonFamilySetup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:background="@drawable/custom_button"
-        android:text="next"
+        android:text="@string/Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

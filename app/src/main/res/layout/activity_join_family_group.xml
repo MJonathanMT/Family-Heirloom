@@ -8,14 +8,14 @@
     tools:context=".JoinFamilyGroup">
 
     <TextView
-        android:id="@+id/textview_join_existing_family"
+        android:id="@+id/textView_join_existing_family"
         android:layout_width="296dp"
         android:layout_height="48dp"
         android:layout_marginStart="82dp"
         android:layout_marginTop="200dp"
         android:layout_marginEnd="83dp"
         android:layout_marginBottom="8dp"
-        android:text="Join Existing Family"
+        android:text="@string/JoinExistingFamily"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
@@ -31,16 +31,17 @@
         android:layout_marginStart="99dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="99dp"
+        android:autofillHints="FamilyId"
         android:ems="10"
-        android:hint="Enter Family ID"
+        android:hint="@string/EnterFamilyId"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/button_continue_to_request_page"
+        app:layout_constraintBottom_toTopOf="@+id/buttonRequestJoin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_join_existing_family" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_join_existing_family" />
 
     <Button
-        android:id="@+id/button_continue_to_request_page"
+        android:id="@+id/buttonRequestJoin"
         android:layout_width="153dp"
         android:layout_height="59dp"
         android:layout_marginStart="159dp"
@@ -48,7 +49,7 @@
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="239dp"
         android:background="@drawable/custom_button"
-        android:text="Request to Join"
+        android:text="@string/RequestJoin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

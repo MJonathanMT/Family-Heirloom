@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/button_to_sign_up"
+        android:id="@+id/buttonSignUp"
         android:layout_width="226dp"
         android:layout_height="52dp"
         android:layout_marginStart="92dp"
@@ -17,15 +17,15 @@
         android:layout_marginEnd="93dp"
         android:layout_marginBottom="132dp"
         android:background="@drawable/custom_button"
-        android:text="Sign Up"
+        android:text="@string/SignUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_to_login" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogIn" />
 
     <Button
-        android:id="@+id/button_to_login"
+        android:id="@+id/buttonLogIn"
         android:layout_width="226dp"
         android:layout_height="52dp"
         android:layout_marginStart="92dp"
@@ -33,8 +33,8 @@
         android:layout_marginEnd="93dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/custom_button"
-        android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/button_to_sign_up"
+        android:text="@string/LogIn"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
         android:layout_marginEnd="93dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/button_to_login"
+        app:layout_constraintBottom_toTopOf="@id/buttonLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3">
@@ -61,7 +61,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="User ID (Email)" />
+                android:hint="@string/EnterUseId" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,7 +71,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password" />
+                android:hint="@string/EnterPassword" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -83,6 +83,7 @@
         android:layout_marginTop="44dp"
         android:layout_marginEnd="69dp"
         android:layout_marginBottom="8dp"
+        android:contentDescription="@string/TemporaryDescription"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -97,6 +98,7 @@
         android:layout_marginStart="58dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/TemporaryDescription"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
@@ -110,6 +112,7 @@
         android:layout_marginTop="31dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="16dp"
+        android:contentDescription="@string/TemporaryDescription"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
