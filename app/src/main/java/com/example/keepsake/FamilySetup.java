@@ -9,15 +9,16 @@ import android.widget.Button;
 
 public class FamilySetup extends AppCompatActivity {
 
-    private Button button;
-    private Button button1;
+    private Button buttonCreateFamily = findViewById(R.id.buttonCreateFamily);
+    private Button buttonJoinFamily = findViewById(R.id.buttonJoinFamily);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_setup);
-        button = (Button) findViewById(R.id.button_to_create_family_group);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        buttonCreateFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -25,8 +26,7 @@ public class FamilySetup extends AppCompatActivity {
             }
         });
 
-        button1 = (Button) findViewById(R.id.button_to_join_family_group);
-        button1.setOnClickListener(new View.OnClickListener() {
+        buttonJoinFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

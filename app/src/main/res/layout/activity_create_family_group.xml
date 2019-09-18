@@ -13,7 +13,7 @@
         android:layout_width="296dp"
         android:layout_height="48dp"
         android:layout_marginTop="180dp"
-        android:text="Create New Family"
+        android:text="@string/CreateNewFamily"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Enter Last Name / Family Name"
+        android:autofillHints="FamilyId"
+        android:hint="@string/EnterFamilyId"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -36,12 +37,12 @@
         app:layout_constraintTop_toBottomOf="@+id/Text_View_join_existing_family" />
 
     <Button
-        android:id="@+id/button_to_home_page"
+        android:id="@+id/buttonHomePage"
         android:layout_width="128dp"
         android:layout_height="54dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/custom_button"
-        android:text="Finish Sign Up"
+        android:text="@string/FinishSignUp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,27 +11,24 @@ import android.widget.Button;
 
 public class AccountSettings extends AppCompatActivity {
 
-    private Button button;
-    private Button button2;
-    private Button button_log_out;
-    private Button button_add_family;
-    private Button button_change_family;
+    private Button buttonUpdateDetails = findViewById(R.id.buttonUpdateDetails);
+    private Button buttonLogOut =  findViewById(R.id.buttonLogOut);
+    private Button buttonChangeFamily = findViewById(R.id.buttonChangeCurrentFamily);
+    private Button buttonAddFamily = findViewById(R.id.buttonAddFamily);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
 
-        button = (Button) findViewById(R.id.button_update_details);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonUpdateDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity1();
             }
         });
 
-        button_log_out = (Button) findViewById(R.id.button_log_out);
-        button_log_out.setOnClickListener(new View.OnClickListener() {
+        buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -59,16 +56,16 @@ public class AccountSettings extends AppCompatActivity {
             }
         });
 
-        button_change_family = (Button) findViewById(R.id.button_change_current_family);
-        button_change_family.setOnClickListener(new View.OnClickListener() {
+
+        buttonChangeFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity3();
             }
         });
 
-        button_add_family = (Button) findViewById(R.id.button_add_family);
-        button_add_family.setOnClickListener(new View.OnClickListener() {
+
+        buttonAddFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity2();

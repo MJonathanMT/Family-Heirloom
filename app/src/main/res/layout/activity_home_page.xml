@@ -49,11 +49,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="8dp"
-                android:text="Rich Sanchez"
+                android:text="@string/TemporaryName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toEndOf="@+id/image_profile_1"
-                app:layout_constraintTop_toBottomOf="@+id/button_to_settings" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonSettings" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -62,7 +62,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
-                android:text="Morty Smith"
+                android:text="@string/TemporaryName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.515"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -87,6 +87,7 @@
                 android:layout_height="122dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
+                android:contentDescription="@string/TemporaryDescription"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_profile_1"
                 app:srcCompat="@drawable/profile2" />
@@ -97,28 +98,29 @@
                 android:layout_height="94dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/TemporaryDescription"
                 android:src="@drawable/profile1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_to_settings"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSettings"
                 tools:src="@drawable/profile1" />
 
             <Button
-                android:id="@+id/button_to_settings"
+                android:id="@+id/buttonSettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_button"
-                android:text="Settings"
-                app:layout_constraintEnd_toStartOf="@+id/button_to_uploads"
+                android:text="@string/Settings"
+                app:layout_constraintEnd_toStartOf="@+id/buttonUpload"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/button_to_uploads"
+                android:id="@+id/buttonUpload"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/custom_button"
-                android:text="Upload"
+                android:text="@string/Upload"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -128,7 +130,7 @@
                 android:layout_height="39dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
-                android:text="I own a portal gun that belongs to me because my useless grandson can't take care of it"
+                android:text="@string/TemporaryText1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.636"
                 app:layout_constraintStart_toEndOf="@+id/image_profile_1"
@@ -140,7 +142,7 @@
                 android:layout_height="39dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
-                android:text="I have a piece of Jessica's hair with me"
+                android:text="@string/TemporaryText2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.714"
                 app:layout_constraintStart_toEndOf="@+id/imageView"

@@ -9,15 +9,14 @@ import android.widget.Button;
 
 public class SignUpPage extends AppCompatActivity {
 
-    private Button button;
+    private Button buttonFamilySetup = findViewById(R.id.buttonFamilySetup);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_page);
 
-        button = (Button) findViewById(R.id.button_to_family_setup);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonFamilySetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivity1();

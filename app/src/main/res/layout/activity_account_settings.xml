@@ -8,36 +8,36 @@
     tools:context=".AccountSettings">
 
     <TextView
-        android:id="@+id/textView_account_settings"
+        android:id="@+id/textViewAccountSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="67dp"
         android:layout_marginTop="94dp"
         android:layout_marginEnd="68dp"
-        android:text="Account Settings"
+        android:text="@string/AccountSettings"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_update_details"
+        app:layout_constraintBottom_toTopOf="@+id/buttonUpdateDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button_update_details"
+        android:id="@+id/buttonUpdateDetails"
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginTop="24dp"
 
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
-        android:text="Update Details"
-        app:layout_constraintBottom_toTopOf="@+id/button6"
+        android:text="@string/UpdateDetails"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSecurityAndPrivacy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_account_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAccountSettings" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/buttonSecurityAndPrivacy"
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginStart="100dp"
@@ -45,14 +45,14 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
-        android:text="Security and Privacy"
-        app:layout_constraintBottom_toTopOf="@+id/button_log_out"
+        android:text="@string/SecurityAndPrivacy"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_update_details" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDetails" />
 
     <Button
-        android:id="@+id/button_log_out"
+        android:id="@+id/buttonLogOut"
         android:layout_width="210dp"
         android:layout_height="54dp"
         android:layout_marginStart="100dp"
@@ -60,28 +60,28 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
-        android:text="Log Out"
-        app:layout_constraintBottom_toTopOf="@+id/textView_family_settings"
+        android:text="@string/LogOut"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFamilySettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSecurityAndPrivacy" />
 
     <TextView
-        android:id="@+id/textView_family_settings"
+        android:id="@+id/textViewFamilySettings"
         android:layout_width="274dp"
         android:layout_height="48dp"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="69dp"
-        android:text="Family Settings"
+        android:text="@string/FamilySettings"
         android:textAlignment="center"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_change_current_family"
+        app:layout_constraintBottom_toTopOf="@+id/buttonChangeCurrentFamily"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_log_out" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogOut" />
 
     <Button
-        android:id="@+id/button_change_current_family"
+        android:id="@+id/buttonChangeCurrentFamily"
         android:layout_width="210dp"
         android:layout_height="54dp"
 
@@ -89,15 +89,15 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="101dp"
         android:background="@drawable/custom_button"
-        android:text="Change Current Family"
-        app:layout_constraintBottom_toTopOf="@+id/button_add_family"
+        android:text="@string/ChangeCurrentFamily"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddFamily"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_family_settings" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFamilySettings" />
 
     <Button
-        android:id="@+id/button_add_family"
+        android:id="@+id/buttonAddFamily"
         android:layout_width="210dp"
         android:layout_height="54dp"
 
@@ -106,10 +106,10 @@
         android:layout_marginEnd="101dp"
         android:layout_marginBottom="96dp"
         android:background="@drawable/custom_button"
-        android:text="Add Family"
+        android:text="@string/AddFamily"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_change_current_family" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonChangeCurrentFamily" />
 </androidx.constraintlayout.widget.ConstraintLayout>

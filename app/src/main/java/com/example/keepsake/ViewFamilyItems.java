@@ -3,10 +3,7 @@ package com.example.keepsake;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,14 +11,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class ViewFamilyItems extends AppCompatActivity {
 
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle abdt;
+    private DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
+    private ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +24,16 @@ public class ViewFamilyItems extends AppCompatActivity {
         setContentView(R.layout.activity_view_family_items);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        dl = (DrawerLayout)findViewById(R.id.itemsDrawerLayout);
-        abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
-        abdt.setDrawerIndicatorEnabled(true);
+        drawerToggle.setDrawerIndicatorEnabled(true);
 
-        dl.addDrawerListener(abdt);
-        abdt.syncState();
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Items");
-
-        NavigationView nav_view = (NavigationView) findViewById(R.id.nav_view);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Items");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        NavigationView nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -73,7 +67,7 @@ public class ViewFamilyItems extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return abdt.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
 

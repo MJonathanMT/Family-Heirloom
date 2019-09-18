@@ -10,54 +10,50 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
 public class HomePage extends AppCompatActivity {
 
+    private Button buttonSettings = findViewById(R.id.buttonSettings);
+    private Button buttonUpload = findViewById(R.id.buttonUpload);
 
-    private Button button;
-    private Button button1;
-    private Button button2;
-
-
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle abdt;
+    private DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
+    private ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        button = (Button) findViewById(R.id.button_to_settings);
-        button.setOnClickListener(new View.OnClickListener(){
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 openActivity1();
-            }});
-        button1 = (Button) findViewById(R.id.button_to_uploads);
-        button1.setOnClickListener(new View.OnClickListener(){
+            }
+        });
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 openActivity2();
-            }});
+            }
+        });
 
-        dl = (DrawerLayout)findViewById(R.id.homeDrawerLayout);
-        abdt = new ActionBarDrawerToggle(this, dl, R.string.Open, R.string.Close);
-        abdt.setDrawerIndicatorEnabled(true);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
-        dl.addDrawerListener(abdt);
-        abdt.syncState();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Home");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Home");
 
-        NavigationView nav_view = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -65,11 +61,9 @@ public class HomePage extends AppCompatActivity {
 
                 if (id == R.id.ButtonHomepageAccess) {
                     openActivity3();
-                }
-                else  if (id == R.id.ButtonFamilyItemsAccess){
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
                     openActivity4();
-                }
-                else  if (id == R.id.ButtonFamilyMembersAccess){
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openActivity5();
                 }
                 return true;
@@ -82,6 +76,7 @@ public class HomePage extends AppCompatActivity {
         Intent intent = new Intent(this, AccountSettings.class);
         startActivity(intent);
     }
+
     public void openActivity2() {
         Intent intent = new Intent(this, NewItemUpload.class);
         startActivity(intent);
@@ -91,10 +86,12 @@ public class HomePage extends AppCompatActivity {
         Intent intent = new Intent(this, HomePage.class);
         startActivity(intent);
     }
+
     public void openActivity4() {
         Intent intent = new Intent(this, ViewFamilyItems.class);
         startActivity(intent);
     }
+
     public void openActivity5() {
         Intent intent = new Intent(this, FamilyMemberPage.class);
         startActivity(intent);
@@ -102,7 +99,7 @@ public class HomePage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return abdt.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
 }
