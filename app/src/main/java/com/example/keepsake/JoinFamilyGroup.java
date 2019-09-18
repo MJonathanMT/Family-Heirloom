@@ -9,12 +9,12 @@ import android.widget.Button;
 
 public class JoinFamilyGroup extends AppCompatActivity {
 
-    private Button buttonRequestJoin = findViewById(R.id.buttonRequestJoin);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_family_group);
+
+        Button buttonRequestJoin = findViewById(R.id.buttonRequestJoin);
 
         buttonRequestJoin.setOnClickListener(new View.OnClickListener() {
             @Override

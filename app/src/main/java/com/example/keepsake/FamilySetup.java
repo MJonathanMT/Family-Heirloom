@@ -9,14 +9,13 @@ import android.widget.Button;
 
 public class FamilySetup extends AppCompatActivity {
 
-    private Button buttonCreateFamily = findViewById(R.id.buttonCreateFamily);
-    private Button buttonJoinFamily = findViewById(R.id.buttonJoinFamily);
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_setup);
+
+        Button buttonCreateFamily = findViewById(R.id.buttonCreateFamily);
+        Button buttonJoinFamily = findViewById(R.id.buttonJoinFamily);
 
         buttonCreateFamily.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,15 +11,15 @@ import android.widget.Button;
 
 public class AccountSettings extends AppCompatActivity {
 
-    private Button buttonUpdateDetails = findViewById(R.id.buttonUpdateDetails);
-    private Button buttonLogOut =  findViewById(R.id.buttonLogOut);
-    private Button buttonChangeFamily = findViewById(R.id.buttonChangeCurrentFamily);
-    private Button buttonAddFamily = findViewById(R.id.buttonAddFamily);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
+
+        Button buttonUpdateDetails = findViewById(R.id.buttonUpdateDetails);
+        Button buttonLogOut =  findViewById(R.id.buttonLogOut);
+        Button buttonChangeFamily = findViewById(R.id.buttonChangeCurrentFamily);
+        Button buttonAddFamily = findViewById(R.id.buttonAddFamily);
 
         buttonUpdateDetails.setOnClickListener(new View.OnClickListener() {
             @Override

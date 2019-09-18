@@ -9,12 +9,12 @@ import android.widget.Button;
 
 public class UpdateDetails extends AppCompatActivity {
 
-    private Button buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_details);
+
+        Button buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
 
         buttonSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override

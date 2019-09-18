@@ -16,16 +16,18 @@ import com.google.android.material.navigation.NavigationView;
 
 public class HomePage extends AppCompatActivity {
 
-    private Button buttonSettings = findViewById(R.id.buttonSettings);
-    private Button buttonUpload = findViewById(R.id.buttonUpload);
-
-    private DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
-    private ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        Button buttonUpload = findViewById(R.id.buttonUpload);
+        DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

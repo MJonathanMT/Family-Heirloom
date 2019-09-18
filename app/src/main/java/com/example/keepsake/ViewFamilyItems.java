@@ -14,14 +14,16 @@ import android.view.MenuItem;
 
 public class ViewFamilyItems extends AppCompatActivity {
 
-    private DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
-    private ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
-
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_family_items);
+
+        DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawerToggle.setDrawerIndicatorEnabled(true);

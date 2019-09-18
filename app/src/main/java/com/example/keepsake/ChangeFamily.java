@@ -11,12 +11,12 @@ import android.widget.Spinner;
 
 public class ChangeFamily extends AppCompatActivity {
 
-    private Button buttonChange = findViewById(R.id.buttonChange);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_family);
+
+        Button buttonChange = findViewById(R.id.buttonChange);
 
         Spinner mySpinner = findViewById(R.id.spinnerFamilyNames);
 
