@@ -32,7 +32,7 @@ public class SignUpPage extends AppCompatActivity {
         mEmail = (EditText)findViewById(R.id.mEmail);
         mPassword = (EditText)findViewById(R.id.mPassword);
         mConfirmPassword = (EditText)findViewById(R.id.mConfirmPassword);
-        Button buttonFamilySetup = findViewById(R.id.buttonFamilySetup);
+        buttonFamilySetup = (Button) findViewById(R.id.buttonFamilySetup);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -76,7 +76,7 @@ public class SignUpPage extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        startActivity(new Intent(getApplicationContext(), FamilySetup.class));
                                         Toast.makeText(SignUpPage.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // If sign in fails, display a message to the user.
@@ -89,9 +89,5 @@ public class SignUpPage extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    public void buttonFamilySetup() {
-        startActivity(new Intent(getApplicationContext(), FamilySetup.class));
     }
 }

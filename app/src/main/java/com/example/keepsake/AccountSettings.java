@@ -8,8 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountSettings extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,31 +35,37 @@ public class AccountSettings extends AppCompatActivity {
 
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(AccountSettings.this);
-                builder.setTitle("Exit");
-                builder.setMessage("Do you want to exit ??");
-                builder.setPositiveButton("Yes. Logging out now!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        finish();
-                        System.exit(0);
-
-                    }
-                });
-                builder.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(AccountSettings.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
+
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(AccountSettings.this);
+//                builder.setTitle("Exit");
+//                builder.setMessage("Do you want to exit ??");
+//                builder.setPositiveButton("Yes. Logging out now!", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        finish();
+//                        System.exit(0);
+//
+//                    }
+//                });
+//                builder.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+//            }
+//        });
 
 
         buttonChangeFamily.setOnClickListener(new View.OnClickListener() {
