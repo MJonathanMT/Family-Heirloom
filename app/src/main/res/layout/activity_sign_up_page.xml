@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView_sign_up_title">
 
         <EditText
-            android:id="@+id/editText_name_input"
+            android:id="@+id/mFirstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Given Name"
@@ -47,7 +47,7 @@
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editText_last_name_input"
+            android:id="@+id/mLastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Last Name"
@@ -60,7 +60,7 @@
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editTextEmailInput"
+            android:id="@+id/mEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Email"
@@ -73,7 +73,7 @@
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editTextPasswordInput"
+            android:id="@+id/mPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Password"
@@ -86,7 +86,7 @@
             android:layout_height="21dp" />
 
         <EditText
-            android:id="@+id/editTextConfirmPasswordInput"
+            android:id="@+id/mConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="Password"
