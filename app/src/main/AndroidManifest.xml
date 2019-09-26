@@ -11,8 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ChangeFamily" />
-        <activity android:name=".ChangeFamilyActivity"></activity>
+        <activity android:name=".ChangeFamilyActivity" />
         <activity android:name=".UpdateDetails" />
         <activity android:name=".FamilyMemberPage" />
         <activity
@@ -28,8 +27,8 @@
         <activity android:name=".HomePageActivity" />
         <activity android:name=".FamilySetupActivity" />
         <activity android:name=".EditItemActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ViewItemActivity">
+        <activity android:name=".ViewItemActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

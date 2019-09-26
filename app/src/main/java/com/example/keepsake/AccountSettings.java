@@ -89,11 +89,11 @@ public class AccountSettings extends AppCompatActivity {
         startActivity(intent);
     }
     public void openActivity2(){
-        Intent intent = new Intent(this, JoinFamilyGroup.class);
+        Intent intent = new Intent(this, JoinFamilyGroupActivity.class);
         startActivity(intent);
     }
     public void openActivity3(){
-        Intent intent = new Intent(this, ChangeFamily.class);
+        Intent intent = new Intent(this, ChangeFamilyActivity.class);
         startActivity(intent);
     }
 }
