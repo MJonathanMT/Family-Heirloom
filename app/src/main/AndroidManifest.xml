@@ -12,6 +12,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".ChangeFamily" />
+        <activity android:name=".ChangeFamilyActivity"></activity>
         <activity android:name=".UpdateDetails" />
         <activity android:name=".FamilyMemberPage" />
         <activity
@@ -20,13 +21,15 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpPage" />
         <activity android:name=".RequestFamilyGroup" />
-        <activity android:name=".JoinFamilyGroup" />
-        <activity android:name=".CreateFamilyGroup" />
-        <activity android:name=".NewItemUpload" />
-        <activity android:name=".AccountSettings" />
-        <activity android:name=".HomePage" />
-        <activity android:name=".FamilySetup" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".JoinFamilyGroupActivity" />
+        <activity android:name=".CreateFamilyGroupActivity" />
+        <activity android:name=".NewItemUploadActivity" />
+        <activity android:name=".AccountSettingsActivity" />
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".FamilySetupActivity" />
+        <activity android:name=".EditItemActivity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ViewItemActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

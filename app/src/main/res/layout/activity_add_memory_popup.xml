@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="350dp"
+    android:layout_height="50dp"
+    android:layout_gravity="center|top"
+    android:layout_marginTop="80dp"
+    android:background="#D8000000"
+    android:backgroundTint="#33FFFFFF"
+    android:fadingEdge="horizontal|vertical"
+    android:fadingEdgeLength="30dp"
+    android:foreground="@android:drawable/zoom_plate"
+    android:foregroundTint="#00FFFFFF"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:requiresFadingEdge="horizontal|vertical"
+    app:layout_constraintStart_toStartOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tableRow"
+        android:layout_width="350dp"
+        android:layout_height="38dp"
+        android:foregroundTint="#00FFFFFF">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/search_input"
+            android:layout_width="306dp"
+            android:layout_height="44dp"
+            android:background="#00FFFFFF"
+            android:drawableTint="#80383131"
+            android:foregroundTint="#00000000"
+            android:hint="Search"
+            android:paddingLeft="15dp"
+            android:singleLine="false"
+            android:textColor="#0A0A0A"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="39dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="308dp"
+            android:backgroundTint="#00FDFDFD"
+            android:foregroundGravity="right"
+            android:foregroundTint="#33383232"
+            android:paddingEnd="0dp"
+            android:tint="#00000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
