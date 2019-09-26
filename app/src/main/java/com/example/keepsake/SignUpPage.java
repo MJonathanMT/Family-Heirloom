@@ -76,7 +76,7 @@ public class SignUpPage extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
-                                        startActivity(new Intent(getApplicationContext(), FamilySetup.class));
+                                        startActivity(new Intent(getApplicationContext(), FamilySetupActivity.class));
                                         Toast.makeText(SignUpPage.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // If sign in fails, display a message to the user.
