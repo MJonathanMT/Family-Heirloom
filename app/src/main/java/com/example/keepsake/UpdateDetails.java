@@ -26,7 +26,7 @@ public class UpdateDetails extends AppCompatActivity {
     }
 
     public void openActivity1(){
-        Intent intent = new Intent(this, AccountSettings.class);
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 }

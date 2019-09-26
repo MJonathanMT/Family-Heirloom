@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class FamilySetup extends AppCompatActivity {
+public class FamilySetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +35,12 @@ public class FamilySetup extends AppCompatActivity {
     }
 
     public void openActivity1() {
-        Intent intent = new Intent(this, CreateFamilyGroup.class);
+        Intent intent = new Intent(this, CreateFamilyGroupActivity.class);
         startActivity(intent);
     }
 
     public void openActivity2() {
-        Intent intent = new Intent(this, JoinFamilyGroup.class);
+        Intent intent = new Intent(this, JoinFamilyGroupActivity.class);
         startActivity(intent);
     }
 }

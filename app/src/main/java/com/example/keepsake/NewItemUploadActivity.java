@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class NewItemUpload extends AppCompatActivity {
+public class NewItemUploadActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class NewItemUpload extends AppCompatActivity {
 
         Spinner mySpinner = findViewById(R.id.spinnerFamilyNames);
 
-        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(NewItemUpload.this,
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<>(NewItemUploadActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.familyNames));
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner.setAdapter(myAdapter);

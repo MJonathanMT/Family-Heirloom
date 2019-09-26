@@ -7,16 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class CreateFamilyGroup extends AppCompatActivity {
+public class JoinFamilyGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_family_group);
+        setContentView(R.layout.activity_join_family_group);
 
-        Button buttonHomePage = findViewById(R.id.buttonHomePage);
+        Button buttonRequestJoin = findViewById(R.id.buttonRequestJoin);
 
-        buttonHomePage.setOnClickListener(new View.OnClickListener() {
+        buttonRequestJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -26,7 +26,8 @@ public class CreateFamilyGroup extends AppCompatActivity {
     }
 
     public void openActivity1() {
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, RequestFamilyGroup.class);
         startActivity(intent);
     }
+
 }

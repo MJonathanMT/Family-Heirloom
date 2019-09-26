@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class ChangeFamily extends AppCompatActivity {
+public class ChangeFamilyActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class ChangeFamily extends AppCompatActivity {
     }
 
     public void openActivity(){
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 }

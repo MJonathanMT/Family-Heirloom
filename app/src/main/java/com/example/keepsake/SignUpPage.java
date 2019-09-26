@@ -90,4 +90,8 @@ public class SignUpPage extends AppCompatActivity {
             }
         });
     }
+
+    public void buttonFamilySetup() {
+        startActivity(new Intent(getApplicationContext(), FamilySetupActivity.class));
+    }
 }

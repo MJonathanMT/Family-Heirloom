@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_alt_2"
-    tools:context=".FamilySetup">
+    tools:context=".FamilySetupActivity">
 
     <TextView
         android:id="@+id/textView_request_ack"

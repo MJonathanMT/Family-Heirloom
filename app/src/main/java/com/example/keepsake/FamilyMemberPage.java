@@ -56,7 +56,7 @@ public class FamilyMemberPage extends AppCompatActivity {
     }
 
     public void openActivity3() {
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 

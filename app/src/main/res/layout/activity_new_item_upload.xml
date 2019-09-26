@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_alt_2"
-    tools:context=".NewItemUpload">
+    tools:context=".NewItemUploadActivity">
 
     <TextView
         android:id="@+id/textView4"

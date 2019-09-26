@@ -14,34 +14,38 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class HomePage extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
+    private Button buttonSettings;
+    private Button buttonUpload;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        Button buttonSettings = findViewById(R.id.buttonSettings);
-        Button buttonUpload = findViewById(R.id.buttonUpload);
-        DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
+        buttonSettings = findViewById(R.id.buttonSettings);
+        buttonUpload = findViewById(R.id.buttonUpload);
+        drawerLayout = findViewById(R.id.homeDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                openActivity1();
+                openAccountSettingsActivity();
             }
         });
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                openActivity2();
+                openNewItemUploadActivity();
             }
         });
 
@@ -62,11 +66,11 @@ public class HomePage extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.ButtonHomepageAccess) {
-                    openActivity3();
+                    openHomePageActivity();
                 } else if (id == R.id.ButtonFamilyItemsAccess) {
-                    openActivity4();
+                    openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
-                    openActivity5();
+                    openFamilyMemberPageActivity();
                 }
                 return true;
             }
@@ -74,27 +78,27 @@ public class HomePage extends AppCompatActivity {
     }
 
 
-    public void openActivity1() {
-        Intent intent = new Intent(this, AccountSettings.class);
+    public void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity2() {
-        Intent intent = new Intent(this, NewItemUpload.class);
+    public void openNewItemUploadActivity() {
+        Intent intent = new Intent(this, NewItemUploadActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity3() {
-        Intent intent = new Intent(this, HomePage.class);
+    public void openHomePageActivity() {
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity4() {
+    public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItems.class);
         startActivity(intent);
     }
 
-    public void openActivity5() {
+    public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPage.class);
         startActivity(intent);
     }

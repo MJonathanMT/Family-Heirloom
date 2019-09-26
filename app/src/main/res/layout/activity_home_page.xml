@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_alt_1"
-    tools:context=".HomePage"
+    tools:context=".HomePageActivity"
     android:orientation="vertical"
     android:id="@+id/homeDrawerLayout"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".HomePage">
+        tools:context=".HomePageActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,6 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
+                android:id="@+id/Q5SWGQ3jNngl5DDtHni4"
                 android:layout_width="267dp"
                 android:layout_height="81dp"
                 android:layout_marginStart="8dp"
@@ -65,8 +66,8 @@
                 android:text="@string/TemporaryName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.515"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                app:layout_constraintStart_toEndOf="@+id/imageViewItemPhoto"
+                app:layout_constraintTop_toTopOf="@+id/imageViewItemPhoto" />
 
             <FrameLayout
                 android:layout_width="267dp"
@@ -74,15 +75,15 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="#28FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/imageViewItemPhoto"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView">
+                app:layout_constraintStart_toEndOf="@+id/imageViewItemPhoto"
+                app:layout_constraintTop_toTopOf="@+id/imageViewItemPhoto">
 
             </FrameLayout>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewItemPhoto"
                 android:layout_width="95dp"
                 android:layout_height="122dp"
                 android:layout_marginStart="16dp"
@@ -145,7 +146,7 @@
                 android:text="@string/TemporaryText2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.714"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/imageViewItemPhoto"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
