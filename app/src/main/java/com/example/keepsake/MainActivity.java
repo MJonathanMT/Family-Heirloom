@@ -67,9 +67,12 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+
+
     }
     public void signup_btn(View view){
 
-        startActivity(new Intent(getApplicationContext(), SignUpPage.class));
+        startActivity(new Intent(getApplicationContext(), SignUpPageActivity.class));
     }
+
 }

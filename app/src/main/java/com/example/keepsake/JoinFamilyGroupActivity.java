@@ -26,7 +26,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
     }
 
     public void openActivity1() {
-        Intent intent = new Intent(this, RequestFamilyGroup.class);
+        Intent intent = new Intent(this, RequestFamilyGroupActivity.class);
         startActivity(intent);
     }
 

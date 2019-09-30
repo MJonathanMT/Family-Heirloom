@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class SignUpPage extends AppCompatActivity {
+public class SignUpPageActivity extends AppCompatActivity {
 
     EditText mFirstname, mLastname, mEmail, mPassword, mConfirmPassword;
     Button buttonFamilySetup;
@@ -46,41 +46,41 @@ public class SignUpPage extends AppCompatActivity {
                 String confirmPassword = mConfirmPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(firstname)) {
-                    Toast.makeText(SignUpPage.this, "Please Enter First Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Please Enter First Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(lastname)) {
-                    Toast.makeText(SignUpPage.this, "Please Enter Full Name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Please Enter Full Name", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(SignUpPage.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(SignUpPage.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(confirmPassword)) {
-                    Toast.makeText(SignUpPage.this, "Please Enter Confirm Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Please Enter Confirm Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (password.length() < 6) {
-                    Toast.makeText(SignUpPage.this, "Password too short", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUpPageActivity.this, "Password too short", Toast.LENGTH_SHORT).show();
                 }
                 if (password.equals(confirmPassword)) {
 
                     mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(SignUpPage.this, new OnCompleteListener<AuthResult>() {
+                            .addOnCompleteListener(SignUpPageActivity.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         // Sign in success, update UI with the signed-in user's information
                                         startActivity(new Intent(getApplicationContext(), FamilySetupActivity.class));
-                                        Toast.makeText(SignUpPage.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpPageActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                     } else {
                                         // If sign in fails, display a message to the user.
-                                        Toast.makeText(SignUpPage.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignUpPageActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                     }
 
                                     // ...

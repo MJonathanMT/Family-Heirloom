@@ -12,7 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.view.MenuItem;
 
-public class ViewFamilyItems extends AppCompatActivity {
+public class ViewFamilyItemsActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -59,12 +59,12 @@ public class ViewFamilyItems extends AppCompatActivity {
         startActivity(intent);
     }
     public void openActivity4() {
-        Intent intent = new Intent(this, ViewFamilyItems.class);
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
     public void openActivity5() {
-        Intent intent = new Intent(this, FamilyMemberPage.class);
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
     @Override

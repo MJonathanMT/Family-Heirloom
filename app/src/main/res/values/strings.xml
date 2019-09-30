@@ -47,7 +47,7 @@
     <string name="EnterUseId">User ID (Email)</string>
     <string name="EnterPassword">Enter Password</string>
 
-    <!--New Item Upload-->
+    <!--New ItemActivity Upload-->
     <string name="NewItemUpload">New Item Upload</string>
     <string name="ItemName">Item Name</string>
     <string name="ItemDescription">Item Description</string>

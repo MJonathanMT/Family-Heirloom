@@ -109,12 +109,12 @@ public class EditItemActivity extends AppCompatActivity {
         final String newDescription = editDescription.getText().toString().trim();
 
         if (TextUtils.isEmpty(newName)) {
-            Toast.makeText(EditItemActivity.this, "Please Enter Item Name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Please Enter ItemActivity Name", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(newDescription)) {
-            Toast.makeText(EditItemActivity.this, "Please Enter Item Description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditItemActivity.this, "Please Enter ItemActivity Description", Toast.LENGTH_SHORT).show();
             return;
         }
 

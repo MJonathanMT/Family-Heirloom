@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_2"
-    tools:context=".SignUpPage">
+    android:background="@drawable/default_background"
+    tools:context=".SignUpPageActivity">
 
     <TextView
         android:id="@+id/textView_sign_up_title"
-        android:layout_width="282dp"
-        android:layout_height="46dp"
+        android:layout_width="308dp"
+        android:layout_height="42dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="66dp"
         android:layout_marginEnd="65dp"
+        android:fontFamily="monospace"
         android:text="@string/AccountSignUp"
         android:textAlignment="center"
         android:textSize="30sp"
