@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_2"
+    android:background="@drawable/default_background"
     tools:context=".CreateFamilyGroupActivity">
 
 
     <TextView
         android:id="@+id/Text_View_join_existing_family"
-        android:layout_width="296dp"
-        android:layout_height="48dp"
+        android:layout_width="358dp"
+        android:layout_height="44dp"
         android:layout_marginTop="180dp"
+        android:fontFamily="monospace"
         android:text="@string/CreateNewFamily"
         android:textAlignment="center"
         android:textAllCaps="false"

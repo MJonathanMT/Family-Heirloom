@@ -35,6 +35,14 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation "androidx.navigation:navigation-fragment:2.1.0"
+    implementation "androidx.navigation:navigation-ui:2.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-beta04"
+    implementation 'androidx.collection:collection:1.1.0'
+
+    implementation "com.google.firebase:firebase-database:19.1.0"
+    implementation "com.google.firebase:firebase-storage:19.0.1"
+    implementation "com.google.firebase:firebase-auth:19.0.0"
     implementation 'de.hdodenhof:circleimageview:3.0.1'
     implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'com.google.gms:google-services:4.3.2'

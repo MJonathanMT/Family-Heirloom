@@ -4,22 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_2"
+    android:background="@drawable/default_background"
     tools:context=".FamilySetupActivity">
 
     <TextView
         android:id="@+id/textView_request_ack"
-        android:layout_width="217dp"
-        android:layout_height="62dp"
+        android:layout_width="287dp"
+        android:layout_height="58dp"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="30dp"
+        android:fontFamily="monospace"
         android:text="@string/FamilySetUp"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:fontFamily="monospace" />
 
     <TextView
         android:id="@+id/textView2"

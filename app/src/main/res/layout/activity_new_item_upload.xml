@@ -5,16 +5,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_2"
+    android:background="@drawable/default_background"
     tools:context=".NewItemUploadActivity">
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="287dp"
-        android:layout_height="76dp"
+        android:layout_width="329dp"
+        android:layout_height="53dp"
         android:layout_marginStart="62dp"
-        android:layout_marginTop="77dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="62dp"
+        android:fontFamily="monospace"
         android:text="@string/NewItemUpload"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"

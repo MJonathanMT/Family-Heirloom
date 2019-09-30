@@ -7,27 +7,26 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class RequestFamilyGroup extends AppCompatActivity {
+public class UpdateDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request_family_group);
+        setContentView(R.layout.activity_update_details);
 
-        Button buttonHomePage = findViewById(R.id.buttonHomePage);
+        Button buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
 
-        buttonHomePage.setOnClickListener(new View.OnClickListener() {
+        buttonSaveChanges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 openActivity1();
             }
         });
+
     }
 
-    public void openActivity1() {
-        Intent intent = new Intent(this, HomePageActivity.class);
+    public void openActivity1(){
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 }
-

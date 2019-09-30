@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_2"
-    tools:context=".RequestFamilyGroup">
+    android:background="@drawable/default_background"
+    tools:context=".RequestFamilyGroupActivity">
 
     <TextView
         android:id="@+id/textView_request_ack"
@@ -27,6 +27,7 @@
         android:layout_width="296dp"
         android:layout_height="27dp"
         android:layout_marginTop="30dp"
+        android:fontFamily="monospace"
         android:text="@string/EmailConfirmation"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,8 +40,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
-        android:text="@string/Continue"
         android:background="@drawable/custom_button"
+        android:fontFamily="monospace"
+        android:text="@string/Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewFamilyItems"
+    tools:context=".ViewFamilyItemsActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_alt_1"
+    android:background="@drawable/default_background"
     android:id="@+id/itemsDrawerLayout"
     >
     

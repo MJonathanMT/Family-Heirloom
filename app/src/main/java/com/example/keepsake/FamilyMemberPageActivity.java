@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class FamilyMemberPage extends AppCompatActivity {
+public class FamilyMemberPageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -61,12 +61,12 @@ public class FamilyMemberPage extends AppCompatActivity {
     }
 
     public void openActivity4() {
-        Intent intent = new Intent(this, ViewFamilyItems.class);
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
     public void openActivity5() {
-        Intent intent = new Intent(this, FamilyMemberPage.class);
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 

@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_alt_1"
     tools:context=".MainActivity">
 
     <Button
@@ -13,9 +12,9 @@
         android:layout_width="226dp"
         android:layout_height="52dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="93dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="98dp"
         android:background="@drawable/custom_button"
         android:onClick="signup_btn"
         android:text="@string/SignUp"
@@ -30,9 +29,9 @@
         android:layout_width="226dp"
         android:layout_height="52dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="93dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/custom_button"
         android:text="@string/LogIn"
         app:layout_constraintBottom_toTopOf="@+id/buttonSignUp"
@@ -41,19 +40,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
+    <ImageView
+        android:id="@+id/main_page_background_image"
+        android:layout_width="406dp"
+        android:layout_height="734dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.666"
+        app:srcCompat="@drawable/main_background" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="226dp"
         android:layout_height="118dp"
         android:layout_marginStart="92dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="400dp"
         android:layout_marginEnd="93dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/buttonLogIn"
+        app:layout_constraintBottom_toTopOf="@+id/buttonLogIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -83,32 +94,19 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="274dp"
-        android:layout_height="302dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="69dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription="@string/TemporaryDescription"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginStart="58dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="10dp"
         android:contentDescription="@string/TemporaryDescription"
+        app:layout_constraintBottom_toTopOf="@+id/main_page_background_image"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/login_icon" />
 
     <ImageView

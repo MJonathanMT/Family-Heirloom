@@ -1,13 +1,14 @@
 package com.example.keepsake;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountSettingsActivity extends AppCompatActivity {
 
@@ -30,32 +31,13 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
         buttonLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(AccountSettingsActivity.this);
-                builder.setTitle("Exit");
-                builder.setMessage("Do you want to exit ??");
-                builder.setPositiveButton("Yes. Logging out now!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        finish();
-                        System.exit(0);
-
-                    }
-                });
-                builder.setNegativeButton("Not now", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        dialogInterface.dismiss();
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Toast.makeText(AccountSettingsActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
-
 
         buttonChangeFamily.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +56,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
     }
     public void openActivity1(){
-        Intent intent = new Intent(this, UpdateDetails.class);
+        Intent intent = new Intent(this, UpdateDetailsActivity.class);
         startActivity(intent);
     }
     public void openActivity2(){
