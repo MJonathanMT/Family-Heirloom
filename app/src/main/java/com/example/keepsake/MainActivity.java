@@ -16,6 +16,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     TextInputEditText mEmail, mPassword;
@@ -27,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mEmail = (TextInputEditText)findViewById(R.id.mEmail);
-        mPassword = (TextInputEditText)findViewById(R.id.mPassword);
-        buttonLogIn = (Button)findViewById(R.id.buttonLogIn);
+        mEmail = findViewById(R.id.mEmail);
+        mPassword = findViewById(R.id.mPassword);
+        buttonLogIn = findViewById(R.id.buttonLogIn);
 
         mAuth = FirebaseAuth.getInstance();
 
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmail.getText().toString().trim();
-                String password = mPassword.getText().toString().trim();
+                String email = Objects.requireNonNull(mEmail.getText()).toString().trim();
+                String password = Objects.requireNonNull(mPassword.getText()).toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(MainActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();

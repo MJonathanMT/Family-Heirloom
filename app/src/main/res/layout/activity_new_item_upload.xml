@@ -38,9 +38,10 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/ItemName" />
+                android:hint="@string/itemname" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
@@ -53,17 +54,31 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/ItemDescription" />
+                android:hint="@string/itemdescription" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/chooseBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_button"
+            android:text="@string/choose_photo" />
 
-            android:text="@string/PhotoOption" />
+        <Button
+            android:id="@+id/uploadBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_button"
+            android:text="@string/upload" />
+
+        <ImageView
+            android:id="@+id/uploadImageView"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:contentDescription="@string/image" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
