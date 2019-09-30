@@ -83,6 +83,11 @@
         <item>Tirtapraja</item>
     </string-array>
     <string name="title_activity_view_family_items">ViewFamilyItems</string>
+    <string name="itemname">ItemName</string>
+    <string name="itemdescription">ItemDescription</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="upload">Upload</string>
+    <string name="image">Image</string>
 
 
 </resources>
