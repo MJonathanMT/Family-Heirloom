@@ -21,13 +21,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpPageActivity" />
         <activity android:name=".RequestFamilyGroupActivity" />
-        <activity android:name=".JoinFamilyGroup" />
-        <activity android:name=".CreateFamilyGroup" />
-        <activity android:name=".NewItemUpload" />
         <activity android:name=".AccountSettingsActivity" />
         <activity android:name=".HomePageActivity"
             android:exported="true" />
-        <activity android:name=".FamilySetup" />
         <activity android:name=".JoinFamilyGroupActivity" />
         <activity android:name=".CreateFamilyGroupActivity" />
         <activity android:name=".NewItemUploadActivity" />
