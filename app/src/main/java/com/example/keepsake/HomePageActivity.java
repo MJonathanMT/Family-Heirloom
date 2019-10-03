@@ -79,6 +79,7 @@ public class HomePageActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
+                assert queryDocumentSnapshots != null;
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
                         QueryDocumentSnapshot data = doc.getDocument();
@@ -127,10 +128,10 @@ public class HomePageActivity extends AppCompatActivity {
                             itemsListAdapter.notifyDataSetChanged();
                         }
                         else if(userFamilyNameList.contains(items.familyName)) {
-                            if (items.privacy.compareTo("P") == 0 || items.privacy.compareTo("family") == 0) {
+//                            if (items.privacy.compareTo("O") != 0 || items.privacy.compareTo("family") == 0) {
                                 itemsList.add(items);
                                 itemsListAdapter.notifyDataSetChanged();
-                            }
+//                            }
                         }
 
                     }
