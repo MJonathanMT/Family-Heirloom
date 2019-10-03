@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> {
+public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.ViewHolder> {
 
     public List<Items> itemsList;
-    public UsersListAdapter(List<Items> itemsList){
+    public ItemsListAdapter(List<Items> itemsList){
 
         this.itemsList = itemsList;
 

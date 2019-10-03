@@ -15,11 +15,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -31,63 +37,107 @@ public class HomePageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
 
-    private FirebaseFirestore db;
-    private RecyclerView mRecyclerView;
-    ArrayList<Items> itemActivityArrayList = new ArrayList<>();
 
     private static final String TAG = "FireLog";
     private RecyclerView posts;
     private FirebaseFirestore fbfs;
-    private UsersListAdapter usersListAdapter;
+    private ItemsListAdapter itemsListAdapter;
     private List<Items> itemsList;
 
+    private String userId;
+    private User currentUser;
+
+    private ArrayList<String> userFamilyNameList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
-//        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_home_page);
-
-        itemsList = new ArrayList<>();
-        usersListAdapter = new UsersListAdapter(itemsList);
-
-        posts = (RecyclerView) findViewById(R.id.main_list);
-        posts.setHasFixedSize(true);
-        posts.setLayoutManager(new LinearLayoutManager(this));
-        posts.setAdapter(usersListAdapter);
-
         fbfs = FirebaseFirestore.getInstance();
-
-        fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                if (e != null) {
-
-                    Log.d(TAG, "Error: " + e.getMessage());
-
-                }
-
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-
-                        Items items = doc.getDocument().toObject(Items.class);
-                        itemsList.add(items);
-
-                        usersListAdapter.notifyDataSetChanged();
-
-                    }
-                }
-            }
-        });
-
-        itemActivityArrayList = new ArrayList<>();
+        getUserId();
+        createFamilyList();
+        createUserClass();
+        homeItemViewing();
         manageButtons();
         createNavBar();
     }
 
 
 
+    private void getUserId(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            userId = user.getUid();
+        }
+    }
+
+    private void createFamilyList(){
+        // Get the list of family that the current user is in
+        fbfs.collection("user").document(userId).collection("familyNames").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                        QueryDocumentSnapshot data = doc.getDocument();
+                        userFamilyNameList.add((String) data.get("familyName"));
+                    }
+                }
+            }
+        });
+    }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        DocumentReference docUser = fbfs.collection("user").document(userId);
+        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+            }
+        });
+    }
+
+    private void homeItemViewing(){
+
+
+        itemsList = new ArrayList<>();
+        itemsListAdapter = new ItemsListAdapter(itemsList);
+
+        posts = findViewById(R.id.main_list);
+        posts.setHasFixedSize(true);
+        posts.setLayoutManager(new LinearLayoutManager(this));
+        posts.setAdapter(itemsListAdapter);
+
+        // get all the items relevant to the current user
+        fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d(TAG, "Error: " + e.getMessage());
+                }
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
+
+                        Items items = doc.getDocument().toObject(Items.class);
+                        if(userId.compareTo(items.owner) == 0) {
+                            itemsList.add(items);
+                            itemsListAdapter.notifyDataSetChanged();
+                        }
+                        else if(userFamilyNameList.contains(items.familyName)) {
+                            if (items.privacy.compareTo("P") == 0 || items.privacy.compareTo("family") == 0) {
+                                itemsList.add(items);
+                                itemsListAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                    }
+                }
+            }
+        });
+    }
 
     private void manageButtons(){
 
