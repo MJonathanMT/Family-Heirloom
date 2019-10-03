@@ -15,13 +15,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -45,24 +42,20 @@ public class HomePageActivity extends AppCompatActivity {
     private List<Items> itemsList;
 
     private String userId;
-    private User currentUser;
-
-    private ArrayList<String> userFamilyNameList = new ArrayList<String>();
+    private ArrayList<String> userFamilyNameList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.activity_home_page);
         fbfs = FirebaseFirestore.getInstance();
+
         getUserId();
         createFamilyList();
-        createUserClass();
         homeItemViewing();
         manageButtons();
         createNavBar();
     }
-
-
 
     private void getUserId(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -90,20 +83,7 @@ public class HomePageActivity extends AppCompatActivity {
         });
     }
 
-    private void createUserClass(){
-        // create a user class for the current user
-        DocumentReference docUser = fbfs.collection("user").document(userId);
-        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currentUser = documentSnapshot.toObject(User.class);
-            }
-        });
-    }
-
     private void homeItemViewing(){
-
-
         itemsList = new ArrayList<>();
         itemsListAdapter = new ItemsListAdapter(itemsList);
 
@@ -119,9 +99,9 @@ public class HomePageActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
+                assert queryDocumentSnapshots != null;
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
-
                         Items items = doc.getDocument().toObject(Items.class);
                         if(userId.compareTo(items.owner) == 0) {
                             itemsList.add(items);
@@ -133,7 +113,6 @@ public class HomePageActivity extends AppCompatActivity {
                                 itemsListAdapter.notifyDataSetChanged();
 //                            }
                         }
-
                     }
                 }
             }

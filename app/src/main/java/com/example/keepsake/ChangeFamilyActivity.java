@@ -38,6 +38,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_family);
         fbfs = FirebaseFirestore.getInstance();
+
         getUserId();
         createFamilyList();
         manageChange();
@@ -77,8 +78,6 @@ public class ChangeFamilyActivity extends AppCompatActivity {
 
     private void manageChange(){
         Button buttonChange = findViewById(R.id.buttonChange);
-
-
         buttonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

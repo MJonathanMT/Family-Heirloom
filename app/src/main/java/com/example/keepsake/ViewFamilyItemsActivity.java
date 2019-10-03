@@ -39,11 +39,13 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
     private ItemsListAdapter itemsListAdapter;
     private RecyclerView posts;
     private User currentUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_family_items);
         fbfs = FirebaseFirestore.getInstance();
+
         getUserId();
         createUserClass();
         createFamilyItemView();
@@ -71,6 +73,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         posts.setLayoutManager(new LinearLayoutManager(this));
         posts.setAdapter(itemsListAdapter);
     }
+
     private void familyItemViewingUpdate(){
         // get all the items relevant to the current user
         fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -79,11 +82,10 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d("ERROR", "Error: " + e.getMessage());
                 }
-                if(currentUser!=null) {
+                if(currentUser.getCurrentFamilyName()!=null) {
                     assert queryDocumentSnapshots != null;
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
-
                             Items items = doc.getDocument().toObject(Items.class);
                             if (items.familyName.compareTo(currentUser.getCurrentFamilyName()) == 0) {
                                 itemsList.add(items);
@@ -95,12 +97,14 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getUserId(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             userId = user.getUid();
         }
     }
+
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
