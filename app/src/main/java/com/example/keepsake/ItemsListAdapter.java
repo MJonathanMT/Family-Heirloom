@@ -3,16 +3,20 @@ package com.example.keepsake;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.ViewHolder> {
 
     public List<Items> itemsList;
+    public ImageView urlView;
     public ItemsListAdapter(List<Items> itemsList){
 
         this.itemsList = itemsList;
@@ -35,6 +39,7 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
         holder.nameText.setText(itemsList.get(position).getName());
         holder.descriptionText.setText(itemsList.get(position).getDescription());
 
+        Picasso.get().load(itemsList.get(position).getUrl()).into(urlView);
 
     }
 
@@ -51,6 +56,7 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
 
         public TextView nameText;
         public TextView descriptionText;
+        public TextView urlText;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -60,6 +66,8 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
 
             nameText = (TextView) mView.findViewById(R.id.name);
             descriptionText = (TextView) mView.findViewById(R.id.description);
+            urlText =  mView.findViewById(R.id.url);
+            urlView = mView.findViewById(R.id.urlView);
         }
     }
 
