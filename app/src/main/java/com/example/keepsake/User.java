@@ -1,7 +1,7 @@
 package com.example.keepsake;
 
 public class User {
-    public String firstname, lastname, email;
+    public String firstname, lastname, email, currentFamilyName;
 
     public User() {
 
@@ -36,4 +36,9 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getCurrentFamilyName(){ return currentFamilyName;}
+
+    public void setCurrentFamilyName(String newFamilyName){ this.currentFamilyName = newFamilyName;}
+
 }

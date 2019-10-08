@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinnerFamilyNames"
+        android:id="@+id/changeCurrentFamilySpinner"
         android:layout_width="201dp"
         android:layout_height="27dp"
         android:layout_marginStart="105dp"
@@ -41,6 +41,6 @@
         android:background="@drawable/custom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerFamilyNames" />
+        app:layout_constraintTop_toBottomOf="@+id/changeCurrentFamilySpinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
