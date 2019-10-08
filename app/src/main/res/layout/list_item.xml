@@ -11,17 +11,22 @@
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="85dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/urlView"
         android:text="Name" />
+
 
     <TextView
         android:id="@+id/description"
         android:layout_width="301dp"
         android:layout_height="65dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/name"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/urlView"
         android:text="description" />
 
     <TextView
@@ -36,18 +41,11 @@
         tools:visibility="invisible" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="15dp"
-        android:layout_height="65dp"
-        app:srcCompat="@drawable/branch" />
-
-    <ImageView
         android:id="@+id/urlView"
-        android:layout_width="68dp"
-        android:layout_height="70dp"
+        android:layout_width="85dp"
+        android:layout_height="91dp"
         android:layout_alignParentStart="false"
         android:layout_alignParentBottom="false"
         android:layout_marginStart="1dp"
-        android:layout_marginBottom="0dp" />
-
+        android:layout_marginLeft="20dp"/>
 </RelativeLayout>
