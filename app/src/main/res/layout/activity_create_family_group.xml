@@ -5,21 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/default_background"
-    tools:context=".CreateFamilyGroupActivity">
+    tools:context=".CreateFamilyActivity">
 
+
+    <ImageButton
+        android:id="@+id/addMemberButton"
+        android:layout_width="53dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="168dp"
+        android:backgroundTint="#00FFFFFF"
+        android:src="@android:drawable/ic_menu_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="188dp"
+        android:text="Add Member"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollViewMember"
+        android:layout_width="409dp"
+        android:layout_height="309dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutMembers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/Text_View_join_existing_family"
         android:layout_width="358dp"
         android:layout_height="44dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="monospace"
         android:text="@string/CreateNewFamily"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.698"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,13 +67,11 @@
         android:id="@+id/editText_enter_family_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
         android:autofillHints="FamilyId"
+        android:ems="10"
         android:hint="@string/EnterFamilyId"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Text_View_join_existing_family" />
 
@@ -41,11 +79,11 @@
         android:id="@+id/buttonHomePage"
         android:layout_width="128dp"
         android:layout_height="54dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/custom_button"
         android:text="@string/FinishSignUp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id" />
+        app:layout_constraintTop_toBottomOf="@+id/scrollViewMember" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

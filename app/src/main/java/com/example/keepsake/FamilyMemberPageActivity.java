@@ -22,7 +22,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_family_member_page);
 
         DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+        //drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
