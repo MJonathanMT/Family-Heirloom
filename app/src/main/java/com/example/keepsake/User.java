@@ -1,40 +1,54 @@
 package com.example.keepsake;
 
 public class User {
-    public String firstname, lastname, email, currentFamilyName;
+    private String firstname, lastname, email, currentFamilyName, username, uuid, image;
 
-    public User() {
-
-    }
-
-    public User(String firstname, String lastname, String email) {
+    public User(String firstname, String lastname, String username) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
+        this.username = username;
     }
 
-    public String getFirstname() {
+    public User() { }
+
+    public String getFirstName() {
         return firstname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String name) {
+        this.firstname = name;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String name) {
+        this.lastname = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String name) {
+        this.username = name;
+    }
+
+    public String getUUID() {
+        return uuid;
+    }
+
+    public void setUUID(String id) {
+        this.uuid = id;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String img) {
+        this.uuid = img;
     }
 
     public String getCurrentFamilyName(){ return currentFamilyName;}
