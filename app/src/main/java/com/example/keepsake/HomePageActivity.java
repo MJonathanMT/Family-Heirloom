@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,8 +34,6 @@ import javax.annotation.Nullable;
 public class HomePageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
-
-
     private static final String TAG = "FireLog";
     private RecyclerView posts;
     private FirebaseFirestore fbfs;

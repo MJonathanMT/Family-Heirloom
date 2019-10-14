@@ -31,6 +31,8 @@ public class ChangeFamilyActivity extends AppCompatActivity {
     private FirebaseFirestore fbfs;
     private String userId;
     private ArrayList<String> userFamilyNameList = new ArrayList<>();
+    private ArrayList<String> userFamilyIdList = new ArrayList<>();
+    private int position;
     private Spinner familyNamesSpinner;
 
     @Override
@@ -55,7 +57,9 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
+
                         QueryDocumentSnapshot data = doc.getDocument();
+                        userFamilyIdList.add(data.getId());
                         userFamilyNameList.add((String) data.get("familyName"));
                     }
                 }
@@ -81,10 +85,11 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         buttonChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newName = String.valueOf(familyNamesSpinner.getSelectedItem());
+                position = familyNamesSpinner.getSelectedItemPosition();
+                String newName = userFamilyIdList.get(position);
                 DocumentReference currentUser = fbfs.collection("user").document(userId);
                 currentUser
-                        .update("currentFamilyName", newName)
+                        .update("userSession", newName)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

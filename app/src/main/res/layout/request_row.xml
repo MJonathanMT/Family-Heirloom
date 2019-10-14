@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_border"
+    android:orientation="horizontal"
+    android:padding="10dp"
+
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/imageItem"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="@string/image"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="170dp"
+        android:layout_height="40dp"
+        android:text="name"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/acceptMemberButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+
+        android:background="@drawable/accept_member" />
+
+    <Button
+        android:id="@+id/declineMemberButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/reject_member" />
+</LinearLayout>
