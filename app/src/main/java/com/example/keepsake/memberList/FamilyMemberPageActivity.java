@@ -1,9 +1,11 @@
-package com.example.keepsake;
+package com.example.keepsake.memberList;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,7 +15,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.keepsake.memberList.FamilyMemberPageActivity;
+import com.example.keepsake.HomePageActivity;
+import com.example.keepsake.R;
+import com.example.keepsake.User;
+import com.example.keepsake.ViewFamilyItemsActivity;
+import com.example.keepsake.memberRequest.MemberRequestActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,72 +37,40 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class ViewFamilyItemsActivity extends AppCompatActivity {
+public class FamilyMemberPageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
     private FirebaseFirestore fbfs;
     private String userId;
-    private List<Items> itemsList;
-    private ItemsListAdapter itemsListAdapter;
+    private List<User> userList;
+    private UserListAdapter userListAdapter;
     private RecyclerView posts;
     private User currentUser;
+    private String currentFamilyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_family_items);
+        setContentView(R.layout.activity_family_member_page);
         fbfs = FirebaseFirestore.getInstance();
 
         getUserId();
         createUserClass();
-        createFamilyItemView();
+        createMemberView();
+
+
+        manageButtons();
         createNavBar();
     }
 
-    private void createUserClass(){
-        // create a user class for the current user
-        DocumentReference docUser = fbfs.collection("user").document(userId);
-        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currentUser = documentSnapshot.toObject(User.class);
-                familyItemViewingUpdate();
-            }
-        });
-    }
+    private void createMemberView(){
+        userList = new ArrayList<>();
+        userListAdapter = new UserListAdapter(userList);
 
-    private void createFamilyItemView(){
-        itemsList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemsList);
-
-        posts = findViewById(R.id.main_list);
+        posts = findViewById(R.id.member_list);
         posts.setHasFixedSize(true);
         posts.setLayoutManager(new LinearLayoutManager(this));
-        posts.setAdapter(itemsListAdapter);
-    }
-
-    private void familyItemViewingUpdate(){
-        // get all the items relevant to the current user
-        fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d("ERROR", "Error: " + e.getMessage());
-                }
-                if(currentUser.getUserSession()!=null) {
-                    assert queryDocumentSnapshots != null;
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            Items items = doc.getDocument().toObject(Items.class);
-                            if (items.familyName.compareTo(currentUser.getUserSession()) == 0) {
-                                itemsList.add(items);
-                                itemsListAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        posts.setAdapter(userListAdapter);
     }
 
     private void getUserId(){
@@ -106,21 +80,76 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         }
     }
 
-    private void createNavBar(){
-        DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
+    private void createUserClass(){
+        // create a user class for the current user
+        DocumentReference docUser = fbfs.collection("user").document(userId);
+        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                currentUser = documentSnapshot.toObject(User.class);
+
+
+                assert currentUser != null;
+                currentFamilyId = currentUser.getUserSession();
+                memberViewUpdate();
+//                Log.d("OH YEA", currentFamilyId);
+//                memberRequestViewUpdate();
+//                familyItemViewingUpdate();
+            }
+        });
+    }
+
+    private void memberViewUpdate(){
+        // get all the items relevant to the current user
+        Log.d("USER SES", currentFamilyId);
+        fbfs.collection("family_group").document(currentFamilyId).collection("members").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.d("ERROR", "Error: " + e.getMessage());
+                }
+
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        User user = doc.getDocument().toObject(User.class);
+                        Log.d("member's name", user.getFirstName());
+                        userList.add(user);
+                        userListAdapter.notifyDataSetChanged();
+
+                    }
+                }
+
+            }
+        });
+    }
+    private void manageButtons(){
+
+        Button buttonMemberRequestPage = findViewById(R.id.memberRequestPage);
+
+        buttonMemberRequestPage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openActivity();
+            }
+        });
+    }
+
+    public void createNavBar(){
+        DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        drawerToggle.setDrawerIndicatorEnabled(true);
 
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle("Family Members");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Items");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
         NavigationView nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -129,22 +158,24 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
 
                 if (id == R.id.ButtonHomepageAccess) {
                     openActivity3();
-                }
-                else  if (id == R.id.ButtonFamilyItemsAccess){
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
                     openActivity4();
-                }
-                else  if (id == R.id.ButtonFamilyMembersAccess){
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openActivity5();
                 }
                 return true;
             }
         });
-
+    }
+    public void openActivity(){
+        Intent intent = new Intent(this, MemberRequestActivity.class);
+        startActivity(intent);
     }
     public void openActivity3() {
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
+
     public void openActivity4() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
@@ -154,10 +185,10 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
-
-
 }
+

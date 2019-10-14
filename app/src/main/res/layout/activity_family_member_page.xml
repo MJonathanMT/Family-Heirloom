@@ -19,73 +19,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/background_alt_1"
-            tools:context=".FamilyMemberPageActivity">
+            tools:context=".memberList.FamilyMemberPageActivity">
+
+            <Button
+                android:id="@+id/memberRequestPage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="@string/AcceptMembers"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/toolbar"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="363dp"
+                tools:layout_editor_absoluteY="7dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-            <TextView
-                android:id="@+id/textView_family_member_title"
-                android:layout_width="238dp"
-                android:layout_height="49dp"
-                android:layout_marginStart="86dp"
-                android:layout_marginTop="55dp"
-                android:layout_marginEnd="87dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/FamilyMembers"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                app:layout_constraintEnd_toEndOf="parent"
+            <RelativeLayout
+                android:id="@+id/memberPageContent"
+                android:layout_width="422dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:layout_constraintEnd_toEndOf="@id/memberRequestPage"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/memberRequestPage"
+                tools:context=".HomePageActivity">
 
-            <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="395dp"
-                android:layout_height="611dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView_family_member_title">
-
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/member_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView_member_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp" />
-                </LinearLayout>
-            </ScrollView>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="355dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="57dp"
-                android:text="@string/AcceptMembers"
-                app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>

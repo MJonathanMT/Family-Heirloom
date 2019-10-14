@@ -1,30 +1,40 @@
 package com.example.keepsake;
 
 public class User {
-    private String firstname, lastname, email, currentFamilyName, username, uuid, image;
 
-    public User(String firstname, String lastname, String username) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String userSession;
+    private String url;
+    private String uuid;
+    private String username;
+
+
+    public User() {
+
     }
 
-    public User() { }
+    public User(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public String getFirstName() {
-        return firstname;
+        return firstName;
     }
 
-    public void setFirstName(String name) {
-        this.firstname = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return lastname;
+        return lastName;
     }
 
-    public void setLastName(String name) {
-        this.lastname = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getUsername() {
@@ -35,6 +45,9 @@ public class User {
         this.username = name;
     }
 
+    public String getUserSession() {
+        return userSession;
+    }
     public String getUUID() {
         return uuid;
     }
@@ -43,16 +56,21 @@ public class User {
         this.uuid = id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
     public void setImage(String img) {
         this.uuid = img;
     }
 
-    public String getCurrentFamilyName(){ return currentFamilyName;}
 
-    public void setCurrentFamilyName(String newFamilyName){ this.currentFamilyName = newFamilyName;}
+    public void setUserSession(String userSession) {
+        this.userSession = userSession;
+    }
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
 
 }

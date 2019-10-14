@@ -15,11 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".memberRequest.MemberRequestActivity"></activity>
         <activity android:name=".imagetest"
             android:exported="true"/>
         <activity android:name=".ChangeFamilyActivity" />
         <activity android:name=".UpdateDetailsActivity" />
-        <activity android:name=".FamilyMemberPageActivity" />
+        <activity android:name=".memberList.FamilyMemberPageActivity" />
         <activity
             android:name=".ViewFamilyItemsActivity"
             android:label="@string/title_activity_view_family_items"
@@ -31,12 +32,12 @@
             android:name=".HomePageActivity"
             android:exported="true" />
         <activity android:name=".JoinFamilyGroupActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".NewItemUploadActivity" />
         <activity android:name=".EditItemActivity" />
         <activity android:name=".ViewItemActivity" />
+        <activity android:name=".FamilySetupActivity"/>
         <activity android:name=".CreateFamilyActivity" />
-        <activity android:name=".FamilySetupActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
