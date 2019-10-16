@@ -71,10 +71,11 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/mEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/EnterUseId"
-                android:id="@+id/mEmail"/>
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -85,11 +86,12 @@
                 android:id="@+id/mPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/EnterPassword"
                 android:ems="10"
+                android:hint="@string/EnterPassword"
                 android:inputType="textPassword"
+                android:singleLine="true"
                 tools:layout_editor_absoluteX="98dp"
-                tools:layout_editor_absoluteY="628dp"/>
+                tools:layout_editor_absoluteY="628dp" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 

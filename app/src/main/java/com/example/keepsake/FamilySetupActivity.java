@@ -45,7 +45,7 @@ public class FamilySetupActivity extends AppCompatActivity {
     }
 
     public void openJoinFamilyActivity() {
-        Intent intent = new Intent(this, JoinFamilyActivity.class);
+        Intent intent = new Intent(this, JoinFamilyGroupActivity.class);
         startActivity(intent);
     }
 

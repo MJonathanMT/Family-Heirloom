@@ -1,11 +1,11 @@
 package com.example.keepsake;
 
-public class Items {
+public class Item {
 
-    String name, description, privacy, owner, familyName, url;
+    private String name, description, privacy, owner, familyName, url;
 
 
-    public Items(String name, String description, String owner, String familyName, String privacy, String url) {
+    public Item(String name, String description, String owner, String familyName, String privacy, String url) {
         this.name = name;
         this.description= description;
         this.privacy = privacy;
@@ -14,7 +14,8 @@ public class Items {
         this.url = url;
 
     }
-    public Items(){}
+    public Item(){}
+
     public String getName() {
         return name;
     }
@@ -42,6 +43,7 @@ public class Items {
     public String getOwner() {
         return owner;
     }
+
     public String getUrl() { return url; }
 
     public void setOwner(String owner) {
@@ -55,9 +57,6 @@ public class Items {
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
     }
-
-
-
 
     public void setUrl(String url) { this.url = url; }
 

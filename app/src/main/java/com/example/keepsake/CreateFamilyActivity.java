@@ -59,7 +59,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
     // Search user Pop-up
     private Dialog myDialog;
     private ImageButton searchButton;
-    private RecyclerView resultsList;
+    private RecyclerView userView;
     private UserViewHolder userHolder;
     private ProgressBar progressBar;
     private Handler handler;
@@ -100,9 +100,9 @@ public class CreateFamilyActivity extends AppCompatActivity {
 
         searchBar = myDialog.findViewById(R.id.editTextSearch);
         searchButton = myDialog.findViewById(R.id.imageButtonSearch);
-        resultsList = myDialog.findViewById(R.id.recyclerViewUsers);
+        userView = myDialog.findViewById(R.id.recyclerViewUsers);
         progressBar = myDialog.findViewById(R.id.progressBar);
-        resultsList.setLayoutManager(new LinearLayoutManager(this));
+        userView.setLayoutManager(new LinearLayoutManager(this));
 
 
         searchBar.addTextChangedListener(new TextWatcher() {
@@ -122,8 +122,8 @@ public class CreateFamilyActivity extends AppCompatActivity {
             }
         });
 
-        resultsList.setHasFixedSize(true);
-        resultsList.setLayoutManager(new LinearLayoutManager(this));
+        userView.setHasFixedSize(true);
+        userView.setLayoutManager(new LinearLayoutManager(this));
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
 
@@ -225,7 +225,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                         });
 
 
-        final DocumentReference userRef = db.collection("user").document(userID).collection("familyNames").document();
+        final DocumentReference userRef = db.collection("user").document(userID).collection("familyGroups").document();
         userRef.set(
                 new HashMap<String, String>() {{
                     put("familyID", familyRef.getId());
@@ -304,7 +304,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         memberList.add(user.getUUID());
                         myDialog.dismiss();
-                        resultsList.removeView(view);
+                        userView.removeView(view);
                         memberListLayout.addView(view);
                         view.setScaleY((float) 0.6);
                         view.setScaleX((float) 0.6);
@@ -319,7 +319,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                 // Create a new instance of the ViewHolder, in this case we are using a custom
                 // layout called R.layout.message for each item
                 View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.list_layout, group, false);
+                        .inflate(R.layout.user_list_layout, group, false);
 
                 return new UserViewHolder(view);
             }
@@ -330,7 +330,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                 super.onDataChanged();
             }
         };
-        resultsList.setAdapter(adapter);
+        userView.setAdapter(adapter);
         adapter.startListening(); //connects to firebase collection
         adapter.notifyDataSetChanged();
         adapter.onDataChanged();
@@ -353,9 +353,9 @@ public class CreateFamilyActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (progressBar != null) {
-                    resultsList.setVisibility(!isLoading ? View.VISIBLE : View.GONE);
+                    userView.setVisibility(!isLoading ? View.VISIBLE : View.GONE);
                 }
-                if (resultsList != null) {
+                if (userView != null) {
                     progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
                 }
             }
