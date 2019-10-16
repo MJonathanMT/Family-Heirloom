@@ -19,6 +19,7 @@
         <activity android:name=".imagetest"
             android:exported="true"/>
         <activity android:name=".ChangeFamilyActivity" />
+        <activity android:name=".ChangeItemOwnerActivity" />
         <activity android:name=".UpdateDetailsActivity" />
         <activity android:name=".memberList.FamilyMemberPageActivity" />
         <activity

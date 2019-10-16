@@ -27,14 +27,13 @@ public class ViewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
+        Intent intent = getIntent();
+        itemID = intent.getStringExtra("itemID");
 
-//        Intent intent = getIntent();
-//        itemID = intent.getStringExtra("itemID");
-        itemID = "Q5SWGQ3jNngl5DDtHni4";
         initialiseDB();
 
         buttonEdit = findViewById(R.id.buttonEdit);
-        buttonExit = findViewById(R.id.imageButtonExit);
+        buttonExit = findViewById(R.id.imageButtonClearOwner);
 
         loadItemInfo(itemID);
 
@@ -82,7 +81,6 @@ public class ViewItemActivity extends AppCompatActivity {
     }
 
     public final void openEditItemActivity(String itemID) {
-        System.out.println(itemID);
         Intent intent = new Intent(this, EditItemActivity.class);
         intent.putExtra("itemID", itemID);
         startActivity(intent);

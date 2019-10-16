@@ -32,6 +32,7 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageButton updateItem;
     private EditText editName;
     private EditText editDescription;
+    private ImageButton changeOwnerButton;
     private String itemID;
     private ImageButton buttonExit;
 
@@ -48,8 +49,9 @@ public class EditItemActivity extends AppCompatActivity {
         editName = findViewById(R.id.editTextEditName);
         editDescription = findViewById(R.id.editTextEditDescription);
         editPhotoButton = findViewById(R.id.imageButtonEditPhoto);
+        changeOwnerButton = findViewById(R.id.imageButtonChangeOwner);
         updateItem = findViewById(R.id.imageButtonUploadItem);
-        buttonExit = findViewById(R.id.imageButtonExit);
+        buttonExit = findViewById(R.id.imageButtonClearOwner);
 
         final DocumentReference docRef = db.collection("item").document(itemID);
 
@@ -74,6 +76,13 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 updateItem(docRef);
+            }
+        });
+
+        changeOwnerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChangeOwnerActivity();
             }
         });
     }
@@ -156,6 +165,13 @@ public class EditItemActivity extends AppCompatActivity {
 
     public void openEditItemPhotoActivity() {
         // TODO(KIREN)
+    }
+
+    public void openChangeOwnerActivity(){
+        Intent intent = new Intent(this, ChangeItemOwnerActivity
+                .class);
+        intent.putExtra("itemID", itemID);
+        startActivity(intent);
     }
 
     public void openViewItemActivity() {

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -59,8 +60,10 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currentUser = documentSnapshot.toObject(User.class);
-                familyItemViewingUpdate();
+                if(documentSnapshot.exists()){
+                    currentUser = documentSnapshot.toObject(User.class);
+                    familyItemViewingUpdate();
+                }
             }
         });
     }
@@ -104,6 +107,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         if (user != null) {
             userId = user.getUid();
         }
+        Toast.makeText(ViewFamilyItemsActivity.this, userId, Toast.LENGTH_SHORT).show();
     }
 
     private void createNavBar(){
@@ -128,29 +132,29 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.ButtonHomepageAccess) {
-                    openActivity3();
+                    openHomePageActivity();
                 }
                 else  if (id == R.id.ButtonFamilyItemsAccess){
-                    openActivity4();
+                    openViewFamilyItemsActivity();
                 }
                 else  if (id == R.id.ButtonFamilyMembersAccess){
-                    openActivity5();
+                    openFamilyMemberPageActivity();
                 }
                 return true;
             }
         });
 
     }
-    public void openActivity3() {
+    public void openHomePageActivity() {
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
-    public void openActivity4() {
+    public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity5() {
+    public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
