@@ -71,10 +71,9 @@ public class HomePageActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
-                assert queryDocumentSnapshots != null;
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        if (doc.getDocument().exists()){
+                if (queryDocumentSnapshots != null){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
                             QueryDocumentSnapshot data = doc.getDocument();
                             userFamilyNameList.add((String) data.get("familyName"));
                         }
@@ -87,6 +86,7 @@ public class HomePageActivity extends AppCompatActivity {
     private void homeItemViewing(){
         itemList = new ArrayList<>();
         itemsListAdapter = new ItemsListAdapter(itemList);
+        itemsListAdapter.enableOnClickBehaviour();
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
@@ -100,25 +100,31 @@ public class HomePageActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
-                assert queryDocumentSnapshots != null;
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        if (doc.getDocument().exists()){
-                            Item item = doc.getDocument().toObject(Item.class);
+                if(queryDocumentSnapshots != null){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                            if (doc.getDocument().exists()) {
 
-                            if(item.getOwner()!=null && userId.compareTo(item.getOwner()) == 0) {
-                                itemList.add(item);
-                                itemsListAdapter.notifyDataSetChanged();
+                                Item item = doc.getDocument().toObject(Item.class);
 
-                            } else if(item.getFamilyName()!=null && userFamilyNameList.contains(item.getFamilyName())) {
-//                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
-                                itemList.add(item);
-                                itemsListAdapter.notifyDataSetChanged();
-//                            }
+                                if (item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
+                                    item.setUUID(doc.getDocument().getId());
+                                    itemList.add(item);
+                                    itemsListAdapter.notifyDataSetChanged();
+
+                                } else if (item.getFamilyName() != null && userFamilyNameList.contains(item.getFamilyName())) {
+                                    //                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
+                                    item.setUUID(doc.getDocument().getId());
+                                    itemList.add(item);
+                                    itemsListAdapter.notifyDataSetChanged();
+                                    //                            }
+                                }
                             }
                         }
                     }
+
                 }
+
             }
         });
     }
@@ -134,6 +140,7 @@ public class HomePageActivity extends AppCompatActivity {
                 openAccountSettingsActivity();
             }
         });
+
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -206,4 +213,5 @@ public class HomePageActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
+
 }

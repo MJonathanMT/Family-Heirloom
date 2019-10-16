@@ -53,17 +53,15 @@ public class CreateFamilyActivity extends AppCompatActivity {
     private Button createFamilyButton;
     private HashSet<String> memberList = new HashSet<>();
     private EditText familyName;
-    private TextView searchBar;
     private LinearLayout memberListLayout;
 
     // Search user Pop-up
     private Dialog myDialog;
+    private TextView searchBar;
     private ImageButton searchButton;
     private RecyclerView userView;
-    private UserViewHolder userHolder;
     private ProgressBar progressBar;
     private Handler handler;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,8 +100,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
         searchButton = myDialog.findViewById(R.id.imageButtonSearch);
         userView = myDialog.findViewById(R.id.recyclerViewUsers);
         progressBar = myDialog.findViewById(R.id.progressBar);
-        userView.setLayoutManager(new LinearLayoutManager(this));
-
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -142,6 +138,83 @@ public class CreateFamilyActivity extends AppCompatActivity {
         myDialog.show();
     }
 
+    public void firebaseUserSearch(String queryString){
+        ArrayList<String> parsedQuery = parseQuery(queryString);
+
+        final Query query;
+
+        if (parsedQuery.size() == 1){
+            query = db.collection("user")
+                    .whereEqualTo("firstName", parsedQuery.get(0));
+        } else if (parsedQuery.size() > 1){
+            query = db.collection("user")
+                    .whereEqualTo("firstName", parsedQuery.get(0))
+                    .whereEqualTo("lastName", parsedQuery.get(1));
+        } else {
+            return;
+        }
+
+        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, new SnapshotParser<User>() {
+                    @NonNull
+                    @Override
+                    public User parseSnapshot(@NonNull DocumentSnapshot snapshot) {
+                        User user = new User();
+                        user.setFirstName((String) snapshot.get("firstName"));
+                        user.setLastName((String) snapshot.get("lastName"));
+                        user.setUUID(snapshot.getId());
+                        return user;
+                    }
+                })
+                .build();
+
+        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<User, UserViewHolder>(options) {
+            @Override
+            public void onBindViewHolder(final UserViewHolder holder, int position, final User user) {
+                // Bind the User object to the UserHolder
+                // ...
+                holder.bind(getApplicationContext(), user);
+
+                holder.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        memberList.add(user.getUUID());
+                        myDialog.dismiss();
+                        userView.removeView(view);
+                        memberListLayout.addView(view);
+                        view.setScaleY((float) 0.6);
+                        view.setScaleX((float) 0.6);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            view.setForegroundGravity(Gravity.LEFT);
+                        }
+                        view.setOnClickListener(null);
+                    }
+                });
+            }
+
+            @Override
+            public UserViewHolder onCreateViewHolder(ViewGroup group, int i) {
+                // Create a new instance of the ViewHolder, in this case we are using a custom
+                // layout called R.layout.message for each item
+                View view = LayoutInflater.from(group.getContext())
+                        .inflate(R.layout.user_list_layout, group, false);
+
+                return new UserViewHolder(view);
+            }
+
+            @Override
+            public void onDataChanged() {
+                setLoading(false);
+                super.onDataChanged();
+            }
+        };
+        userView.setAdapter(adapter);
+        adapter.startListening(); //connects to firebase collection
+        adapter.notifyDataSetChanged();
+        adapter.onDataChanged();
+
+    }
+
     public void createFamilyEntry() {
         familyName = findViewById(R.id.editText_enter_family_id);
 
@@ -174,11 +247,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
             //TODO(naverill) Notify user of failure
             Toast.makeText(CreateFamilyActivity.this, "Invalid Family ID", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void openFamilyHomepageActivity(View v) {
-        Intent intent = new Intent(this, HomePageActivity.class);
-        startActivity(intent);
     }
 
     public void addMembersToFamily(final DocumentReference familyRef) {
@@ -263,82 +331,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
         });
     }
 
-    public void firebaseUserSearch(String queryString){
-        ArrayList<String> parsedQuery = parseQuery(queryString);
-
-        final Query query;
-
-        if (parsedQuery.size() == 1){
-            query = db.collection("user")
-                    .whereEqualTo("firstname", parsedQuery.get(0));
-        } else {
-            query = db.collection("user")
-                    .whereEqualTo("firstname", parsedQuery.get(0))
-                    .whereEqualTo("lastname", parsedQuery.get(1));
-        }
-
-        FirestoreRecyclerOptions<User> options = new FirestoreRecyclerOptions.Builder<User>()
-                .setQuery(query, new SnapshotParser<User>() {
-                    @NonNull
-                    @Override
-                    public User parseSnapshot(@NonNull DocumentSnapshot snapshot) {
-                        User user = new User();
-                        user.setFirstName((String) snapshot.get("firstname"));
-                        user.setLastName((String) snapshot.get("lastname"));
-                        user.setUsername((String) snapshot.get("username"));
-                        user.setUUID(snapshot.getId());
-                        return user;
-                    }
-                })
-                .build();
-
-        FirestoreRecyclerAdapter adapter = new FirestoreRecyclerAdapter<User, UserViewHolder>(options) {
-            @Override
-            public void onBindViewHolder(final UserViewHolder holder, int position, final User user) {
-                // Bind the User object to the UserHolder
-                // ...
-                holder.bind(getApplicationContext(), user);
-
-                holder.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        memberList.add(user.getUUID());
-                        myDialog.dismiss();
-                        userView.removeView(view);
-                        memberListLayout.addView(view);
-                        view.setScaleY((float) 0.6);
-                        view.setScaleX((float) 0.6);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            view.setForegroundGravity(Gravity.LEFT);
-                        }
-                        view.setOnClickListener(null);
-                    }
-                });
-            }
-
-            @Override
-            public UserViewHolder onCreateViewHolder(ViewGroup group, int i) {
-                // Create a new instance of the ViewHolder, in this case we are using a custom
-                // layout called R.layout.message for each item
-                View view = LayoutInflater.from(group.getContext())
-                        .inflate(R.layout.user_list_layout, group, false);
-
-                return new UserViewHolder(view);
-            }
-
-            @Override
-            public void onDataChanged() {
-                setLoading(false);
-                super.onDataChanged();
-            }
-        };
-        userView.setAdapter(adapter);
-        adapter.startListening(); //connects to firebase collection
-        adapter.notifyDataSetChanged();
-        adapter.onDataChanged();
-
-    }
-
     public ArrayList<String> parseQuery(String query){
         String[] splitQuery =  query.split(" ");
         ArrayList<String> parsedQuery = new ArrayList<>();
@@ -367,5 +359,10 @@ public class CreateFamilyActivity extends AppCompatActivity {
     public void initialiseDB() {
         FirebaseApp.initializeApp(this);
         db = FirebaseFirestore.getInstance();
+    }
+
+    public void openFamilyHomepageActivity(View v) {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
     }
 }

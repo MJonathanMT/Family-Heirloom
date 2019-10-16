@@ -2,7 +2,7 @@ package com.example.keepsake;
 
 public class Item {
 
-    private String name, description, privacy, owner, familyName, url;
+    private String name, description, privacy, owner, familyName, url, uuid;
 
 
     public Item(String name, String description, String owner, String familyName, String privacy, String url) {
@@ -52,6 +52,14 @@ public class Item {
 
     public String getFamilyName() {
         return familyName;
+    }
+
+    public void setUUID(String id){
+        this.uuid = id;
+    }
+
+    public String getUUID(){
+        return uuid;
     }
 
     public void setFamilyName(String familyName) {

@@ -8,7 +8,22 @@
     tools:context=".NewItemUploadActivity">
 
     <ImageButton
-        android:id="@+id/imageButtonExit"
+        android:id="@+id/imageButtonChangeOwner"
+        style="@android:style/Widget.ImageButton"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/transparent"
+        android:foregroundTint="#00FFFFFF"
+        android:tint="#97FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/imageViewItemPhoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/swap_owners_small" />
+
+    <ImageButton
+        android:id="@+id/imageButtonClearOwner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="348dp"

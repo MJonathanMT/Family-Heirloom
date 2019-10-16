@@ -90,7 +90,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
         familyName.setAdapter(familyAdapter);
 
         ArrayAdapter<String> privacyAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacy));
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacyLevels));
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         privacy.setAdapter(privacyAdapter);
     }
@@ -130,6 +130,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
                 String imgName = System.currentTimeMillis()+"."+getExtension(filePath);
                 final StorageReference imageRef = mStorageRef.child(imgName);
                 UploadTask mUploadTask = imageRef.putFile(filePath);
+
                 mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {

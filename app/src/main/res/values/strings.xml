@@ -82,10 +82,10 @@
         <item>Ng</item>
         <item>Tirtapraja</item>
     </string-array>
-    <string-array name="privacy">
-        <item>Private</item>
+    <string-array name="privacyLevels">
+        <item>Owner</item>
         <item>Family</item>
-        <item>Only me</item>
+        <item>Public</item>
     </string-array>
     <string name="title_activity_view_family_items">ViewFamilyItems</string>
     <string name="itemname">ItemName</string>
