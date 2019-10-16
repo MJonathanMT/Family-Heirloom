@@ -1,8 +1,5 @@
 package com.example.keepsake;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,25 +8,34 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class NewItemUploadActivity extends AppCompatActivity {
@@ -37,10 +43,13 @@ public class NewItemUploadActivity extends AppCompatActivity {
     Button btnbrowse, btnupload;
     ImageView img;
     TextInputEditText itemName, itemDescription;
+    Spinner familyName, privacy;
     StorageReference mStorageRef;
     FirebaseFirestore mFirebaseFirestore;
+    FirebaseUser mUser;
     Uri filePath;
     final int IMAGE_REQUEST = 71;
+    StorageTask mUploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +60,12 @@ public class NewItemUploadActivity extends AppCompatActivity {
         btnupload = findViewById(R.id.uploadBtn);
         itemName = findViewById(R.id.itemName);
         itemDescription = findViewById(R.id.itemDescription);
-        mStorageRef = FirebaseStorage.getInstance().getReference("images");
+        privacy = findViewById(R.id.spinnerPrivacy);
+        familyName = findViewById(R.id.familyNames);
+        mStorageRef = FirebaseStorage.getInstance().getReference("item");
         mFirebaseFirestore = FirebaseFirestore.getInstance();
         img = findViewById(R.id.uploadImageView);
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         btnbrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,9 +75,24 @@ public class NewItemUploadActivity extends AppCompatActivity {
         btnupload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadImage();
+                if (mUploadTask != null) {
+                    Toast.makeText(NewItemUploadActivity.this, "Upload in progress", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    uploadImage();
+                }
             }
         });
+
+        ArrayAdapter<String> familyAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.familyNames));
+        familyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        familyName.setAdapter(familyAdapter);
+
+        ArrayAdapter<String> privacyAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacy));
+        privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        privacy.setAdapter(privacyAdapter);
     }
 
     private void chooseImage() {
@@ -93,10 +120,14 @@ public class NewItemUploadActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
+        final String name = itemName.getText().toString().trim();
+        final String description = itemDescription.getText().toString().trim();
+        final String itemPrivacy = privacy.getSelectedItem().toString().trim();
+        final String itemFamilyName = familyName.getSelectedItem().toString().trim();
+        final SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddhhmmss");
         try {
-            if(!Objects.requireNonNull(itemName.getText()).toString().isEmpty() && (Objects.requireNonNull(itemDescription.getText()).toString().isEmpty())
-                    && (filePath != null)) {
-                String imgName = itemName.getText().toString()+"."+getExtension(filePath);
+            if(filePath != null) {
+                String imgName = System.currentTimeMillis()+"."+getExtension(filePath);
                 final StorageReference imageRef = mStorageRef.child(imgName);
                 UploadTask mUploadTask = imageRef.putFile(filePath);
                 mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -111,11 +142,18 @@ public class NewItemUploadActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if(task.isSuccessful()) {
-                            Map<String, String> objectMap = new HashMap<>();
-                            objectMap.put("url", Objects.requireNonNull(task.getResult()).toString());
-
-                            mFirebaseFirestore.collection("images").document(itemName.getText().toString())
-                                    .set(objectMap)
+                            final String url = Objects.requireNonNull(task.getResult()).toString();
+                            UploadInfo upload = new UploadInfo(
+                                    name,
+                                    itemFamilyName,
+                                    itemPrivacy,
+                                    mUser.getUid(),
+                                    description,
+                                    url,
+                                    timeStamp.format(new Date()).toString().trim()
+                            );
+                            mFirebaseFirestore.collection("item").document()
+                                    .set(upload)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -137,11 +175,11 @@ public class NewItemUploadActivity extends AppCompatActivity {
             }
 
             else {
-                Toast.makeText(this, "Please fill in the input", Toast.LENGTH_LONG).show();
+                Toast.makeText(NewItemUploadActivity.this, "Please fill in the input", Toast.LENGTH_LONG).show();
             }
         }
         catch(Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(NewItemUploadActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

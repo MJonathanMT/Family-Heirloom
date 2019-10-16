@@ -1,24 +1,16 @@
 package com.example.keepsake;
 
 public class User {
+    private String firstName, lastName, email, userSession, username, uuid, url;
 
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String userSession;
-    private String url;
-    private String uuid;
-    private String username;
-
-
-    public User() {
-
+    public User(String firstname, String lastname, String email, String url) {
+        this.firstName = firstname;
+        this.lastName = lastname;
+        this.email = email;
+        this.url = url;
     }
 
-    public User(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public User() {
     }
 
     public String getFirstName() {
@@ -35,6 +27,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {
@@ -55,11 +55,6 @@ public class User {
     public void setUUID(String id) {
         this.uuid = id;
     }
-
-    public void setImage(String img) {
-        this.uuid = img;
-    }
-
 
     public void setUserSession(String userSession) {
         this.userSession = userSession;
