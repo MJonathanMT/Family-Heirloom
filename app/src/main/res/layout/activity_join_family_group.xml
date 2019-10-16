@@ -8,51 +8,95 @@
     tools:context=".JoinFamilyGroupActivity">
 
     <TextView
-        android:id="@+id/textView_join_existing_family"
+        android:id="@+id/textViewJoinFamily"
         android:layout_width="374dp"
         android:layout_height="46dp"
         android:layout_marginStart="82dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="83dp"
-        android:layout_marginBottom="8dp"
         android:fontFamily="monospace"
         android:text="@string/JoinExistingFamily"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/editText_enter_family_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editText_enter_family_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="99dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="99dp"
-        android:autofillHints="FamilyId"
-        android:ems="10"
-        android:hint="@string/EnterFamilyId"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/buttonRequestJoin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_join_existing_family" />
-
-    <Button
-        android:id="@+id/buttonRequestJoin"
-        android:layout_width="153dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="159dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="239dp"
-        android:background="@drawable/custom_button"
-        android:text="@string/RequestJoin"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="402dp"
+        android:layout_height="537dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewJoinFamily"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="415dp"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="59dp">
+
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="349dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:capitalize="words"
+                android:drawableEnd="@color/common_google_signin_btn_text_light_default"
+                android:fontFamily="sans-serif-thin"
+                android:foregroundTint="#807D7D"
+                android:gravity="start|left|center_vertical"
+                android:hint="Search families"
+                android:selectAllOnFocus="false"
+                android:shadowColor="#00202020"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textColor="#A8858181"
+                android:textColorHint="#A8858181"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="544dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="485dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewFamilies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+
+        </TableRow>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

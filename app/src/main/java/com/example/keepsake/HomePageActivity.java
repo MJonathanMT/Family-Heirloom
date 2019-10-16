@@ -36,9 +36,9 @@ public class HomePageActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private static final String TAG = "FireLog";
     private RecyclerView posts;
-    private FirebaseFirestore fbfs;
+    private FirebaseFirestore db;
     private ItemsListAdapter itemsListAdapter;
-    private List<Items> itemsList;
+    private List<Item> itemList;
 
     private String userId;
     private ArrayList<String> userFamilyNameList = new ArrayList<>();
@@ -47,7 +47,7 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.activity_home_page);
-        fbfs = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         getUserId();
         createFamilyList();
@@ -65,7 +65,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void createFamilyList(){
         // Get the list of family that the current user is in
-        fbfs.collection("user").document(userId).collection("familyNames").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("user").document(userId).collection("familyNames").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -74,8 +74,10 @@ public class HomePageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        QueryDocumentSnapshot data = doc.getDocument();
-                        userFamilyNameList.add((String) data.get("familyName"));
+                        if (doc.getDocument().exists()){
+                            QueryDocumentSnapshot data = doc.getDocument();
+                            userFamilyNameList.add((String) data.get("familyName"));
+                        }
                     }
                 }
             }
@@ -83,8 +85,8 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void homeItemViewing(){
-        itemsList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemsList);
+        itemList = new ArrayList<>();
+        itemsListAdapter = new ItemsListAdapter(itemList);
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
@@ -92,7 +94,7 @@ public class HomePageActivity extends AppCompatActivity {
         posts.setAdapter(itemsListAdapter);
 
         // get all the items relevant to the current user
-        fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -101,16 +103,19 @@ public class HomePageActivity extends AppCompatActivity {
                 assert queryDocumentSnapshots != null;
                 for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        Items items = doc.getDocument().toObject(Items.class);
-                        if(userId.compareTo(items.owner) == 0) {
-                            itemsList.add(items);
-                            itemsListAdapter.notifyDataSetChanged();
-                        }
-                        else if(userFamilyNameList.contains(items.familyName)) {
-//                            if (items.privacy.compareTo("O") != 0 || items.privacy.compareTo("family") == 0) {
-                                itemsList.add(items);
+                        if (doc.getDocument().exists()){
+                            Item item = doc.getDocument().toObject(Item.class);
+
+                            if(item.getOwner()!=null && userId.compareTo(item.getOwner()) == 0) {
+                                itemList.add(item);
+                                itemsListAdapter.notifyDataSetChanged();
+
+                            } else if(item.getFamilyName()!=null && userFamilyNameList.contains(item.getFamilyName())) {
+//                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
+                                itemList.add(item);
                                 itemsListAdapter.notifyDataSetChanged();
 //                            }
+                            }
                         }
                     }
                 }
@@ -126,40 +131,15 @@ public class HomePageActivity extends AppCompatActivity {
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                openActivity1();
+                openAccountSettingsActivity();
             }
         });
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                openActivity2();
+                openNewItemUploadActivity();
             }
         });
-    }
-
-    private void openActivity1() {
-        Intent intent = new Intent(this, AccountSettingsActivity.class);
-        startActivity(intent);
-    }
-
-    private void openActivity2() {
-        Intent intent = new Intent(this, NewItemUploadActivity.class);
-        startActivity(intent);
-    }
-
-    private void openActivity3() {
-        Intent intent = new Intent(this, HomePageActivity.class);
-        startActivity(intent);
-    }
-
-    private void openActivity4() {
-        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
-        startActivity(intent);
-    }
-
-    private void openActivity5() {
-        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
-        startActivity(intent);
     }
 
     private void createNavBar(){
@@ -186,11 +166,11 @@ public class HomePageActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.ButtonHomepageAccess) {
-                    openActivity3();
+                    openHomePageActivity();
                 } else if (id == R.id.ButtonFamilyItemsAccess) {
-                    openActivity4();
+                    openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
-                    openActivity5();
+                    openFamilyMemberPageActivity();
                 }
                 return true;
             }
@@ -202,4 +182,28 @@ public class HomePageActivity extends AppCompatActivity {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openNewItemUploadActivity() {
+        Intent intent = new Intent(this, NewItemUploadActivity.class);
+        startActivity(intent);
+    }
+
+    private void openHomePageActivity() {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+    }
+
+    private void openViewFamilyItemsActivity() {
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openFamilyMemberPageActivity() {
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
+        startActivity(intent);
+    }
 }

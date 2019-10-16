@@ -36,7 +36,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private FirebaseFirestore fbfs;
     private String userId;
-    private List<Items> itemsList;
+    private List<Item> itemList;
     private ItemsListAdapter itemsListAdapter;
     private RecyclerView posts;
     private User currentUser;
@@ -66,8 +66,8 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
     }
 
     private void createFamilyItemView(){
-        itemsList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemsList);
+        itemList = new ArrayList<>();
+        itemsListAdapter = new ItemsListAdapter(itemList);
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
@@ -87,9 +87,9 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
                     assert queryDocumentSnapshots != null;
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
-                            Items items = doc.getDocument().toObject(Items.class);
-                            if (items.familyName.compareTo(currentUser.getUserSession()) == 0) {
-                                itemsList.add(items);
+                            Item items = doc.getDocument().toObject(Item.class);
+                            if (items.getFamilyName().compareTo(currentUser.getUserSession()) == 0) {
+                                itemList.add(items);
                                 itemsListAdapter.notifyDataSetChanged();
                             }
                         }
@@ -118,7 +118,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         drawerToggle.syncState();
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Items");
+            getSupportActionBar().setTitle("Item");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         NavigationView nav_view = findViewById(R.id.nav_view);

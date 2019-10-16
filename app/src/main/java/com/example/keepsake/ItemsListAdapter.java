@@ -15,11 +15,11 @@ import java.util.List;
 
 public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.ViewHolder> {
 
-    public List<Items> itemsList;
+    public List<Item> itemList;
     public ImageView urlView;
-    public ItemsListAdapter(List<Items> itemsList){
+    public ItemsListAdapter(List<Item> itemList){
 
-        this.itemsList = itemsList;
+        this.itemList = itemList;
 
     }
 
@@ -36,17 +36,17 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.nameText.setText(itemsList.get(position).getName());
-        holder.descriptionText.setText(itemsList.get(position).getDescription());
+        holder.nameText.setText(itemList.get(position).getName());
+        holder.descriptionText.setText(itemList.get(position).getDescription());
 
-        Picasso.get().load(itemsList.get(position).getUrl()).into(urlView);
+        Picasso.get().load(itemList.get(position).getUrl()).into(urlView);
 
     }
 
     @Override
     public int getItemCount() {
 
-        return itemsList.size();
+        return itemList.size();
 
     }
 
