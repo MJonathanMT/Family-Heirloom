@@ -21,7 +21,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     TextInputEditText mEmail, mPassword;
-    Button buttonLogIn, buttonSignUp;
+    Button buttonLogIn;
     private FirebaseAuth mAuth;
 
     @Override
@@ -41,19 +41,18 @@ public class MainActivity extends AppCompatActivity {
                 String email = Objects.requireNonNull(mEmail.getText()).toString().trim();
                 String password = Objects.requireNonNull(mPassword.getText()).toString().trim();
 
+                // Check if email input is empty
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(MainActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                // Check if password input is empty
                 if (TextUtils.isEmpty(password)) {
                     Toast.makeText(MainActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (password.length() < 6) {
-                    Toast.makeText(MainActivity.this, "Password too short", Toast.LENGTH_SHORT).show();
-                }
-
+                // Login with user email and password if user has already registered
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
+
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(MainActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    public void signup_btn(View view){
 
+    // Redirect to signup page
+    public void signup_btn(View view){
         startActivity(new Intent(getApplicationContext(), SignUpPageActivity.class));
     }
-
 }

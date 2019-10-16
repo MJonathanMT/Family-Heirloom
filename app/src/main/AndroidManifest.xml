@@ -27,17 +27,19 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SignUpPageActivity" />
         <activity android:name=".RequestFamilyGroupActivity" />
-        <activity android:name=".FamilySetupActivity" />
+        <activity android:name=".AccountSettingsActivity" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
         <activity
             android:name=".HomePageActivity"
             android:exported="true" />
+        <!--<activity android:name=".JoinFamilyGroupActivity" />-->
+        <activity android:name=".FamilySetupActivity" />
         <activity android:name=".JoinFamilyGroupActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".AccountSettingsActivity" />
         <activity android:name=".NewItemUploadActivity" />
         <activity android:name=".EditItemActivity" />
         <activity android:name=".ViewItemActivity" />
-        <activity android:name=".FamilySetupActivity"/>
         <activity android:name=".CreateFamilyActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
