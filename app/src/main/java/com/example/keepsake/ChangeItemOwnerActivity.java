@@ -1,7 +1,6 @@
 package com.example.keepsake;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -10,14 +9,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -37,19 +34,15 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChangeItemOwnerActivity extends AppCompatActivity {
@@ -62,7 +55,8 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
 
     private ImageButton imageButtonChangeOwner;
     private Button buttonConfirm;
-    private TextView textViewName;
+    private TextView textViewDisplayName;
+    private TextView textViewDisplayUsername;
     private Spinner spinnerPrivacy;
 
 
@@ -88,7 +82,8 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         dialog = new Dialog(this);
         handler = new Handler();
 
-        textViewName = findViewById(R.id.textViewName);
+        textViewDisplayName = findViewById(R.id.textViewDisplayName);
+        textViewDisplayUsername = findViewById(R.id.textViewDisplayUsername);
         imageButtonChangeOwner = findViewById(R.id.imageButtonChangeOwner);
         buttonConfirm = findViewById(R.id.buttonConfirm);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
@@ -121,7 +116,8 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()){
                             String name = documentSnapshot.get("firstName") + " " + documentSnapshot.get("lastName");
-                            textViewName.setText(name);
+                            textViewDisplayName.setText(name);
+                            textViewDisplayUsername.setText(documentSnapshot.get("username", String.class));
                         }
                     }
                 });
@@ -214,6 +210,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                         user.setFirstName(snapshot.get("firstName", String.class));
                         user.setLastName(snapshot.get("lastName", String.class));
                         user.setUUID(snapshot.getId());
+                        user.setUsername(snapshot.get("username", String.class));
                         return user;
                     }
                 })
@@ -232,8 +229,9 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                         dialog.dismiss();
 
                         String name = user.getFirstName() + " " + user.getLastName();
-                        textViewName.setTypeface(Typeface.DEFAULT);
-                        textViewName.setText(name);
+                        textViewDisplayName.setTypeface(Typeface.DEFAULT);
+                        textViewDisplayName.setText(name);
+                        textViewDisplayUsername.setText(user.getUsername());
 
                         newOwner = user;
                     }
