@@ -133,6 +133,7 @@ public class HomePageActivity extends AppCompatActivity {
 
         Button buttonSettings = findViewById(R.id.buttonSettings);
         Button buttonUpload = findViewById(R.id.buttonUpload);
+        Button buttonProfile = findViewById(R.id.gotoprofile);
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -145,6 +146,12 @@ public class HomePageActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 openNewItemUploadActivity();
+            }
+        });
+        buttonProfile.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openProfile();
             }
         });
     }
@@ -214,4 +221,8 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openProfile() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
 }

@@ -7,13 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.ViewHolder> {
@@ -49,7 +46,6 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
 
         holder.nameText.setText(itemList.get(position).getName());
         holder.descriptionText.setText(itemList.get(position).getDescription());
-
         Picasso.get().load(itemList.get(position).getUrl()).into(urlView);
 
 
