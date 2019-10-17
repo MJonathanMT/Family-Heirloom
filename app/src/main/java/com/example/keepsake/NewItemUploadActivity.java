@@ -6,12 +6,16 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,7 +30,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -35,21 +43,26 @@ import com.google.firebase.storage.UploadTask;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class NewItemUploadActivity extends AppCompatActivity {
+    private Button btnbrowse, btnupload;
+    private ImageView img;
+    private TextInputEditText itemName, itemDescription;
+    private Spinner spinnerFamilyGroup, spinnerPrivacy;
+    private StorageReference mStorageRef;
+    private FirebaseFirestore db;
 
-    Button btnbrowse, btnupload;
-    ImageView img;
-    TextInputEditText itemName, itemDescription;
-    Spinner familyName, privacy;
-    StorageReference mStorageRef;
-    FirebaseFirestore mFirebaseFirestore;
-    FirebaseUser mUser;
-    Uri filePath;
+    private Uri filePath;
     final int IMAGE_REQUEST = 71;
-    StorageTask mUploadTask;
+    private StorageTask mUploadTask;
+    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private String itemPrivacy;
+    private String familyID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +73,15 @@ public class NewItemUploadActivity extends AppCompatActivity {
         btnupload = findViewById(R.id.uploadBtn);
         itemName = findViewById(R.id.itemName);
         itemDescription = findViewById(R.id.itemDescription);
-        privacy = findViewById(R.id.spinnerPrivacy);
-        familyName = findViewById(R.id.familyNames);
+        spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
+        spinnerFamilyGroup = findViewById(R.id.spinnerFamilyGroup);
         mStorageRef = FirebaseStorage.getInstance().getReference("item");
-        mFirebaseFirestore = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         img = findViewById(R.id.uploadImageView);
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        populateFamilyGroupSpinner();
+        populatePrivacyLevelSpinner();
+
         btnbrowse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,15 +100,117 @@ public class NewItemUploadActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> familyAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.familyNames));
-        familyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        familyName.setAdapter(familyAdapter);
+    }
 
-        ArrayAdapter<String> privacyAdapter = new ArrayAdapter<>(this,
+    public void populatePrivacyLevelSpinner(){
+        ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacyLevels));
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        privacy.setAdapter(privacyAdapter);
+
+        spinnerPrivacy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String level = spinnerPrivacy.getSelectedItem().toString();
+                itemPrivacy = level.substring(0, 1);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        spinnerPrivacy.setAdapter(privacyAdapter);
+    }
+
+    public void populateFamilyGroupSpinner(){
+        Query query = db.collection("user").document(userID).collection("familyGroups");
+
+        final List<Family> familyList = new ArrayList<>();
+
+        ArrayAdapter<Family> familyAdapter = new ArrayAdapter<Family>(this, R.layout.family_list_layout, familyList){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                return getCustomView(position, convertView, parent);
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                return getCustomView(position, convertView, parent);
+            }
+
+            public View getCustomView(int position, View convertView, ViewGroup parent){
+                View spinner = LayoutInflater.from(parent.getContext()).inflate(R.layout.family_list_layout, parent, false);
+
+                TextView familyName = spinner.findViewById(R.id.textViewFamilyName);
+                TextView familyID = spinner.findViewById(R.id.textViewFamilyID);
+                TextView buttonJoin = spinner.findViewById(R.id.buttonJoin);
+
+                buttonJoin.setVisibility(View.GONE);
+
+                familyName.setText(getItem(position).getFamilyName());
+                familyID.setText(getItem(position).getUUID());
+                spinner.setScaleX((float)0.75);
+                spinner.setScaleY((float)0.75);
+                return spinner;
+            }
+
+            @Override
+            public int getPosition(Family item) {
+                int i;
+                for (i=0; i < getCount(); i++){
+                    if (getItem(i).getUUID().compareTo(item.getUUID()) == 0){
+                        return i;
+                    }
+                }
+                return -1;
+            }
+        };
+
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot docRef : queryDocumentSnapshots){
+                    String familyID = docRef.get("familyID", String.class);
+                    DocumentReference famRef = db.collection("family_group").document(familyID);
+
+                    famRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Family family = new Family();
+                            family.setFamilyName(documentSnapshot.get("familyName", String.class));
+                            family.setUUID((documentSnapshot.getId()));
+                            familyList.add(family);
+                        }
+                    });
+                }
+            }
+        });
+
+        //todo (naverill) ensure a user session is always created
+        db.collection("user").document(userID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()){
+                        familyID = doc.get("userSession", String.class);
+                    }
+                }
+            }
+        });
+
+        spinnerFamilyGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                familyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getUUID();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        spinnerFamilyGroup.setAdapter(familyAdapter);
+        spinnerFamilyGroup.setSelection(((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(familyID));
     }
 
     private void chooseImage() {
@@ -122,9 +240,11 @@ public class NewItemUploadActivity extends AppCompatActivity {
     private void uploadImage() {
         final String name = itemName.getText().toString().trim();
         final String description = itemDescription.getText().toString().trim();
-        final String itemPrivacy = privacy.getSelectedItem().toString().trim();
-        final String itemFamilyName = familyName.getSelectedItem().toString().trim();
+        final String privacy = spinnerPrivacy.getSelectedItem().toString().trim();
+        //todo(naverill) change familyName reference to familyID reference
+        //todo(naverill) make family spinner work properly
         final SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddhhmmss");
+
         try {
             if(filePath != null) {
                 String imgName = System.currentTimeMillis()+"."+getExtension(filePath);
@@ -146,14 +266,15 @@ public class NewItemUploadActivity extends AppCompatActivity {
                             final String url = Objects.requireNonNull(task.getResult()).toString();
                             UploadInfo upload = new UploadInfo(
                                     name,
-                                    itemFamilyName,
-                                    itemPrivacy,
-                                    mUser.getUid(),
+                                    familyID,
+                                    privacy,
+                                    userID,
                                     description,
                                     url,
                                     timeStamp.format(new Date()).toString().trim()
                             );
-                            mFirebaseFirestore.collection("item").document()
+
+                            db.collection("item").document()
                                     .set(upload)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

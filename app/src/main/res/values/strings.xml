@@ -74,14 +74,7 @@
     <!--View Family Item-->
     <string name="DateReceived">Date Received</string>
 
-    Enter Last Name / Family Name
-
-
-    <string-array name="familyNames">
-        <item>Ngoh</item>
-        <item>Ng</item>
-        <item>Tirtapraja</item>
-    </string-array>
+    <!--Enter Last Name / Family Name-->
     <string-array name="privacyLevels">
         <item>Owner</item>
         <item>Family</item>

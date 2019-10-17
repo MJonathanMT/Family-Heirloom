@@ -7,6 +7,30 @@
     android:background="@drawable/default_background"
     tools:context=".NewItemUploadActivity">
 
+    <Spinner
+        android:id="@+id/spinnerFamilyGroup"
+        android:layout_width="337dp"
+        android:layout_height="93dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewItemPhoto" />
+
+    <Spinner
+        android:id="@+id/spinnerPrivacy"
+        android:layout_width="330dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerFamilyGroup" />
+
     <ImageButton
         android:id="@+id/imageButtonChangeOwner"
         style="@android:style/Widget.ImageButton"
@@ -35,11 +59,12 @@
 
     <ImageView
         android:id="@+id/imageViewItemPhoto"
-        android:layout_width="333dp"
-        android:layout_height="237dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="330dp"
+        android:layout_height="187dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="30dp"
+        android:foregroundGravity="clip_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,10 +73,10 @@
 
     <EditText
         android:id="@+id/editTextEditDescription"
-        android:layout_width="330dp"
-        android:layout_height="201dp"
+        android:layout_width="331dp"
+        android:layout_height="147dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:editable="true"
@@ -63,15 +88,15 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditName"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <EditText
         android:id="@+id/editTextEditName"
         android:layout_width="329dp"
         android:layout_height="46dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="8dp"
         android:editable="true"
         android:ems="10"
@@ -81,8 +106,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewItemPhoto"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerPrivacy"
+        app:layout_constraintVertical_bias="0.005" />
 
     <ImageButton
         android:id="@+id/imageButtonEditPhoto"
@@ -108,7 +133,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditDescription"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.733"
         app:srcCompat="@android:drawable/ic_menu_upload" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

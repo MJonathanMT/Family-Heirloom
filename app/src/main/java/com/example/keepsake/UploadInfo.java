@@ -2,14 +2,14 @@ package com.example.keepsake;
 
 public class UploadInfo {
 
-    public String name, familyName, privacy, owner, description, url, startDate;
+    public String name, familyID, privacy, owner, description, url, startDate;
 
     public UploadInfo(){}
 
-    public UploadInfo(String name, String familyName, String privacy, String owner,
+    public UploadInfo(String name, String familyID, String privacy, String owner,
                       String description, String url, String date) {
         this.name = name;
-        this.familyName = familyName;
+        this.familyID = familyID;
         this.privacy = privacy;
         this.owner = owner;
         this.description = description;
@@ -25,12 +25,12 @@ public class UploadInfo {
         this.name = name;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getFamilyID() {
+        return familyID;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setFamilyID(String familyID) {
+        this.familyID = familyID;
     }
 
     public String getPrivacy() {
