@@ -1,14 +1,13 @@
 package com.example.keepsake;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +27,7 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -70,7 +69,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void homeItemViewing(){
         itemList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemList);
+        itemsListAdapter = new ItemsListAdapter(itemList, this);
 
         posts = findViewById(R.id.profile_page_recycleView);
         posts.setHasFixedSize(true);
@@ -105,5 +104,10 @@ public class UserProfileActivity extends AppCompatActivity {
         if (user != null) {
             userId = user.getUid();
         }
+    }
+
+    @Override
+    public void onNoteClick(int position) {
+
     }
 }

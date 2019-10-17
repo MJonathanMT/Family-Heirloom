@@ -31,7 +31,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     private ActionBarDrawerToggle drawerToggle;
     private static final String TAG = "FireLog";
@@ -85,8 +85,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void homeItemViewing(){
         itemList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemList);
-        itemsListAdapter.enableOnClickBehaviour();
+        itemsListAdapter = new ItemsListAdapter(itemList,this);
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
@@ -100,26 +99,20 @@ public class HomePageActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
-                if(queryDocumentSnapshots != null){
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                            if (doc.getDocument().exists()) {
-
-                                Item item = doc.getDocument().toObject(Item.class);
-
-                                if (item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
-                                    item.setUUID(doc.getDocument().getId());
-                                    itemList.add(item);
-                                    itemsListAdapter.notifyDataSetChanged();
-
-                                } else if (item.getFamilyName() != null && userFamilyNameList.contains(item.getFamilyName())) {
-                                    //                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
-                                    item.setUUID(doc.getDocument().getId());
-                                    itemList.add(item);
-                                    itemsListAdapter.notifyDataSetChanged();
-                                    //                            }
-                                }
-                            }
+                assert queryDocumentSnapshots != null;
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                        Item item = doc.getDocument().toObject(Item.class);
+                        item.setItemId(doc.getDocument().getId());
+                        if(userId.compareTo(item.getOwner()) == 0) {
+                            itemList.add(item);
+                            itemsListAdapter.notifyDataSetChanged();
+                        }
+                        else if(userFamilyNameList.contains(item.getFamilyId())) {
+//                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
+                                itemList.add(item);
+                                itemsListAdapter.notifyDataSetChanged();
+//                            }
                         }
                     }
 
@@ -223,6 +216,14 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void openProfile() {
         Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+    @Override
+    public void onNoteClick(int position) {
+        String nextItemView = itemList.get(position).getItemId();
+        Log.d("this item is:", nextItemView);
+        Intent intent = new Intent(this, ViewItemActivity.class);
+        intent.putExtra("itemId", nextItemView);
         startActivity(intent);
     }
 }

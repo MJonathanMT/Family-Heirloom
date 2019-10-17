@@ -21,26 +21,26 @@ public class ViewItemActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageButton buttonEdit;
     private ImageButton buttonExit;
-    private String itemID;
+    private String itemId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
         Intent intent = getIntent();
-        itemID = intent.getStringExtra("itemID");
-
+        itemId = intent.getStringExtra("itemId");
+//        itemId = "Q5SWGQ3jNngl5DDtHni4";
         initialiseDB();
 
         buttonEdit = findViewById(R.id.buttonEdit);
         buttonExit = findViewById(R.id.imageButtonClearOwner);
 
-        loadItemInfo(itemID);
+        loadItemInfo(itemId);
 
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openEditItemActivity(itemID);
+                openEditItemActivity(itemId);
             }
         });
 
@@ -82,12 +82,12 @@ public class ViewItemActivity extends AppCompatActivity {
 
     public final void openEditItemActivity(String itemID) {
         Intent intent = new Intent(this, EditItemActivity.class);
-        intent.putExtra("itemID", itemID);
+        intent.putExtra("itemId", itemID);
         startActivity(intent);
     }
 
     public final void openPreviousActivity() {
-        Intent intent = new Intent(this, EditItemActivity.class);
+        Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 

@@ -2,19 +2,14 @@ package com.example.keepsake;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import java.lang.String;
-import java.util.Map;
-import java.util.HashMap;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +21,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditItemActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageButton editPhotoButton;
@@ -33,7 +31,7 @@ public class EditItemActivity extends AppCompatActivity {
     private EditText editName;
     private EditText editDescription;
     private ImageButton changeOwnerButton;
-    private String itemID;
+    private String itemId;
     private ImageButton buttonExit;
 
     @Override
@@ -44,7 +42,7 @@ public class EditItemActivity extends AppCompatActivity {
         initialiseDB();
 
         Intent intent = getIntent();
-        itemID = intent.getStringExtra("itemID");
+        itemId = intent.getStringExtra("itemId");
 
         editName = findViewById(R.id.editTextEditName);
         editDescription = findViewById(R.id.editTextEditDescription);
@@ -53,7 +51,7 @@ public class EditItemActivity extends AppCompatActivity {
         updateItem = findViewById(R.id.imageButtonUploadItem);
         buttonExit = findViewById(R.id.imageButtonClearOwner);
 
-        final DocumentReference docRef = db.collection("item").document(itemID);
+        final DocumentReference docRef = db.collection("item").document(itemId);
 
         loadItemInfo(docRef);
 
@@ -67,7 +65,7 @@ public class EditItemActivity extends AppCompatActivity {
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openViewItemActivity(itemID);
+                openViewItemActivity(itemId);
             }
         });
 
@@ -170,14 +168,14 @@ public class EditItemActivity extends AppCompatActivity {
     public void openChangeOwnerActivity(){
         Intent intent = new Intent(this, ChangeItemOwnerActivity
                 .class);
-        intent.putExtra("itemID", itemID);
+        intent.putExtra("itemId", itemId);
         startActivity(intent);
     }
 
     public void openViewItemActivity() {
-        System.out.println(itemID);
+        System.out.println(itemId);
         Intent intent = new Intent(this, ViewItemActivity.class);
-        intent.putExtra("itemID", itemID);
+        intent.putExtra("itemId", itemId);
         startActivity(intent);
     }
 
@@ -190,7 +188,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     public final void openViewItemActivity(String itemID) {
         Intent intent = new Intent(this, ViewItemActivity.class);
-        intent.putExtra("itemID", itemID);
+        intent.putExtra("itemId", itemID);
         startActivity(intent);
     }
 

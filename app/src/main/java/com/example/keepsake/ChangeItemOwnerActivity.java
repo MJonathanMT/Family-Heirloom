@@ -47,7 +47,7 @@ import java.util.Map;
 
 public class ChangeItemOwnerActivity extends AppCompatActivity {
     private FirebaseFirestore db;
-    private String itemID;
+    private String itemId;
     private User newOwner;
     private String ownerPrivacy = "O";
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -77,7 +77,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_item_owner);
 
         Intent intent = getIntent();
-        itemID = intent.getStringExtra("itemID");
+        itemId = intent.getStringExtra("itemIdd");
 
         dialog = new Dialog(this);
         handler = new Handler();
@@ -271,7 +271,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
     }
 
     public void createOwnerShipRecord(){
-        final DocumentReference item = db.collection("item").document(itemID);
+        final DocumentReference item = db.collection("item").document(itemId);
 
         item.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -292,7 +292,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         db.collection("user")
                 .document(userID)
                 .collection("items")
-                .document(itemID)
+                .document(itemId)
                 .delete()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -305,7 +305,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                             db.collection("user")
                                     .document(newOwner.getUUID())
                                     .collection("items")
-                                    .document(itemID)
+                                    .document(itemId)
                                     .set(data);
                         } else {
                             Toast.makeText(ChangeItemOwnerActivity.this, "Failed to transfer ownership", Toast.LENGTH_SHORT).show();
