@@ -15,10 +15,10 @@ import java.util.List;
 
 public class ItemsListProfileAdapter extends RecyclerView.Adapter<ItemsListProfileAdapter.ViewHolder> {
 
-    public List<Items> itemsList;
+    public List<Item> itemsList;
     public ImageView urlView;
 
-    public ItemsListProfileAdapter(List<Items> itemsList) {
+    public ItemsListProfileAdapter(List<Item> itemsList) {
 
         this.itemsList = itemsList;
     }

@@ -1,20 +1,12 @@
 package com.example.keepsake;
 
 public class Item {
-
-    private String name, description, privacy, owner, familyName, url, uuid;
-
-
-    public Item(String name, String description, String owner, String familyName, String privacy, String url) {
-        this.name = name;
-        this.description= description;
-        this.privacy = privacy;
-        this.owner = owner;
-        this.familyName = familyName;
-        this.url = url;
-
-    }
-    public Item(){}
+    private String name;
+    private String description;
+    private String privacy;
+    private String owner;
+    private String familyId;
+    private String url;
 
     public String getName() {
         return name;
@@ -44,29 +36,44 @@ public class Item {
         return owner;
     }
 
-    public String getUrl() { return url; }
-
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getFamilyId() {
+        return familyId;
     }
 
-    public void setUUID(String id){
-        this.uuid = id;
+    public void setFamilyId(String familyId) {
+        this.familyId = familyId;
     }
 
-    public String getUUID(){
-        return uuid;
+    public String getUrl() {
+        return url;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public void setUrl(String url) { this.url = url; }
+    public String getItemId() {
+        return itemId;
+    }
 
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    private String itemId;
+
+    public Item(){}
+
+    public Item(String name, String description, String privacy, String owner, String familyId, String url) {
+        this.name = name;
+        this.description = description;
+        this.privacy = privacy;
+        this.owner = owner;
+        this.familyId = familyId;
+        this.url = url;
+    }
 }
-

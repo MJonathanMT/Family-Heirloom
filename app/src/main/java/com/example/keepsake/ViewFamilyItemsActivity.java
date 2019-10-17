@@ -32,7 +32,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-public class ViewFamilyItemsActivity extends AppCompatActivity {
+public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     private ActionBarDrawerToggle drawerToggle;
     private FirebaseFirestore fbfs;
@@ -60,17 +60,17 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
         docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()){
-                    currentUser = documentSnapshot.toObject(User.class);
-                    familyItemViewingUpdate();
-                }
+                currentUser = documentSnapshot.toObject(User.class);
+                assert currentUser != null;
+                Log.d("current user session",currentUser.getUserSession());
+                familyItemViewingUpdate();
             }
         });
     }
 
     private void createFamilyItemView(){
         itemList = new ArrayList<>();
-        itemsListAdapter = new ItemsListAdapter(itemList);
+        itemsListAdapter = new ItemsListAdapter(itemList, this);
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
@@ -90,9 +90,17 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
                     assert queryDocumentSnapshots != null;
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
-                            Item items = doc.getDocument().toObject(Item.class);
-                            if (items.getFamilyName().compareTo(currentUser.getUserSession()) == 0) {
-                                itemList.add(items);
+                            Item item = doc.getDocument().toObject(Item.class);
+                            item.setItemId(doc.getDocument().getId());
+
+                            // temporary guard until database is cleaned Up
+                            Log.d("current user sess", currentUser.getUserSession());
+                            if(item.getFamilyId() == null){
+                                continue;
+                            }
+                            Log.d("famiyl name", item.getFamilyId());
+                            if (item.getFamilyId().compareTo(currentUser.getUserSession()) == 0) {
+                                itemList.add(item);
                                 itemsListAdapter.notifyDataSetChanged();
                             }
                         }
@@ -164,4 +172,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onNoteClick(int position) {
+        String nextItemView = itemList.get(position).getItemId();
+        Intent intent = new Intent(this, ViewItemActivity.class);
+        intent.putExtra("itemId", nextItemView);
+        startActivity(intent);
+    }
 }
