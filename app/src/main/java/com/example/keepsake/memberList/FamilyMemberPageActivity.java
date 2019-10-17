@@ -101,7 +101,6 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
     private void memberViewUpdate(){
         // get all the items relevant to the current user
-        Log.d("USER SES", currentFamilyId);
         fbfs.collection("family_group").document(currentFamilyId).collection("members").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

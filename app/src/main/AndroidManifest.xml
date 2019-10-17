@@ -15,8 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".memberRequest.MemberRequestActivity"></activity>
-        <activity android:name=".imagetest"
+        <activity android:name=".UserProfileActivity"
+            android:exported="true"/>
+        <activity android:name=".memberRequest.MemberRequestActivity"
             android:exported="true"/>
         <activity android:name=".ChangeFamilyActivity" />
         <activity android:name=".ChangeItemOwnerActivity" />
@@ -41,6 +42,8 @@
         <activity android:name=".NewItemUploadActivity" />
         <activity android:name=".EditItemActivity" />
         <activity android:name=".ViewItemActivity" />
+        <activity android:name=".FamilySetupActivity"
+            tools:ignore="DuplicateActivity" />
         <activity android:name=".CreateFamilyActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

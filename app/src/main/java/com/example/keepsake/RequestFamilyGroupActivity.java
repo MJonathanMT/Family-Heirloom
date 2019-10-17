@@ -20,12 +20,12 @@ public class RequestFamilyGroupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                openActivity1();
+                returnToHomePage();
             }
         });
     }
 
-    public void openActivity1() {
+    public void returnToHomePage() {
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }

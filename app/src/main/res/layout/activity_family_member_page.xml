@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ViewFamilyItemsActivity"
     android:orientation="vertical"
-    android:background="@drawable/default_background"
     android:id="@+id/familyMembersLayout"
     >
 
@@ -18,8 +17,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_alt_1"
-            tools:context=".memberList.FamilyMemberPageActivity">
+            android:background="@drawable/default_background">
 
             <Button
                 android:id="@+id/memberRequestPage"
