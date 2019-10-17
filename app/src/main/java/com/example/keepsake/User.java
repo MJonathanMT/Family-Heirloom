@@ -3,11 +3,12 @@ package com.example.keepsake;
 public class User {
     private String firstName, lastName, email, userSession, username, uuid, url;
 
-    public User(String firstname, String lastname, String email, String url) {
+    public User(String firstname, String lastname, String email, String url, String username) {
         this.firstName = firstname;
         this.lastName = lastname;
         this.email = email;
         this.url = url;
+        this.username = username;
     }
 
     public User() {

@@ -154,11 +154,14 @@ public class SignUpPageActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
+                                    String username = email.substring(0, email.indexOf("@"));
+                                    Toast.makeText(SignUpPageActivity.this, username, Toast.LENGTH_LONG).show();
                                     User user = new User(
                                             firstname,
                                             lastname,
                                             email,
-                                            imageURL
+                                            imageURL,
+                                            username
                                     );
                                     FirebaseFirestore.getInstance().collection("user").document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid())
                                             .set(user)

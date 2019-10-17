@@ -2,7 +2,7 @@ package com.example.keepsake;
 
 public class UploadInfo {
 
-    public String name, familyName, privacy, owner, description, url, date;
+    public String name, familyName, privacy, owner, description, url, startDate;
 
     public UploadInfo(){}
 
@@ -14,7 +14,7 @@ public class UploadInfo {
         this.owner = owner;
         this.description = description;
         this.url = url;
-        this.date = date;
+        this.startDate = date;
     }
 
     public String getName() {
@@ -65,11 +65,11 @@ public class UploadInfo {
         this.url = url;
     }
 
-    public String getDate() {
-        return date;
+    public String getStartDate() {
+        return startDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartDate(String date) {
+        this.startDate = date;
     }
 }

@@ -163,6 +163,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                         user.setFirstName((String) snapshot.get("firstName"));
                         user.setLastName((String) snapshot.get("lastName"));
                         user.setUUID(snapshot.getId());
+                        user.setUsername(snapshot.get("username", String.class));
                         return user;
                     }
                 })
