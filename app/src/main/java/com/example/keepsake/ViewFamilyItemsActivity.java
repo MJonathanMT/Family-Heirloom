@@ -19,12 +19,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     private ItemsListAdapter itemsListAdapter;
     private RecyclerView posts;
     private User currentUser;
+    private ArrayList<String> userFamilyIDList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +59,24 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
     private void createUserClass(){
         // create a user class for the current user
-        DocumentReference docUser = db.collection("user").document(userId);
-        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currentUser = documentSnapshot.toObject(User.class);
-                assert currentUser != null;
-                Log.d("current user session",currentUser.getUserSession());
-                familyItemViewingUpdate();
-            }
-        });
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+
+                        if (currentUser != null){
+                            currentUser.setUUID(documentSnapshot.getId());
+
+                            if (!currentUser.getUUID().isEmpty()){
+                                loadFamilyItemViews();
+                            }
+                        }
+
+                    }
+                });
     }
 
     private void createFamilyItemView(){
@@ -78,37 +89,70 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         posts.setAdapter(itemsListAdapter);
     }
 
-    private void familyItemViewingUpdate(){
+    private void loadFamilyItemViews(){
         // get all the items relevant to the current user
-        db.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d("ERROR", "Error: " + e.getMessage());
-                }
-                if(currentUser.getUserSession()!=null) {
-                    assert queryDocumentSnapshots != null;
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            Item item = doc.getDocument().toObject(Item.class);
-                            item.setItemId(doc.getDocument().getId());
+        if(currentUser.getUserSession() != null) {
+            db.collection("user")
+                    .document(userId)
+                    .collection("familyGroups")
+                    .document(currentUser.getUserSession())
+                    .get()
+                    .addOnSuccessListener(
+                            new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if (documentSnapshot.exists()) {
+                                        String acceptedString = documentSnapshot.get("accepted", String.class);
 
-                            // temporary guard until database is cleaned Up
-                            Log.d("current user sess", currentUser.getUserSession());
-                            if(item.getFamilyId() == null){
-                                continue;
+                                        if (acceptedString.compareTo("1") == 0){
+                                            loadItems();
+                                        }
+                                    }
+                                }
                             }
+                    );
+        }
+    }
 
-                            Log.d("famiyl name", item.getFamilyId());
-                            if (item.getFamilyId().compareTo(currentUser.getUserSession()) == 0) {
-                                itemList.add(item);
-                                itemsListAdapter.notifyDataSetChanged();
+    private void loadItems(){
+        db.collection("item")
+                .whereEqualTo("familyID", currentUser.getUserSession())
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d("ERROR", "Error: " + e.getMessage());
+                        }
+                        if (queryDocumentSnapshots != null) {
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                    if (doc.getDocument().exists()){
+                                        Item item = doc.getDocument().toObject(Item.class);
+                                        item.setItemId(doc.getDocument().getId());
+
+                                        // temporary guard until database is cleaned Up
+                                        if (item.getFamilyId() == null || item.getOwner() == null) {
+                                            continue;
+                                        }
+
+                                        if (userId.compareTo(item.getOwner()) == 0){
+                                            itemList.add(item);
+                                            itemsListAdapter.notifyDataSetChanged();
+                                        }
+
+                                        else if (currentUser.getUserSession().compareTo(item.getFamilyId()) == 0){
+                                            if(item.getPrivacy().compareTo("O") != 0){
+                                                itemList.add(item);
+                                                itemsListAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
-                }
-            }
-        });
+                });
     }
 
     private void getUserId(){
@@ -133,6 +177,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
             getSupportActionBar().setTitle("Item");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         NavigationView nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -166,6 +211,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

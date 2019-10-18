@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,7 +16,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.keepsake.Family;
 import com.example.keepsake.HomePageActivity;
+import com.example.keepsake.NewItemUploadActivity;
 import com.example.keepsake.R;
 import com.example.keepsake.User;
 import com.example.keepsake.ViewFamilyItemsActivity;
@@ -40,7 +43,7 @@ import javax.annotation.Nullable;
 public class FamilyMemberPageActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle drawerToggle;
-    private FirebaseFirestore fbfs;
+    private FirebaseFirestore db;
     private String userId;
     private List<User> userList;
     private UserListAdapter userListAdapter;
@@ -52,7 +55,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_family_member_page);
-        fbfs = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         getUserId();
         createUserClass();
@@ -82,45 +85,97 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
     private void createUserClass(){
         // create a user class for the current user
-        DocumentReference docUser = fbfs.collection("user").document(userId);
-        docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("user")
+                .document(userId)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                currentUser = documentSnapshot.toObject(User.class);
+                if (documentSnapshot.exists()){
+                    currentUser = documentSnapshot.toObject(User.class);
+                    currentUser.setUUID(userId);
+                    currentFamilyId = currentUser.getUserSession();
 
-
-                assert currentUser != null;
-                currentFamilyId = currentUser.getUserSession();
-                memberViewUpdate();
+                    if(currentFamilyId!=null){
+                        memberViewUpdate();
+                    }
 //                Log.d("OH YEA", currentFamilyId);
 //                memberRequestViewUpdate();
 //                familyItemViewingUpdate();
+
+                }
             }
         });
     }
 
     private void memberViewUpdate(){
+        final ArrayList<String> acceptedFamilyGroups = new ArrayList<>();
         // get all the items relevant to the current user
-        fbfs.collection("family_group").document(currentFamilyId).collection("members").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d("ERROR", "Error: " + e.getMessage());
-                }
+        Log.d("Current user: ", currentUser.getUUID());
+        Log.d("Current user: ", currentFamilyId);
+        db.collection("user")
+                .document(currentUser.getUUID())
+                .collection("familyGroups")
+                .document(currentFamilyId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            String accepted = documentSnapshot.get("accepted", String.class);
+                            if (accepted.compareTo("1") ==  0){
+                                loadMembers();
 
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-                        User user = doc.getDocument().toObject(User.class);
-                        Log.d("member's name", user.getFirstName());
-                        userList.add(user);
-                        userListAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+        Log.d("Accepted group size: ", String.valueOf(acceptedFamilyGroups.size()));
+    }
+
+    public void loadMembers(){
+        db.collection("family_group")
+                .document(currentFamilyId)
+                .collection("members")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d("ERROR", "Error: " + e.getMessage());
+                        }
+
+                        if (queryDocumentSnapshots != null){
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                    if (doc.getDocument().exists()){
+                                        addUserToView(doc.getDocument().getId());
+                                    }
+                                }
+                            }
+                        }
+
 
                     }
-                }
-
-            }
-        });
+                });
     }
+
+    public void addUserToView(String userID){
+        final DocumentReference userRef = db.collection("user")
+                .document(userID);
+
+        userRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(final DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            User user = documentSnapshot.toObject(User.class);
+                            userList.add(user);
+                            userListAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+    }
+
     private void manageButtons(){
 
         Button buttonMemberRequestPage = findViewById(R.id.memberRequestPage);

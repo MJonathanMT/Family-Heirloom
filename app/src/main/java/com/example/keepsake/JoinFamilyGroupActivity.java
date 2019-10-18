@@ -32,7 +32,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,22 +156,46 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
     }
 
     public void sendFamilyRequest(String familyID){
-        Map<String, String> data = new HashMap<String, String>() {{
-            put("userID", userID);
+        //todo(naverill) change all join requests ID to be userIDs in database
+        createJoinRequest(familyID);
+        createUserFamilyGroup(familyID);
+        createUserSession(familyID);
+    }
+
+    public void createJoinRequest(String familyID){
+        Map<String, String> dataJoinRequest = new HashMap<String, String>() {{
+            put("exists", "1");
         }};
 
         db.collection("family_group")
                 .document(familyID)
                 .collection("joinRequests")
-                .document()
-                .set(data);
+                .document(userID)
+                .set(dataJoinRequest);
+    }
+
+    public void createUserFamilyGroup(String familyID){
+        Map<String, String> dataFamilyGroup = new HashMap<String, String>() {{
+            put("accepted", "0");
+        }};
+
+        db.collection("user")
+                .document(userID)
+                .collection("familyGroups")
+                .document(familyID)
+                .set(dataFamilyGroup);
+    }
+
+    public void createUserSession(String familyID){
+        db.collection("user")
+                .document(userID)
+                .update("userSession", familyID);
     }
 
     public void populateFamilyView(String userID){
         final Query query = db.collection("user")
                 .document(userID)
-                .collection("familyGroups")
-                .orderBy("familyID");
+                .collection("familyGroups");
 
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -187,7 +210,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
                                     final Family family = new Family();
 
                                     if(snapshot.exists()){
-                                        String familyID = snapshot.get("familyID", String.class);
+                                        String familyID = snapshot.getId();
 
                                         db.collection("familyGroup").document(familyID)
                                                 .get()
@@ -195,7 +218,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                         if (documentSnapshot.exists()){
-                                                            family.setFamilyName((String) documentSnapshot.get("familyName"));
+                                                            family.setFamilyName(documentSnapshot.get("familyName", String.class));
                                                         }
                                                     }
                                                 });

@@ -279,11 +279,11 @@ public class CreateFamilyActivity extends AppCompatActivity {
     }
 
     public void createFamilyMemberEntry(final DocumentReference familyRef, final String userID) {
-        final DocumentReference memberRef = familyRef.collection("members").document();
+        final DocumentReference memberRef = familyRef.collection("members").document(userID);
 
         memberRef.set(
                 new HashMap<String, String>() {{
-                    put("userID", userID);
+                    put("exists", "1");
                 }})
                 .addOnFailureListener(
                         new OnFailureListener() {
@@ -294,11 +294,14 @@ public class CreateFamilyActivity extends AppCompatActivity {
                         });
 
 
-        final DocumentReference userRef = db.collection("user").document(userID).collection("familyGroups").document();
-        userRef.set(
-                new HashMap<String, String>() {{
-                    put("familyID", familyRef.getId());
-                }})
+        db.collection("user")
+                .document(userID)
+                .collection("familyGroups")
+                .document(familyRef.getId())
+                .set(
+                    new HashMap<String, String>() {{
+                        put("accepted", "1");
+                    }})
                 .addOnFailureListener(
                         new OnFailureListener() {
                             @Override
@@ -312,24 +315,15 @@ public class CreateFamilyActivity extends AppCompatActivity {
     public void createFamilyMemberAdmin(DocumentReference familyRef, String userID) {
         final DocumentReference adminRef = familyRef.collection("admin").document(userID);
 
-        adminRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    // Task completed successfully
-                    adminRef.set(
-                            new HashMap<String, String>() {{
-                                put("test", "0");
-                            }}
-                    );
+        HashMap data = new HashMap<String, String>() {{
+            put("exists", "1");
+        }};
 
-                } else {
-                    // Task failed with an exception
-                    Exception exception = task.getException();
-                    Toast.makeText(CreateFamilyActivity.this, "Failed to add admin to family", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        adminRef.set(data);
+
+        db.collection("user")
+                .document(userID)
+                .update("userSession", familyRef.getId());
     }
 
     public ArrayList<String> parseQuery(String query){

@@ -123,7 +123,10 @@ public class NewItemUploadActivity extends AppCompatActivity {
     }
 
     public void populateFamilyGroupSpinner(){
-        Query query = db.collection("user").document(userID).collection("familyGroups");
+        Query query = db.collection("user")
+                .document(userID)
+                .collection("familyGroups")
+                .whereEqualTo("accepted", "1");
 
         final List<Family> familyList = new ArrayList<>();
 
@@ -170,7 +173,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot docRef : queryDocumentSnapshots){
-                    String familyID = docRef.get("familyID", String.class);
+                    String familyID = docRef.getId();
                     DocumentReference famRef = db.collection("family_group").document(familyID);
 
                     famRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -240,7 +243,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
     private void uploadImage() {
         final String name = itemName.getText().toString().trim();
         final String description = itemDescription.getText().toString().trim();
-        final String privacy = spinnerPrivacy.getSelectedItem().toString().trim();
+        final String privacy = spinnerPrivacy.getSelectedItem().toString().substring(0, 1);
         //todo(naverill) make family spinner work properly
         final SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddhhmmss");
 

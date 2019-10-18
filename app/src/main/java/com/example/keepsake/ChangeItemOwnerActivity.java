@@ -342,7 +342,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         docRef.update("startDate", formatter.format(date));
         docRef.update("privacy", "O");
         docRef.update("owner", newOwner.getUUID());
-        docRef.update("familyID", document.get("familyID", String.class));
+        docRef.update("familyID", newOwner.getUserSession());
     }
 
     public ArrayList<String> parseQuery(String query){

@@ -54,22 +54,23 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                 if (e != null) {
                     Log.d("ERROR", "Error: " + e.getMessage());
                 }
-                assert queryDocumentSnapshots != null;
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                if (queryDocumentSnapshots != null){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
 
-                        QueryDocumentSnapshot data = doc.getDocument();
-                        userFamilyIdList.add(data.getId());
-                        userFamilyNameList.add((String) data.get("familyName"));
+                            QueryDocumentSnapshot data = doc.getDocument();
+                            userFamilyIdList.add(data.getId());
+                            userFamilyNameList.add((String) data.get("familyName"));
+                        }
                     }
-                }
 
-                // Create spinner based on array list
-                familyNamesSpinner = findViewById(R.id.changeCurrentFamilySpinner);
-                ArrayAdapter<String> familyNamesAdapter = new ArrayAdapter<>(ChangeFamilyActivity.this,
-                        android.R.layout.simple_list_item_1, userFamilyNameList);
-                familyNamesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                familyNamesSpinner.setAdapter((familyNamesAdapter));
+                    // Create spinner based on array list
+                    familyNamesSpinner = findViewById(R.id.changeCurrentFamilySpinner);
+                    ArrayAdapter<String> familyNamesAdapter = new ArrayAdapter<>(ChangeFamilyActivity.this,
+                            android.R.layout.simple_list_item_1, userFamilyNameList);
+                    familyNamesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    familyNamesSpinner.setAdapter((familyNamesAdapter));
+                }
             }
         });
     }

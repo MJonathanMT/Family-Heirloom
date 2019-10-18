@@ -5,7 +5,7 @@ public class Item {
     private String description;
     private String privacy;
     private String owner;
-    private String familyId;
+    private String familyID;
     private String url;
 
     public String getName() {
@@ -41,11 +41,11 @@ public class Item {
     }
 
     public String getFamilyId() {
-        return familyId;
+        return familyID;
     }
 
     public void setFamilyId(String familyId) {
-        this.familyId = familyId;
+        this.familyID = familyID;
     }
 
     public String getUrl() {
@@ -73,7 +73,7 @@ public class Item {
         this.description = description;
         this.privacy = privacy;
         this.owner = owner;
-        this.familyId = familyId;
+        this.familyID = familyId;
         this.url = url;
     }
 }

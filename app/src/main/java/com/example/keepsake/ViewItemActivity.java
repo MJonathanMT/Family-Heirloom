@@ -82,6 +82,10 @@ public class ViewItemActivity extends AppCompatActivity {
 
                                 String familyID = document.get("familyID", String.class);
 
+                                if (familyID == null){
+                                    return;
+                                }
+
                                 db.collection("family_group").document(familyID)
                                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
