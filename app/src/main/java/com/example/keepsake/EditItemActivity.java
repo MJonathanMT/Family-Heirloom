@@ -231,6 +231,7 @@ public class EditItemActivity extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot docRef : queryDocumentSnapshots){
                     String familyID = docRef.get("familyID", String.class);
+
                     DocumentReference famRef = db.collection("family_group").document(familyID);
 
                     famRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

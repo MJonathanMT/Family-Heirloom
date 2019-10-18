@@ -77,7 +77,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_item_owner);
 
         Intent intent = getIntent();
-        itemId = intent.getStringExtra("itemIdd");
+        itemId = intent.getStringExtra("itemId");
 
         dialog = new Dialog(this);
         handler = new Handler();
@@ -319,13 +319,12 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         final Date date = new Date();
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        //todo(naverill) convert all familyName references to familyID references
         final Map<String, String> oldOwnerData = new HashMap<String, String>() {{
             put("startDate", document.get("start_date", String.class));
             put("privacy", ownerPrivacy);
             put("endDate", formatter.format(date));
             put("ownerID", userID);
-            put("familyName", document.get("familyName", String.class));
+            put("familyID", document.get("familyID", String.class));
         }};
 
         docRef.collection("ownership_record").document().set(oldOwnerData);
@@ -343,7 +342,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         docRef.update("startDate", formatter.format(date));
         docRef.update("privacy", "O");
         docRef.update("owner", newOwner.getUUID());
-        docRef.update("familyName", document.get("familyName", String.class));
+        docRef.update("familyID", document.get("familyID", String.class));
     }
 
     public ArrayList<String> parseQuery(String query){

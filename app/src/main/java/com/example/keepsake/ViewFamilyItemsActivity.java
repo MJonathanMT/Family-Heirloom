@@ -35,7 +35,7 @@ import javax.annotation.Nullable;
 public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     private ActionBarDrawerToggle drawerToggle;
-    private FirebaseFirestore fbfs;
+    private FirebaseFirestore db;
     private String userId;
     private List<Item> itemList;
     private ItemsListAdapter itemsListAdapter;
@@ -46,7 +46,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_family_items);
-        fbfs = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         getUserId();
         createUserClass();
@@ -56,7 +56,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
     private void createUserClass(){
         // create a user class for the current user
-        DocumentReference docUser = fbfs.collection("user").document(userId);
+        DocumentReference docUser = db.collection("user").document(userId);
         docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -80,7 +80,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
     private void familyItemViewingUpdate(){
         // get all the items relevant to the current user
-        fbfs.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -98,6 +98,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
                             if(item.getFamilyId() == null){
                                 continue;
                             }
+
                             Log.d("famiyl name", item.getFamilyId());
                             if (item.getFamilyId().compareTo(currentUser.getUserSession()) == 0) {
                                 itemList.add(item);
@@ -115,7 +116,6 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         if (user != null) {
             userId = user.getUid();
         }
-        Toast.makeText(ViewFamilyItemsActivity.this, userId, Toast.LENGTH_SHORT).show();
     }
 
     private void createNavBar(){
