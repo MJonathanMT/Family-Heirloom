@@ -4,14 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,27 +23,37 @@ import java.lang.String;
 public class ViewItemActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageButton buttonEdit;
+    private TextView textViewItemName;
+    private TextView textViewItemDescription;
     private ImageButton buttonExit;
-    private String itemId;
+    private TextView textViewFamilyName;
+    private String itemID;
+    private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+    //todo(naverill) ensure edit button can only be seen by users who own the item
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
+
         Intent intent = getIntent();
-        itemId = intent.getStringExtra("itemId");
+        itemID = intent.getStringExtra("itemId");
+
 //        itemId = "Q5SWGQ3jNngl5DDtHni4";
         initialiseDB();
 
         buttonEdit = findViewById(R.id.buttonEdit);
         buttonExit = findViewById(R.id.imageButtonClearOwner);
+        textViewItemName = findViewById(R.id.textViewItemName);
+        textViewItemDescription = findViewById(R.id.textViewItemDescription);
+        textViewFamilyName = findViewById(R.id.textViewFamilyName);
 
-        loadItemInfo(itemId);
+        loadItemInfo(itemID);
 
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openEditItemActivity(itemId);
+                openEditItemActivity(itemID);
             }
         });
 
@@ -64,8 +77,23 @@ public class ViewItemActivity extends AppCompatActivity {
                             // Task completed successfully
                             final DocumentSnapshot document = task.getResult();
                             if (document.exists()){
-                                ((TextView) findViewById(R.id.textViewItemName)).setText((String) document.get("name"));
-                                ((TextView) findViewById(R.id.textViewEditDescription)).setText((String)document.get("description"));
+                                textViewItemName.setText(document.get("name", String.class));
+                                textViewItemDescription.setText(document.get("description", String.class));
+
+                                String familyID = document.get("familyID", String.class);
+
+                                db.collection("family_group").document(familyID)
+                                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+                                    }
+                                });
+
+                                if (userID.compareTo(document.get("owner", String.class)) != 0){
+                                   buttonEdit.setVisibility(View.GONE);
+                                }
+
                             } else {
                                 System.out.println("Failed to find doc " + itemID);
                             }
