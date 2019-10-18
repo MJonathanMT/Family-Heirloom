@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.keepsake.memberList.FamilyMemberPageActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -65,7 +67,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
     private void createFamilyList(){
         // Get the list of family that the current user is in
-        db.collection("user").document(userId).collection("familyNames").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.collection("user").document(userId).collection("familyGroups").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e != null) {
@@ -75,7 +77,17 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() ==  DocumentChange.Type.ADDED) {
                             QueryDocumentSnapshot data = doc.getDocument();
-                            userFamilyNameList.add((String) data.get("familyName"));
+                            String familyID = data.get("familyID", String.class);
+                            db.collection("familyGroup").document(familyID)
+                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if(documentSnapshot.exists()){
+                                        //todo (naverill) check this works
+                                        userFamilyNameList.add(documentSnapshot.get("familyName", String.class));
+                                    }
+                                }
+                            });
                         }
                     }
                 }

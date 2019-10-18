@@ -241,7 +241,6 @@ public class NewItemUploadActivity extends AppCompatActivity {
         final String name = itemName.getText().toString().trim();
         final String description = itemDescription.getText().toString().trim();
         final String privacy = spinnerPrivacy.getSelectedItem().toString().trim();
-        //todo(naverill) change familyName reference to familyID reference
         //todo(naverill) make family spinner work properly
         final SimpleDateFormat timeStamp = new SimpleDateFormat("yyyyMMddhhmmss");
 
