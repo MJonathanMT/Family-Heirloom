@@ -1,7 +1,10 @@
 package com.example.keepsake.memberRequest;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.keepsake.R;
 import com.example.keepsake.User;
+import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -34,7 +38,8 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
 
     private static final String TAG = "FireLog";
     private RecyclerView posts;
-    private FirebaseFirestore fbfs;
+    private ImageButton imageButtonExit;
+    private FirebaseFirestore db;
     private MemberRequestListAdapter memberRequestListAdapter;
     private List<MemberRequests> memberRequestsList;
     private User currentUser;
@@ -46,7 +51,9 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_request);
 
-        fbfs = FirebaseFirestore.getInstance();
+        imageButtonExit = findViewById(R.id.imageButtonExit);
+
+        db = FirebaseFirestore.getInstance();
         getUserId();
         createUserClass();
 
@@ -59,32 +66,42 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         posts.setLayoutManager(new LinearLayoutManager(this));
         posts.setAdapter(memberRequestListAdapter);
 
-
-
-    }
-    private void memberRequestViewUpdate(){
-        fbfs.collection("family_group").document(currentFamilyId).collection("joinRequest").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        imageButtonExit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                if (e != null) {
-                    Log.d(TAG, "Error: " + e.getMessage());
-                }
-
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    MemberRequests memberRequests  = doc.getDocument().toObject(MemberRequests.class);
-
-                    Log.d("UMM BEFORE ADDING", memberRequests.getName());
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        memberRequests.setUserId(doc.getDocument().getId());
-                        memberRequestsList.add(memberRequests);
-                        memberRequestListAdapter.notifyDataSetChanged();
-
-                    }
-                }
+            public void onClick(View view) {
+                openFamilyMemberPageActivity();
             }
         });
     }
+
+    private void memberRequestViewUpdate(){
+        db.collection("family_group")
+                .document(currentFamilyId)
+                .collection("joinRequests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                        if (e != null) {
+                            Log.d(TAG, "Error: " + e.getMessage());
+                        }
+                        if (queryDocumentSnapshots != null){
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                if (doc.getDocument().exists()){
+                                    MemberRequests memberRequests  = doc.getDocument().toObject(MemberRequests.class);
+
+                                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                                        memberRequests.setUserId(doc.getDocument().getId());
+                                        memberRequestsList.add(memberRequests);
+                                        memberRequestListAdapter.notifyDataSetChanged();
+                                    }
+                                }
+                            }
+                        }
+                    }
+        });
+    }
+
     private void getUserId(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -92,18 +109,23 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
             Log.d("User ID", userId);
         }
     }
+
     private void createUserClass(){
         // create a user class for the current user
-        DocumentReference docUser = fbfs.collection("user").document(userId);
+        DocumentReference docUser = db.collection("user").document(userId);
         docUser.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d("hah", "starting update view");
                 currentUser = documentSnapshot.toObject(User.class);
-                assert currentUser != null;
-                currentFamilyId = currentUser.getUserSession();
-                Log.d("OH YEA", currentFamilyId);
-                memberRequestViewUpdate();
+                if (currentUser != null){
+                    currentFamilyId = currentUser.getUserSession();
+
+                    if (!currentUser.getUserSession().isEmpty()){
+                        memberRequestViewUpdate();
+
+                    }
+                }
+
             }
         });
     }
@@ -111,37 +133,13 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
     @Override
     public void onAcceptClick(int position) {
         // Add current userId to family_group's members
-        Map<String, Object> newMember = new HashMap<>();
-        newMember.put("name", memberRequestsList.get(position).getName());
-        final String newId = memberRequestsList.get(position).getUserId();
+        final String userID = memberRequestsList.get(position).getUserId();
 
-        fbfs.collection("family_group").document(currentFamilyId).collection("members").document(newId).set(newMember);
-
-        // Add family_group's name to userId's family_names
-        final String[] familyName = new String[1];
-        DocumentReference docRef = fbfs.collection("family_group").document(currentFamilyId);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    familyName[0] = (String) document.get("name");
-                    Log.d("new group name", familyName[0] + document.get("name"));Map<String, Object> newGroup = new HashMap<>();
-
-                    Log.d("adding new name", String.valueOf(familyName));
-                    newGroup.put("name",familyName[0]);
-
-                    fbfs.collection("user").document(newId).collection("familyNames").document(currentFamilyId).set(newGroup);
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-
-
+        addMemberToFamilyGroup(userID);
+        acceptUser(userID);
 
         memberRequestsList.remove(position);
-        fbfs.collection("family_group").document(currentFamilyId).collection("joinRequest").document(newId).delete();
+
         memberRequestListAdapter.notifyDataSetChanged();
         memberRequestListAdapter.notifyItemRemoved(position);
     }
@@ -150,9 +148,44 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
     public void onDeclineClick(int position) {
         memberRequestsList.remove(position);
         memberRequestListAdapter.notifyItemRemoved(position);
-        final String newId = memberRequestsList.get(position).getUserId();
-        fbfs.collection("family_group").document(currentFamilyId).collection("joinRequest").document(newId).delete();
+
+        final String userID = memberRequestsList.get(position).getUserId();
+
+        db.collection("family_group")
+                .document(currentFamilyId)
+                .collection("joinRequest")
+                .document(userID)
+                .delete();
+
         memberRequestListAdapter.notifyDataSetChanged();
+    }
+
+    public void addMemberToFamilyGroup(String userID){
+        DocumentReference familyRef = db.collection("family_group")
+                .document(currentFamilyId);
+
+        familyRef.collection("members")
+                .document(userID)
+                .set(
+                        new HashMap<String, String>() {{
+                            put("exists", "1");
+                        }});
+
+        familyRef.collection("joinRequests")
+                .document(userID).delete();
+    }
+
+    public void acceptUser(String userID) {
+        db.collection("user")
+                .document(userID)
+                .collection("familyGroups")
+                .document(currentFamilyId)
+                .update("accepted", "1");
+    }
+
+    private void openFamilyMemberPageActivity() {
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
+        startActivity(intent);
     }
 
 }

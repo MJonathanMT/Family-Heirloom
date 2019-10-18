@@ -183,7 +183,10 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     public void populateFamilyGroupSpinner(){
-        Query query = db.collection("user").document(userID).collection("familyGroups");
+        Query query = db.collection("user")
+                .document(userID)
+                .collection("familyGroups")
+                .whereEqualTo("accepted", "1");
 
         final List<Family> familyList = new ArrayList<>();
 

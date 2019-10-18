@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,7 +40,11 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
         holder.nameText.setText(itemList.get(position).getName());
         holder.descriptionText.setText(itemList.get(position).getDescription());
 
-        Picasso.get().load(itemList.get(position).getUrl()).into(urlView);
+        if (itemList.get(position).getUrl() != ""){
+            Picasso.get().load(itemList.get(position).getUrl()).into(urlView);
+        } else {
+            //todo(naverill) replace with standard failure image
+        }
     }
 
 

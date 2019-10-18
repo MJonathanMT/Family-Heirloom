@@ -43,7 +43,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
     private List<Item> itemList;
 
     private String userId;
-    private ArrayList<String> userFamilyNameList = new ArrayList<>();
+    private ArrayList<String> userFamilyIDList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
         getUserId();
         createFamilyList();
-        homeItemViewing();
+        loadItemViews();
         manageButtons();
         createNavBar();
     }
@@ -67,35 +67,38 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
     private void createFamilyList(){
         // Get the list of family that the current user is in
-        db.collection("user").document(userId).collection("familyGroups").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.d(TAG, "Error: " + e.getMessage());
-                }
-                if (queryDocumentSnapshots != null){
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                            QueryDocumentSnapshot data = doc.getDocument();
-                            String familyID = data.get("familyID", String.class);
-                            db.collection("familyGroup").document(familyID)
-                                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    if(documentSnapshot.exists()){
-                                        //todo (naverill) check this works
-                                        userFamilyNameList.add(documentSnapshot.get("familyName", String.class));
+        db.collection("user")
+                .document(userId)
+                .collection("familyGroups")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d(TAG, "Error: " + e.getMessage());
+                        }
+                        if (queryDocumentSnapshots != null){
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+                                if (doc.getType() ==  DocumentChange.Type.ADDED) {
+
+                                    QueryDocumentSnapshot data = doc.getDocument();
+                                    String familyID = data.getId();
+                                    String accepted = data.get("accepted", String.class);
+
+                                    //todo(naverill) add 'accepted' field to user.familyGroups
+                                    if (accepted != null){
+                                        if (accepted.compareTo("1") == 0) {
+                                            userFamilyIDList.add(familyID);
+                                        }
                                     }
                                 }
-                            });
+                            }
                         }
                     }
-                }
-            }
         });
     }
 
-    private void homeItemViewing(){
+    private void loadItemViews(){
         itemList = new ArrayList<>();
         itemsListAdapter = new ItemsListAdapter(itemList,this);
 
@@ -111,25 +114,26 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
-                assert queryDocumentSnapshots != null;
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        Item item = doc.getDocument().toObject(Item.class);
-                        item.setItemId(doc.getDocument().getId());
-                        if(userId.compareTo(item.getOwner()) == 0) {
-                            itemList.add(item);
-                            itemsListAdapter.notifyDataSetChanged();
-                        }
-                        else if(userFamilyNameList.contains(item.getFamilyId())) {
-//                            if (item.privacy.compareTo("O") != 0 || item.privacy.compareTo("family") == 0) {
+                if (queryDocumentSnapshots != null){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                            Item item = doc.getDocument().toObject(Item.class);
+                            item.setItemId(doc.getDocument().getId());
+                            if(userId.compareTo(item.getOwner()) == 0) {
                                 itemList.add(item);
                                 itemsListAdapter.notifyDataSetChanged();
-//                            }
+                            }
+                            else if(userFamilyIDList.contains(item.getFamilyId())) {
+                                if (item.getPrivacy().compareTo("O") != 0) {
+                                    itemList.add(item);
+                                    itemsListAdapter.notifyDataSetChanged();
+                                }
+                            }
                         }
+
                     }
 
                 }
-
             }
         });
     }
