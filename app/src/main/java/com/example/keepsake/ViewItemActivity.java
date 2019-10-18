@@ -86,7 +86,9 @@ public class ViewItemActivity extends AppCompatActivity {
                                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+                                        if (documentSnapshot.exists()){
+                                            textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+                                        }
                                     }
                                 });
 
