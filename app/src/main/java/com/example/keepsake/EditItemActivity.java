@@ -1,8 +1,11 @@
 package com.example.keepsake;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import java.lang.String;
 import java.util.ArrayList;
@@ -131,10 +135,6 @@ public class EditItemActivity extends AppCompatActivity {
                                 itemPrivacy = document.get("privacy", String.class);
                                 familyID = document.get("familyID", String.class);
 
-                                int index = ((ArrayAdapter) spinnerFamilyGroup.getAdapter()).getPosition(new Family(familyName, familyID));
-                                spinnerFamilyGroup.setSelection(index, true);
-                                Toast.makeText(EditItemActivity.this, "Index " + String.valueOf(index), Toast.LENGTH_SHORT).show();
-
 
                                 int selectedIndex;
                                 if (itemPrivacy == "O"){
@@ -188,8 +188,38 @@ public class EditItemActivity extends AppCompatActivity {
                 .collection("familyGroups")
                 .whereEqualTo("accepted", "1");
 
-        final List<Family> familyList = new ArrayList<>();
+        final ArrayList<Family> familyList = new ArrayList<>();
 
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot docRef : queryDocumentSnapshots){
+                    String familyID = docRef.getId();
+
+                    db.collection("family_group")
+                            .document(familyID)
+                            .get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    Family family = new Family();
+                                    family.setFamilyName(documentSnapshot.get("familyName", String.class));
+                                    family.setUUID((documentSnapshot.getId()));
+                                    familyList.add(family);
+
+                                    if (familyList.size() == 1){
+                                        createFamilySpinner(familyList);
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+
+    }
+
+    public void createFamilySpinner(ArrayList<Family> familyList){
+        Log.d("LIST", " "+ String.valueOf(familyList.size()));
         ArrayAdapter<Family> familyAdapter = new ArrayAdapter<Family>(this, R.layout.family_list_layout, familyList){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -197,13 +227,12 @@ public class EditItemActivity extends AppCompatActivity {
             }
 
             @Override
-            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            public View getDropDownView(int position, @androidx.annotation.Nullable View convertView, @NonNull ViewGroup parent) {
                 return getCustomView(position, convertView, parent);
             }
 
             public View getCustomView(int position, View convertView, ViewGroup parent){
                 View spinner = LayoutInflater.from(parent.getContext()).inflate(R.layout.family_list_layout, parent, false);
-
                 TextView familyName = spinner.findViewById(R.id.textViewFamilyName);
                 TextView familyID = spinner.findViewById(R.id.textViewFamilyID);
                 TextView buttonJoin = spinner.findViewById(R.id.buttonJoin);
@@ -229,38 +258,30 @@ public class EditItemActivity extends AppCompatActivity {
             }
         };
 
-        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot docRef : queryDocumentSnapshots){
-                    String familyID = docRef.get("familyID", String.class);
+        familyAdapter.setDropDownViewResource(R.layout.family_list_layout);
 
-                    DocumentReference famRef = db.collection("family_group").document(familyID);
-
-                    famRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Family family = new Family();
-                            family.setFamilyName(documentSnapshot.get("familyName", String.class));
-                            family.setUUID((documentSnapshot.getId()));
-                            familyList.add(family);
-                        }
-                    });
-                }
-            }
-        });
-
+        spinnerFamilyGroup.setAdapter(familyAdapter);
         spinnerFamilyGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                familyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getUUID();
+                String selectedFamilyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getUUID();
+                setFamilyID(selectedFamilyID);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
-        spinnerFamilyGroup.setAdapter(familyAdapter);
+
+        int index = ((ArrayAdapter) spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
+        spinnerFamilyGroup.setSelection(index, true);
+        Toast.makeText(EditItemActivity.this, "Index " + String.valueOf(index), Toast.LENGTH_SHORT).show();
+    }
+
+    private void setFamilyID(String familyID){
+        this.familyID = familyID;
     }
 
     private void updateItem(final DocumentReference docRef){
@@ -343,6 +364,26 @@ public class EditItemActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ViewItemActivity.class);
         intent.putExtra("itemId", itemID);
         startActivity(intent);
+    }
+
+    public class FamilySpinner extends AppCompatSpinner {
+        AdapterView.OnItemSelectedListener listener;
+
+        public FamilySpinner(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        @Override
+        public void setSelection(int position) {
+            super.setSelection(position);
+            if (listener != null)
+                listener.onItemSelected(null, null, position, 0);
+        }
+
+        public void setOnItemSelectedEvenIfUnchangedListener(
+                OnItemSelectedListener listener) {
+            this.listener = listener;
+        }
     }
 
 }
