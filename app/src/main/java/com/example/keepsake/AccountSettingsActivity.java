@@ -50,7 +50,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
         buttonAddFamily.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openJoinFamilyGroupActivity();
+                openFamilySetupActivity();
             }
         });
 
@@ -59,8 +59,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UpdateDetailsActivity.class);
         startActivity(intent);
     }
-    public void openJoinFamilyGroupActivity(){
-        Intent intent = new Intent(this, JoinFamilyGroupActivity.class);
+    public void openFamilySetupActivity(){
+        Intent intent = new Intent(this, FamilySetupActivity.class);
         startActivity(intent);
     }
     public void openChangeFamilyActivity(){

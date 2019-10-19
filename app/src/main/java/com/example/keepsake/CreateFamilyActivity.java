@@ -222,26 +222,24 @@ public class CreateFamilyActivity extends AppCompatActivity {
         if (familyName != null) {
             final String name = familyName.getText().toString();
 
-            CollectionReference familyGroupCol = db.collection("family_group");
-
-            final Task<DocumentReference> task = familyGroupCol.add(
+            db.collection("family_group")
+                    .add(
                     new HashMap<String, String>() {{
                         put("familyName", name);
-                    }});
-
-            task.addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentReference> task) {
-                    if (task.isSuccessful()) {
-                        // Task completed successfully
-                        final DocumentReference familyRef = task.getResult();
-                        addMembersToFamily(familyRef);
-                    } else {
-                        // Task failed with an exception
-                        Exception exception = task.getException();
-                        Toast.makeText(CreateFamilyActivity.this, "Failed to create family entry", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                    }})
+                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            if (task.isSuccessful()) {
+                                // Task completed successfully
+                                final DocumentReference familyRef = task.getResult();
+                                addMembersToFamily(familyRef);
+                            } else {
+                                // Task failed with an exception
+                                Exception exception = task.getException();
+                                Toast.makeText(CreateFamilyActivity.this, "Failed to create family entry", Toast.LENGTH_SHORT).show();
+                            }
+                        }
             });
 
         } else {
