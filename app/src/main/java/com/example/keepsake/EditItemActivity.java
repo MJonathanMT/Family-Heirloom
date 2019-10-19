@@ -194,10 +194,10 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (DocumentSnapshot docRef : queryDocumentSnapshots){
-                    String familyID = docRef.getId();
+                    String id = docRef.getId();
 
                     db.collection("family_group")
-                            .document(familyID)
+                            .document(id)
                             .get()
                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
@@ -210,6 +210,13 @@ public class EditItemActivity extends AppCompatActivity {
                                     if (familyList.size() == 1){
                                         createFamilySpinner(familyList);
                                     }
+
+                                    int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
+                                    if (position != -1){
+                                        spinnerFamilyGroup.setSelection(position, true);
+                                        Log.d("FAMILY ITEM", String.valueOf(position));
+
+                                    }
                                 }
                             });
                 }
@@ -219,7 +226,6 @@ public class EditItemActivity extends AppCompatActivity {
     }
 
     public void createFamilySpinner(ArrayList<Family> familyList){
-        Log.d("LIST", " "+ String.valueOf(familyList.size()));
         ArrayAdapter<Family> familyAdapter = new ArrayAdapter<Family>(this, R.layout.family_list_layout, familyList){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -275,9 +281,6 @@ public class EditItemActivity extends AppCompatActivity {
             }
         });
 
-        int index = ((ArrayAdapter) spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
-        spinnerFamilyGroup.setSelection(index, true);
-        Toast.makeText(EditItemActivity.this, "Index " + String.valueOf(index), Toast.LENGTH_SHORT).show();
     }
 
     private void setFamilyID(String familyID){
@@ -385,5 +388,4 @@ public class EditItemActivity extends AppCompatActivity {
             this.listener = listener;
         }
     }
-
 }

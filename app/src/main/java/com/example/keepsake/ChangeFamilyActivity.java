@@ -159,6 +159,26 @@ public class ChangeFamilyActivity extends AppCompatActivity {
 
             }
         });
+
+        setCurrentUserSession();
+    }
+
+    private void setCurrentUserSession(){
+        db.collection("user")
+                .document(userID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()){
+                            String userSession = documentSnapshot.get("userSession", String.class);
+                            int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", userSession));
+                            Log.d("FAMILY ITEM", String.valueOf(position));
+
+                            spinnerFamilyGroup.setSelection(position, true);
+                        }
+                    }
+                });
     }
 
     private void setFamilyID(String familyID){
