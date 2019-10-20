@@ -55,6 +55,8 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageButton buttonExit;
 
     private Spinner spinnerFamilyGroup;
+    private ArrayList<Family> familyList;
+
     private Spinner spinnerPrivacy;
 
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -188,41 +190,48 @@ public class EditItemActivity extends AppCompatActivity {
                 .collection("familyGroups")
                 .whereEqualTo("accepted", "1");
 
-        final ArrayList<Family> familyList = new ArrayList<>();
+        familyList = new ArrayList<>();
 
         query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot docRef : queryDocumentSnapshots){
-                    String id = docRef.getId();
+                if (queryDocumentSnapshots != null){
+                    for (DocumentSnapshot docRef : queryDocumentSnapshots){
+                        if (docRef.exists()){
+                            String id = docRef.getId();
+                            loadFamilyInfo(id);
+                        }
 
-                    db.collection("family_group")
-                            .document(id)
-                            .get()
-                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                @Override
-                                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                    Family family = new Family();
-                                    family.setFamilyName(documentSnapshot.get("familyName", String.class));
-                                    family.setUUID((documentSnapshot.getId()));
-                                    familyList.add(family);
-
-                                    if (familyList.size() == 1){
-                                        createFamilySpinner(familyList);
-                                    }
-
-                                    int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
-                                    if (position != -1){
-                                        spinnerFamilyGroup.setSelection(position, true);
-                                        Log.d("FAMILY ITEM", String.valueOf(position));
-
-                                    }
-                                }
-                            });
+                    }
                 }
             }
         });
 
+    }
+
+    public void loadFamilyInfo(String id){
+        db.collection("family_group")
+                .document(id)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Family family = new Family();
+                        family.setFamilyName(documentSnapshot.get("familyName", String.class));
+                        family.setUUID((documentSnapshot.getId()));
+                        familyList.add(family);
+
+                        if (familyList.size() == 1){
+                            createFamilySpinner(familyList);
+                        }
+
+                        int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
+                        if (position != -1){
+                            spinnerFamilyGroup.setSelection(position, true);
+
+                        }
+                    }
+                });
     }
 
     public void createFamilySpinner(ArrayList<Family> familyList){
