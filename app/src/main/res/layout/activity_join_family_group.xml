@@ -42,20 +42,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:layout_width="415dp"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:visibility="gone" />
-        </TableRow>
-
-        <TableRow
             android:layout_width="match_parent"
             android:layout_height="59dp">
 
@@ -83,8 +69,22 @@
         </TableRow>
 
         <TableRow
+            android:layout_width="415dp"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="544dp">
+            android:layout_height="wrap_content">
 
             <ScrollView
                 android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.keepsake.memberList;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,7 +24,9 @@ import com.example.keepsake.R;
 import com.example.keepsake.User;
 import com.example.keepsake.ViewFamilyItemsActivity;
 import com.example.keepsake.memberRequest.MemberRequestActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -47,6 +50,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
     private String userId;
     private List<User> userList;
     private UserListAdapter userListAdapter;
+    private Button buttonMemberRequestPage;
     private RecyclerView posts;
     private User currentUser;
     private String currentFamilyId;
@@ -57,13 +61,13 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_family_member_page);
         db = FirebaseFirestore.getInstance();
 
+        manageButtons();
+        createNavBar();
+
         getUserId();
         createUserClass();
         createMemberView();
 
-
-        manageButtons();
-        createNavBar();
     }
 
     private void createMemberView(){
@@ -97,21 +101,38 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
                     if(currentFamilyId!=null){
                         memberViewUpdate();
+                        checkAdmin(currentFamilyId);
                     }
-//                Log.d("OH YEA", currentFamilyId);
-//                memberRequestViewUpdate();
-//                familyItemViewingUpdate();
 
                 }
             }
         });
     }
 
+    private void checkAdmin(String familyID){
+        db.collection("family_group")
+                .document(familyID)
+                .collection("admin")
+                .document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (!document.exists()) {
+                                buttonMemberRequestPage.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    }
+                });
+    }
+
     private void memberViewUpdate(){
         final ArrayList<String> acceptedFamilyGroups = new ArrayList<>();
         // get all the items relevant to the current user
-        Log.d("Current user: ", currentUser.getUUID());
-        Log.d("Current user: ", currentFamilyId);
+
+
         db.collection("user")
                 .document(currentUser.getUUID())
                 .collection("familyGroups")
@@ -177,12 +198,11 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
     }
 
     private void manageButtons(){
-
-        Button buttonMemberRequestPage = findViewById(R.id.memberRequestPage);
+        buttonMemberRequestPage = findViewById(R.id.memberRequestPage);
 
         buttonMemberRequestPage.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                openActivity();
+                openMemberRequestActivity();
             }
         });
     }
@@ -211,31 +231,31 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.ButtonHomepageAccess) {
-                    openActivity3();
+                    openHomePageActivity();
                 } else if (id == R.id.ButtonFamilyItemsAccess) {
-                    openActivity4();
+                    openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
-                    openActivity5();
+                    openFamilyMemberPageActivity();
                 }
                 return true;
             }
         });
     }
-    public void openActivity(){
+    public void openMemberRequestActivity(){
         Intent intent = new Intent(this, MemberRequestActivity.class);
         startActivity(intent);
     }
-    public void openActivity3() {
+    public void openHomePageActivity() {
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity4() {
+    public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
-    public void openActivity5() {
+    public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }

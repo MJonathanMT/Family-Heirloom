@@ -230,8 +230,6 @@ public class NewItemUploadActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()){
                             String userSession = documentSnapshot.get("userSession", String.class);
                             int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", userSession));
-                            Log.d("FAMILY ITEM", String.valueOf(position));
-
                             spinnerFamilyGroup.setSelection(position, true);
                         }
                     }

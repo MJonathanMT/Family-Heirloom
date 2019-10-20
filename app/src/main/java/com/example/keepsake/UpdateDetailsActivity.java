@@ -107,8 +107,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(firebaseUser.getUid());
 
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("firstname", firstname);
-        hashMap.put("lastname", lastname);
+        hashMap.put("firstName", firstname);
+        hashMap.put("lastName", lastname);
         hashMap.put("email", email);
 
         reference.update(hashMap);
