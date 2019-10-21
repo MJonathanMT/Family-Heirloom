@@ -73,6 +73,21 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 //            }
 //        });
 
+//        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                User user = documentSnapshot.toObject(User.class);
+//                TextView displayName = findViewById(R.id.user_header_welcome_message);
+//                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+//
+//                // Prints the name of the user session base on id of the view
+//                displayName.setText(user.getFirstName());
+//                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+//
+//            }
+//        });
+
         createFamilyList();
         loadItemViews();
         createNavBar();
