@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +33,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -47,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
     private FirebaseFirestore db;
     private ItemsListAdapter itemsListAdapter;
     private List<Item> itemList;
+    private User currentUser;
 
     private String userId;
     private ArrayList<String> userFamilyNameList = new ArrayList<>();
@@ -60,28 +58,48 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         setContentView(R.layout.activity_home_page);
         db = FirebaseFirestore.getInstance();
 
-        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(Objects.requireNonNull(user).getUid());
+        getUserId();
+        createUserClass();
+
+        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
         reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
-                TextView displayName = findViewById(R.id.user_header_welcome_message);
-                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
 
-                // Prints the name of the user session base on id of the view
-                displayName.setText(user.getFirstName() +" "+ user.getLastName());
-                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
 
             }
         });
 
-        getUserId();
         createFamilyList();
         loadItemViews();
-        manageButtons();
         createNavBar();
     }
 
+    private void displayView(){
+        TextView displayName = findViewById(R.id.user_header_welcome_message);
+        ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+
+        // Prints the name of the user session base on id of the view
+        displayName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
+        Picasso.get().load(currentUser.getUrl()).into(displayProfilePicture);
+    }
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUUID(documentSnapshot.getId());
+                        }
+
+                    }
+                });
+    }
     private void getUserId(){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -162,25 +180,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
             });
     }
 
-    private void manageButtons(){
 
-        Button buttonSettings = findViewById(R.id.buttonSettings);
-        Button buttonUpload = findViewById(R.id.buttonUpload);
-
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                openAccountSettingsActivity();
-            }
-        });
-
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                openNewItemUploadActivity();
-            }
-        });
-    }
 
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
@@ -195,7 +195,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         drawerToggle.syncState();
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Home");
+            getSupportActionBar().setTitle("Timeline");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -232,15 +232,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
-    private void openAccountSettingsActivity() {
-        Intent intent = new Intent(this, AccountSettingsActivity.class);
-        startActivity(intent);
-    }
 
-    private void openNewItemUploadActivity() {
-        Intent intent = new Intent(this, NewItemUploadActivity.class);
-        startActivity(intent);
-    }
 
     private void openHomePageActivity() {
         Intent intent = new Intent(this, HomePageActivity.class);

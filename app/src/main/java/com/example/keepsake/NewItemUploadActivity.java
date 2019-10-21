@@ -30,7 +30,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -45,7 +44,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 public class NewItemUploadActivity extends AppCompatActivity {
@@ -305,7 +303,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Toast.makeText(NewItemUploadActivity.this, "Images is uploaded", Toast.LENGTH_LONG).show();
-                                            startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
+                                            startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
