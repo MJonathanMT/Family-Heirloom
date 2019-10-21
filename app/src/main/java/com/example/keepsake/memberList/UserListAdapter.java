@@ -29,7 +29,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_list_layout, parent, false);
 
         return new ViewHolder(view);
 
@@ -37,11 +37,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        String name = userList.get(position).getFirstName() + " " + userList.get(position).getLastName();
+        holder.textViewName.setText(name);
+        holder.textViewUsername.setText(userList.get(position).getUsername());
 
-        holder.firstNameText.setText(userList.get(position).getFirstName());
-        holder.lastNameText.setText(userList.get(position).getLastName());
-
-        Picasso.get().load(userList.get(position).getUrl()).into(urlView);
+        if (userList.get(position).getUrl() != null){
+            Picasso.get().load(userList.get(position).getUrl()).into(urlView);
+        }
 
     }
 
@@ -56,8 +58,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         View mView;
 
-        public TextView firstNameText;
-        public TextView lastNameText;
+        public TextView textViewName;
+        public TextView textViewUsername;
         public TextView urlText;
 
 
@@ -66,10 +68,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
             mView = itemView;
 
-            firstNameText = (TextView) mView.findViewById(R.id.firstName);
-            lastNameText = (TextView) mView.findViewById(R.id.lastName);
+            textViewName = (TextView) mView.findViewById(R.id.textViewName);
+            textViewUsername = (TextView) mView.findViewById(R.id.textViewUsername);
             urlText =  mView.findViewById(R.id.url);
-            urlView = mView.findViewById(R.id.urlView);
+            urlView = mView.findViewById(R.id.imageSearchProfile);
         }
     }
 
