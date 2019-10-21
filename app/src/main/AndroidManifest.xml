@@ -39,7 +39,8 @@
         <activity android:name=".FamilySetupActivity" />
         <activity android:name=".JoinFamilyGroupActivity"
             android:windowSoftInputMode="adjustPan"/>
-        <activity android:name=".NewItemUploadActivity" />
+        <activity android:name=".NewItemUploadActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".EditItemActivity" />
         <activity android:name=".ViewItemActivity" />
         <activity android:name=".FamilySetupActivity"
@@ -54,6 +55,10 @@
             <!--meta-data android:name="android.app.default_searchable"
                 android:value=".UserSearchActivity" /-->
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
         <!--activity android:name=".UserSearchActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#49A3A8"
+    android:background="#49A0A8"
     android:gravity="left"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:scaleType="centerCrop">
 
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/user_profile_image"
-        android:layout_width="100dp"
+        android:id="@+id/user_header_profile_image"
+        android:layout_width="75dp"
         android:layout_height="125dp"
         android:layout_marginLeft="10dp"
         android:src="@drawable/default_profile_picture"
@@ -17,14 +19,15 @@
         app:civ_border_width="0dp" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/user_header_welcome_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="50dp"
-        android:layout_toRightOf="@id/user_profile_image"
-        android:fontFamily="monospace"
-        android:text="Welcome Rick Sanchez!" />
+        android:layout_toRightOf="@id/user_header_profile_image"
+        android:fontFamily="@font/athiti_bold"
+        android:text="Welcome Rick Sanchez!"
+        android:textSize="15dp" />
 
 
 </RelativeLayout>

@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#59B7BD</color>
     <color name="colorAccent">#D8C9CE</color>
     <color name="colorSpace">#72F3E9ED</color>
+    <color name="colorDivider">#8273B5B9</color>
+    <color name="colorDelete">#90FF0000</color>
 </resources>

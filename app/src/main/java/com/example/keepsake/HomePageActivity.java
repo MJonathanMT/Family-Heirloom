@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -21,15 +24,18 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nullable;
 
@@ -43,13 +49,31 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
     private List<Item> itemList;
 
     private String userId;
+    private ArrayList<String> userFamilyNameList = new ArrayList<>();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ArrayList<String> userFamilyIDList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate((savedInstanceState));
         setContentView(R.layout.activity_home_page);
         db = FirebaseFirestore.getInstance();
+
+        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(Objects.requireNonNull(user).getUid());
+        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView displayName = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+
+                // Prints the name of the user session base on id of the view
+                displayName.setText(user.getFirstName() +" "+ user.getLastName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+
+            }
+        });
 
         getUserId();
         createFamilyList();
@@ -142,7 +166,6 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
         Button buttonSettings = findViewById(R.id.buttonSettings);
         Button buttonUpload = findViewById(R.id.buttonUpload);
-        Button buttonProfile = findViewById(R.id.gotoprofile);
 
         buttonSettings.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -157,17 +180,12 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                 openNewItemUploadActivity();
             }
         });
-        buttonProfile.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                openProfile();
-            }
-        });
     }
 
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -194,6 +212,15 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                     openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(HomePageActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
                 }
                 return true;
             }
@@ -230,10 +257,16 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         startActivity(intent);
     }
 
-    private void openProfile() {
+    private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
+
+    private void userLogOut() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onNoteClick(int position) {
         String nextItemView = itemList.get(position).getItemId();
