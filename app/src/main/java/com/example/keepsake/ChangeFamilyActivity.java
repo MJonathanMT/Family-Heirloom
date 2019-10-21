@@ -2,9 +2,9 @@ package com.example.keepsake;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.Touch;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,26 +15,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Nullable;
 
 public class ChangeFamilyActivity extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -64,6 +60,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         });
 
         getUserId();
+        createNavBar();
         populateFamilyGroupSpinner();
     }
 
@@ -204,7 +201,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            openHomePageActivity();
+                            openMyProfileActivity();
                             Log.d("SUCCESS", "DocumentSnapshot successfully updated!");
                         }
                     })
@@ -218,8 +215,60 @@ public class ChangeFamilyActivity extends AppCompatActivity {
 
     }
 
-    public void openHomePageActivity(){
+    public void openMyProfileActivity(){
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+    private void createNavBar(){
+        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        NavigationView nav_view = findViewById(R.id.nav_view);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.ButtonHomepageAccess) {
+                    openHomePageActivity();
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
+                    openViewFamilyItemsActivity();
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
+                    openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(ChangeFamilyActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
+                }
+                return true;
+            }
+        });
+    }
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHomePageActivity() {
         Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+    }
+    public void openViewFamilyItemsActivity() {
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
+        startActivity(intent);
+    }
+
+    public void openFamilyMemberPageActivity() {
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 }

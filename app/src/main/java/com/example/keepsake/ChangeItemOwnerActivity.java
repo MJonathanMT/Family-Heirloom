@@ -103,7 +103,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 handleUpdateOwnership();
-                openHomePageActivity();
+                openMyProfileActivity();
             }
         });
 
@@ -386,8 +386,8 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void openHomePageActivity() {
-        Intent intent = new Intent(this, HomePageActivity.class);
+    public void openMyProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 }

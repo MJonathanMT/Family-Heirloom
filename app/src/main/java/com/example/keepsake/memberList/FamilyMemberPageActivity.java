@@ -1,7 +1,6 @@
 package com.example.keepsake.memberList;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -17,11 +16,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.keepsake.Family;
 import com.example.keepsake.HomePageActivity;
-import com.example.keepsake.NewItemUploadActivity;
+import com.example.keepsake.MainActivity;
 import com.example.keepsake.R;
 import com.example.keepsake.User;
+import com.example.keepsake.UserProfileActivity;
 import com.example.keepsake.ViewFamilyItemsActivity;
 import com.example.keepsake.memberRequest.MemberRequestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -236,11 +235,23 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
                     openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(FamilyMemberPageActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }
                 return true;
             }
         });
     }
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
     public void openMemberRequestActivity(){
         Intent intent = new Intent(this, MemberRequestActivity.class);
         startActivity(intent);

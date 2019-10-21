@@ -1,19 +1,25 @@
 package com.example.keepsake;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -31,7 +37,7 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-public class UserProfileActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
+public class UserProfileActivity extends HomePageActivity implements ItemsListAdapter.OnNoteListener {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -41,6 +47,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
     private FirebaseFirestore db;
     private ItemsListAdapter itemsListAdapter;
     private List<Item> itemList;
+    private ActionBarDrawerToggle drawerToggle;
 
     private String userId;
 
@@ -69,6 +76,8 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
 
         homeItemViewing();
         getUserId();
+        createNavBar();
+        manageButtons();
     }
 
     private void homeItemViewing(){
@@ -92,6 +101,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
                     if (doc.getType() ==  DocumentChange.Type.ADDED) {
                         if (doc.getDocument().exists()){
                             Item item = doc.getDocument().toObject(Item.class);
+                            item.setItemId(doc.getDocument().getId());
                             if(item.getOwner()!=null && userId.compareTo(item.getOwner()) == 0) {
                                 itemList.add(item);
                                 itemsListAdapter.notifyDataSetChanged();
@@ -112,6 +122,107 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
 
     @Override
     public void onNoteClick(int position) {
+        String nextItemView = itemList.get(position).getItemId();
+        Log.d("this item is:", nextItemView);
+        Intent intent = new Intent(this, ViewItemActivity.class);
+        intent.putExtra("itemId", nextItemView);
+        startActivity(intent);
+    }
+    private void createNavBar(){
+        DrawerLayout drawerLayout = findViewById(R.id.userProfileDrawerLayout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+
+        Toolbar toolbar = findViewById(R.id.userProfileToolbar);
+        setSupportActionBar(toolbar);
+
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("My Profile");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
+        NavigationView nav_view = findViewById(R.id.nav_view);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.ButtonHomepageAccess) {
+                    openHomePageActivity();
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
+                    openViewFamilyItemsActivity();
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
+                    openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(UserProfileActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
+                }
+                return true;
+            }
+        });
+    }
+
+    private void openHomePageActivity() {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+    }
+
+    private void openViewFamilyItemsActivity() {
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openFamilyMemberPageActivity() {
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
+        startActivity(intent);
+    }
+
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+    private void manageButtons(){
+
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        Button buttonUpload = findViewById(R.id.buttonUpload);
+
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openAccountSettingsActivity();
+            }
+        });
+
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openNewItemUploadActivity();
+            }
+        });
+    }
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openNewItemUploadActivity() {
+        Intent intent = new Intent(this, NewItemUploadActivity.class);
+        startActivity(intent);
     }
 }

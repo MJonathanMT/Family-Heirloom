@@ -19,14 +19,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.core.Tag;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -186,18 +183,31 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
                 if (id == R.id.ButtonHomepageAccess) {
                     openHomePageActivity();
-                }
-                else  if (id == R.id.ButtonFamilyItemsAccess){
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
                     openViewFamilyItemsActivity();
-                }
-                else  if (id == R.id.ButtonFamilyMembersAccess){
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(ViewFamilyItemsActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
                 }
                 return true;
             }
         });
 
     }
+
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
     public void openHomePageActivity() {
         Intent intent = new Intent(this, HomePageActivity.class);
         startActivity(intent);
