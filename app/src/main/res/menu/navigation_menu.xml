@@ -11,7 +11,7 @@
     <item
         android:id="@+id/ButtonProfileAccess"
         android:title="Profile"
-        android:icon="@drawable/family_black"
+        android:icon="@drawable/baseline_perm_identity_24"
         >
     </item>
 
@@ -25,7 +25,7 @@
     <item
         android:id="@+id/ButtonFamilyMembersAccess"
         android:title="Member"
-        android:icon="@drawable/family_black"
+        android:icon="@drawable/baseline_supervisor_account_24"
         >
 
     </item>

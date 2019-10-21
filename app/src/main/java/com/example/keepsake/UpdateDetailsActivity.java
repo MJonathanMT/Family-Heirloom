@@ -99,6 +99,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 updateProfile(firstname.getText().toString(),
                         lastname.getText().toString(),
                         email.getText().toString());
+                openHomePageActivity();
             }
         });
     }
@@ -179,5 +180,10 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Can't get result", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void openHomePageActivity() {
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
     }
 }

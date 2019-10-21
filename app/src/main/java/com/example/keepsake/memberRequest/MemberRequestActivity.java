@@ -231,10 +231,13 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
                         if (currentUser != null){
                             currentFamilyId = currentUser.getUserSession();
 
-                            if (!currentUser.getUserSession().isEmpty()){
-                                memberRequestViewUpdate();
+                            if (currentUser.getUserSession()!=null){
+                                if (!currentUser.getUserSession().isEmpty()){
+                                    memberRequestViewUpdate();
 
+                                }
                             }
+
                         }
 
                     }
@@ -250,7 +253,6 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         acceptUser(userID);
 
         memberRequestsList.remove(position);
-
         memberRequestListAdapter.notifyDataSetChanged();
         memberRequestListAdapter.notifyItemRemoved(position);
     }

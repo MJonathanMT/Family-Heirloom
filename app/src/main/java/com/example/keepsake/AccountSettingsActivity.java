@@ -18,7 +18,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_account_settings);
 
         Button buttonUpdateDetails = findViewById(R.id.buttonUpdateDetails);
-        Button buttonLogOut =  findViewById(R.id.buttonLogOut);
         Button buttonChangeFamily = findViewById(R.id.buttonChangeCurrentFamily);
         Button buttonAddFamily = findViewById(R.id.buttonAddFamily);
 
@@ -26,16 +25,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openUpdateDetailsActivity();
-            }
-        });
-
-        buttonLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(AccountSettingsActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 

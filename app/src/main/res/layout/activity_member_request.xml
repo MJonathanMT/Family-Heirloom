@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_background"
     tools:context=".memberRequest.MemberRequestActivity">
 
     <ImageButton
@@ -31,7 +30,7 @@
         android:layout_marginStart="82dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="83dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/advent_pro_bold"
         android:text="Add Users"
         android:textAlignment="center"
         android:textAllCaps="false"
