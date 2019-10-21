@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.lang.String;
+import com.squareup.picasso.Picasso;
 
 public class ViewItemActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ImageButton buttonEdit;
+    ImageView imageViewItemPhoto;
     private TextView textViewItemName;
     private TextView textViewItemDescription;
     private ImageButton buttonExit;
@@ -44,6 +45,7 @@ public class ViewItemActivity extends AppCompatActivity {
 
         buttonEdit = findViewById(R.id.buttonEdit);
         buttonExit = findViewById(R.id.imageButtonClearOwner);
+        imageViewItemPhoto = findViewById(R.id.imageViewItemPhoto);
         textViewItemName = findViewById(R.id.textViewItemName);
         textViewItemDescription = findViewById(R.id.textViewItemDescription);
         textViewFamilyName = findViewById(R.id.textViewFamilyName);
@@ -67,7 +69,8 @@ public class ViewItemActivity extends AppCompatActivity {
     }
 
     public void loadItemInfo(final String itemID){
-        DocumentReference docRef = db.collection("item").document(itemID);
+        DocumentReference docRef = db.collection("item")
+                .document(itemID);
 
         docRef.get().addOnCompleteListener(
                 new OnCompleteListener<DocumentSnapshot>() {
@@ -79,6 +82,7 @@ public class ViewItemActivity extends AppCompatActivity {
                             if (document.exists()){
                                 textViewItemName.setText(document.get("name", String.class));
                                 textViewItemDescription.setText(document.get("description", String.class));
+                                Picasso.get().load(document.get("url", String.class)).into(imageViewItemPhoto);
 
                                 String familyID = document.get("familyID", String.class);
 

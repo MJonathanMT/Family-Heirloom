@@ -128,7 +128,6 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-
         if(mImageUri != null) {
             String imgName = System.currentTimeMillis()+"."+getExtension(mImageUri);
             final StorageReference imageRef = storageReference.child(imgName);

@@ -1,18 +1,24 @@
 package com.example.keepsake;
 
 import android.content.Context;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
-import java.lang.String;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,19 +41,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class EditItemActivity extends AppCompatActivity {
     private FirebaseFirestore db;
 
-    private ImageButton editPhotoButton;
     private ImageButton updateItem;
     private EditText editName;
     private EditText editDescription;
     private ImageButton changeOwnerButton;
     private ImageButton buttonExit;
+    private ImageView imageEditItemPhoto;
+    private TextView tvUploadImage;
+    private final int IMAGE_REQUEST = 71;
+    private Uri mImageUri;
+    private StorageReference storageReference;
 
     private Spinner spinnerFamilyGroup;
     private ArrayList<Family> familyList;
@@ -64,8 +78,6 @@ public class EditItemActivity extends AppCompatActivity {
 
     private String itemPrivacy = "O";
     private String familyID;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,23 +91,34 @@ public class EditItemActivity extends AppCompatActivity {
 
         editName = findViewById(R.id.editTextEditName);
         editDescription = findViewById(R.id.editTextEditDescription);
-        editPhotoButton = findViewById(R.id.imageButtonEditPhoto);
+        imageEditItemPhoto = findViewById(R.id.imageViewItemPhoto);
+        tvUploadImage = findViewById(R.id.tv_change);
         changeOwnerButton = findViewById(R.id.imageButtonChangeOwner);
         updateItem = findViewById(R.id.imageButtonUploadItem);
         buttonExit = findViewById(R.id.imageButtonClearOwner);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
         spinnerFamilyGroup = findViewById(R.id.spinnerFamilyGroup);
 
-        final DocumentReference docRef = db.collection("item").document(itemID);
+        storageReference = FirebaseStorage.getInstance().getReference("item");
+
+        final DocumentReference docRef = db.collection("item")
+                .document(itemID);
 
         populatePrivacyLevelSpinner();
         populateFamilyGroupSpinner();
         loadItemInfo(docRef);
 
-        editPhotoButton.setOnClickListener(new View.OnClickListener() {
+        imageEditItemPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
+
+        tvUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openEditItemPhotoActivity();
+                chooseImage();
             }
         });
 
@@ -136,6 +159,7 @@ public class EditItemActivity extends AppCompatActivity {
                                 editDescription.setText(document.get("description", String.class));
                                 itemPrivacy = document.get("privacy", String.class);
                                 familyID = document.get("familyID", String.class);
+                                Picasso.get().load(document.get("url", String.class)).into(imageEditItemPhoto);
 
 
                                 int selectedIndex;
@@ -348,8 +372,94 @@ public class EditItemActivity extends AppCompatActivity {
         openViewItemActivity();
     }
 
+    // TODO KIREN
+    private void chooseImage() {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, IMAGE_REQUEST);
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    // TODO KIREN
+    private String getExtension(Uri uri) {
+        try {
+            ContentResolver contentResolver = getContentResolver();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+        }
+        catch(Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        return null;
+    }
+
+    // TODO(KIREN)
     public void openEditItemPhotoActivity() {
-        // TODO(KIREN)
+        if(mImageUri != null) {
+            String imgName = System.currentTimeMillis()+"."+getExtension(mImageUri);
+            final StorageReference imageRef = storageReference.child(imgName);
+            UploadTask uploadTask = imageRef.putFile(mImageUri);
+            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if(!task.isSuccessful()) {
+                        throw Objects.requireNonNull(task.getException());
+                    }
+                    return imageRef.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if(task.isSuccessful()) {
+                        final String imageURL = Objects.requireNonNull(task.getResult()).toString();
+                        DocumentReference reference = FirebaseFirestore.getInstance().collection("item").document(itemID);
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("url", imageURL);
+
+                        reference.update(hashMap);
+                        openViewItemActivity();
+                    }
+                    else {
+                        Toast.makeText(EditItemActivity.this, "Failed to update", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(EditItemActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        else {
+            Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    // TODO KIREN
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                mImageUri = data.getData();
+                openEditItemPhotoActivity();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
+                    imageEditItemPhoto.setImageBitmap(bitmap);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+
+        }
     }
 
     public void openChangeOwnerActivity(){
