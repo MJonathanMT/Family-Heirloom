@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,14 +20,12 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,33 +56,28 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
         getUserId();
         createUserClass();
-
-        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-
-                // Prints the name of the user session base on id of the view
-                displayName.setText(user.getFirstName());
-                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
-
-            }
-        });
+//
+//        FirebaseFirestore.getInstance()
+//                .collection("user")
+//                .document(currentUser.getUUID())
+//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                User user = documentSnapshot.toObject(User.class);
+//                TextView displayName = findViewById(R.id.user_header_welcome_message);
+//                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+//
+//                // Prints the name of the user session base on id of the view
+//                displayName.setText("Welcome "+currentUser.getFirstName() +" "+ currentUser.getLastName());
+//                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+//            }
+//        });
 
         createFamilyList();
         loadItemViews();
         createNavBar();
     }
 
-    private void displayView(){
-        TextView displayName = findViewById(R.id.user_header_welcome_message);
-        ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
-
-        // Prints the name of the user session base on id of the view
-        displayName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
-        Picasso.get().load(currentUser.getUrl()).into(displayProfilePicture);
-    }
     private void createUserClass(){
         // create a user class for the current user
         db.collection("user")

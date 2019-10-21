@@ -94,7 +94,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
 
     public void showAddMemberPopup(View v) {
         myDialog.setContentView(R.layout.activity_add_user_popup);
-
+        
         searchBar = myDialog.findViewById(R.id.editTextSearch);
         searchButton = myDialog.findViewById(R.id.imageButtonSearch);
         userView = myDialog.findViewById(R.id.recyclerViewUsers);

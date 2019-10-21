@@ -50,6 +50,22 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
         getUserId();
         createUserClass();
+
+//        FirebaseFirestore.getInstance()
+//                .collection("user")
+//                .document(currentUser.getUUID())
+//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                User user = documentSnapshot.toObject(User.class);
+//                TextView displayName = findViewById(R.id.user_header_welcome_message);
+//                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+//
+//                // Prints the name of the user session base on id of the view
+//                displayName.setText("Welcome "+currentUser.getFirstName() +" "+ currentUser.getLastName());
+//                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+//            }
+//        });
         createFamilyItemView();
         createNavBar();
     }

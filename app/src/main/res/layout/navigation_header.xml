@@ -26,7 +26,7 @@
         android:layout_marginTop="50dp"
         android:layout_toRightOf="@id/user_header_profile_image"
         android:fontFamily="@font/athiti_bold"
-        android:text="Welcome Rick Sanchez!"
+        android:text="Welcome!"
         android:textSize="15dp" />
 
 

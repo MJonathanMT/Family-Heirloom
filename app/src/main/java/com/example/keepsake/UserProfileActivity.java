@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,11 +33,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-public class UserProfileActivity extends HomePageActivity implements ItemsListAdapter.OnNoteListener {
+public class UserProfileActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -48,6 +47,7 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
     private ItemsListAdapter itemsListAdapter;
     private List<Item> itemList;
     private ActionBarDrawerToggle drawerToggle;
+    private User currentUser;
 
     private String userId;
 
@@ -58,10 +58,12 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
 
         db = FirebaseFirestore.getInstance();
 
+        getUserId();
+        createUserClass();
 
         FirebaseFirestore.getInstance()
                 .collection("user")
-                .document(Objects.requireNonNull(user).getUid())
+                .document(user.getUid())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -70,7 +72,7 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
                         ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
 
                         // Prints the name of the user session base on id of the view
-                        displayName.setText(user.getFirstName() +" "+ user.getLastName());
+                        displayName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
                         Picasso.get().load(user.getUrl()).into(displayProfilePicture);
                     }
                 });
@@ -117,6 +119,24 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
                 }
             }
         });
+    }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUUID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
     }
 
     private void getUserId(){
