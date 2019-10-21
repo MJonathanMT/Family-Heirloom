@@ -31,7 +31,8 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="62dp"
-                android:fontFamily="monospace"
+                android:fontFamily="@font/advent_pro_bold"
+                android:gravity="center"
                 android:text="@string/NewItemUpload"
                 android:textSize="36sp" />
 

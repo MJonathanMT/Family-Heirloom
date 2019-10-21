@@ -16,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/advent_pro_bold"
         android:text="@string/AccountSignUp"
         android:textAlignment="center"
         android:textSize="30sp"

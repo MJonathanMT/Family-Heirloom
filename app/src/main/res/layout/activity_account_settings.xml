@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_background"
+    android:background="#FFFFFF"
     tools:context=".AccountSettingsActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="67dp"
         android:layout_marginTop="94dp"
         android:layout_marginEnd="68dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/cousine_bold"
         android:text="@string/AccountSettings"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonUpdateDetails"
@@ -69,11 +69,11 @@
 
     <TextView
         android:id="@+id/textViewFamilySettings"
-        android:layout_width="274dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="69dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/cousine_bold"
         android:text="@string/FamilySettings"
         android:textAlignment="center"
         android:textSize="36sp"

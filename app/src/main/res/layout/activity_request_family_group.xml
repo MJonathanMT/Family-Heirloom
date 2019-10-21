@@ -11,27 +11,26 @@
         android:id="@+id/textView_request_ack"
         android:layout_width="313dp"
         android:layout_height="36dp"
-        android:layout_marginTop="283dp"
-        android:fontFamily="monospace"
+        android:fontFamily="@font/advent_pro_bold"
         android:text="@string/RequestSent"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="276dp" />
 
     <TextView
         android:id="@+id/textView_confirmation_ack"
         android:layout_width="296dp"
         android:layout_height="27dp"
-        android:layout_marginTop="30dp"
-        android:fontFamily="monospace"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/advent_pro_semibold"
+        android:gravity="center"
         android:text="@string/EmailConfirmation"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_request_ack" />
 
@@ -39,12 +38,12 @@
         android:id="@+id/buttonHomePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/custom_button"
         android:fontFamily="monospace"
         android:text="@string/Continue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_confirmation_ack" />
 

@@ -9,7 +9,6 @@
     android:layout_gravity="center|top"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="30dp"
-    android:background="#D8000000"
     android:backgroundTint="#33FFFFFF"
     android:fadingEdge="horizontal|vertical"
     android:fadingEdgeLength="30dp"

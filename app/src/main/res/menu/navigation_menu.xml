@@ -7,6 +7,14 @@
         >
 
     </item>
+
+    <item
+        android:id="@+id/ButtonProfileAccess"
+        android:title="Profile"
+        android:icon="@drawable/family_black"
+        >
+    </item>
+
     <item
         android:id="@+id/ButtonFamilyItemsAccess"
         android:title="Item"
@@ -21,4 +29,11 @@
         >
 
     </item>
+    <item
+        android:id="@+id/ButtonLogOutAccess"
+        android:icon="@drawable/password_icon"
+        android:title="Log Out">
+
+    </item>
+
 </menu>

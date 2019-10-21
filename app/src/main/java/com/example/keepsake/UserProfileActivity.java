@@ -1,5 +1,9 @@
 package com.example.keepsake;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -54,7 +58,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
                 TextView displayName = findViewById(R.id.user_profile_name);
-                ImageView displayProfilePicture = findViewById(R.id.user_profile_image);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
 
                 // Prints the name of the user session base on id of the view
                 displayName.setText(user.getFirstName() +" "+ user.getLastName());
