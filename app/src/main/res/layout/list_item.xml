@@ -54,7 +54,8 @@
             android:layout_alignParentStart="false"
             android:layout_alignParentBottom="false"
             android:layout_marginLeft="5dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:layout_alignParentLeft="false" />
 
         <ImageView
             android:id="@+id/imageView"

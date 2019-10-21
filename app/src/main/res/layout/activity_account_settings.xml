@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="67dp"
-        android:layout_marginTop="94dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="68dp"
-        android:fontFamily="@font/cousine_bold"
+        android:fontFamily="@font/advent_pro_bold"
         android:text="@string/AccountSettings"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonUpdateDetails"
@@ -44,43 +44,28 @@
         android:layout_marginStart="100dp"
 
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="24dp"
         android:background="@drawable/custom_button"
         android:text="@string/SecurityAndPrivacy"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDetails" />
-
-    <Button
-        android:id="@+id/buttonLogOut"
-        android:layout_width="210dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="100dp"
-
-        android:layout_marginEnd="101dp"
-        android:layout_marginBottom="24dp"
-        android:background="@drawable/custom_button"
-        android:text="@string/LogOut"
         app:layout_constraintBottom_toTopOf="@+id/textViewFamilySettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSecurityAndPrivacy" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDetails" />
 
     <TextView
         android:id="@+id/textViewFamilySettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="68dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="69dp"
-        android:fontFamily="@font/cousine_bold"
+        android:fontFamily="@font/advent_pro_bold"
         android:text="@string/FamilySettings"
         android:textAlignment="center"
         android:textSize="36sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonChangeCurrentFamily"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogOut" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonSecurityAndPrivacy" />
 
     <Button
         android:id="@+id/buttonChangeCurrentFamily"
@@ -106,7 +91,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="101dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/custom_button"
         android:text="@string/AddFamily"
         app:layout_constraintBottom_toBottomOf="parent"

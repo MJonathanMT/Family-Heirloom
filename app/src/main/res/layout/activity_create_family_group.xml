@@ -82,10 +82,15 @@
         android:id="@+id/buttonHomePage"
         android:layout_width="128dp"
         android:layout_height="54dp"
-        android:layout_marginStart="272dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginLeft="140dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/custom_button"
         android:text="@string/FinishSignUp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewMember" />
 
