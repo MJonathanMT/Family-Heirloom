@@ -12,10 +12,10 @@
         android:layout_width="337dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.142"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewItemPhoto" />
 
@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerFamilyGroup" />
 
@@ -59,17 +59,32 @@
 
     <ImageView
         android:id="@+id/imageViewItemPhoto"
-        android:layout_width="330dp"
-        android:layout_height="187dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="30dp"
-        android:foregroundGravity="clip_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="411dp"
+        android:layout_height="153dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:contentDescription="@string/image"
+        android:src="@drawable/imageview"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonClearOwner"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/transparent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonChangeOwner" />
+
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="119dp"
+        android:layout_marginLeft="119dp"
+        android:layout_marginEnd="119dp"
+        android:layout_marginRight="119dp"
+        android:text="Change Item Photo"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewItemPhoto" />
 
     <EditText
         android:id="@+id/editTextEditDescription"
@@ -85,10 +100,10 @@
         android:singleLine="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditName"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.108" />
 
     <EditText
         android:id="@+id/editTextEditName"
@@ -104,23 +119,10 @@
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.363"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerPrivacy"
-        app:layout_constraintVertical_bias="0.005" />
-
-    <ImageButton
-        android:id="@+id/imageButtonEditPhoto"
-        android:layout_width="36dp"
-        android:layout_height="35dp"
-        android:backgroundTint="#00FFFFFF"
-        android:src="@android:drawable/ic_menu_camera"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewItemPhoto"
-        app:layout_constraintEnd_toEndOf="@+id/imageViewItemPhoto"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageViewItemPhoto"
-        app:layout_constraintTop_toTopOf="@+id/imageViewItemPhoto"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.01" />
 
     <ImageButton
         android:id="@+id/imageButtonUploadItem"

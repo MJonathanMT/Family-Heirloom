@@ -11,83 +11,88 @@
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="8dp">
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="410dp"
+        android:layout_height="654dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.004">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:fontFamily="monospace"
+            android:text="@string/NewItemUpload"
+            android:textSize="30sp" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="329dp"
-                android:layout_height="53dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="62dp"
-                android:fontFamily="@font/advent_pro_bold"
-                android:gravity="center"
-                android:text="@string/NewItemUpload"
-                android:textSize="36sp" />
+        <ImageView
+            android:id="@+id/uploadImageView"
+            android:layout_width="match_parent"
+            android:layout_height="179dp"
+            android:contentDescription="@string/image"
+            android:src="@drawable/imageview" />
 
-            <ImageView
-                android:id="@+id/uploadImageView"
-                android:layout_width="match_parent"
-                android:layout_height="208dp"
-                android:contentDescription="@string/image"
-                android:src="@drawable/imageview" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/itemName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/itemname" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/spinnerFamilyGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/itemDescription"
-                    android:layout_width="401dp"
-                    android:layout_height="80dp"
-                    android:hint="@string/itemdescription" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/spinnerPrivacy"
-                android:layout_width="match_parent"
-                android:layout_height="50dp" />
-
-            <Button
-                android:id="@+id/chooseBtn"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:text="@string/choose_photo" />
+                android:hint="@string/itemname" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/uploadBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_button"
-                android:text="@string/upload" />
-        </LinearLayout>
-    </ScrollView>
+        <Spinner
+            android:id="@+id/spinnerFamilyGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/itemDescription"
+                android:layout_width="401dp"
+                android:layout_height="80dp"
+                android:hint="@string/itemdescription" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerPrivacy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="203dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="52dp"
+        android:background="@drawable/custom_button"
+        android:text="@string/upload"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

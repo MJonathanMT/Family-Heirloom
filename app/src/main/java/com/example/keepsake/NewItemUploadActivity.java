@@ -30,7 +30,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +49,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class NewItemUploadActivity extends AppCompatActivity {
-    private Button btnbrowse, btnupload;
+    private Button btnupload;
     private ImageView img;
     private TextInputEditText itemName, itemDescription;
     private Spinner spinnerFamilyGroup, spinnerPrivacy;
@@ -70,7 +69,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item_upload);
 
-        btnbrowse = findViewById(R.id.chooseBtn);
+        //btnbrowse = findViewById(R.id.chooseBtn);
         btnupload = findViewById(R.id.uploadBtn);
         itemName = findViewById(R.id.itemName);
         itemDescription = findViewById(R.id.itemDescription);
@@ -83,7 +82,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
         populateFamilyGroupSpinner();
         populatePrivacyLevelSpinner();
 
-        btnbrowse.setOnClickListener(new View.OnClickListener() {
+        img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 chooseImage();

@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,6 +56,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
 
 
     private ImageButton imageButtonChangeOwner;
+    private ImageView imageViewProfile;
     private Button buttonConfirm;
     private TextView textViewDisplayName;
     private TextView textViewDisplayUsername;
@@ -84,6 +87,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
 
         textViewDisplayName = findViewById(R.id.textViewDisplayName);
         textViewDisplayUsername = findViewById(R.id.textViewDisplayUsername);
+        imageViewProfile = findViewById(R.id.imageViewProfile);
         imageButtonChangeOwner = findViewById(R.id.imageButtonChangeOwner);
         buttonConfirm = findViewById(R.id.buttonConfirm);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
@@ -118,6 +122,8 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                             String name = documentSnapshot.get("firstName") + " " + documentSnapshot.get("lastName");
                             textViewDisplayName.setText(name);
                             textViewDisplayUsername.setText(documentSnapshot.get("username", String.class));
+                            // Load into activity
+                            Picasso.get().load(documentSnapshot.toObject(User.class).getUrl()).into(imageViewProfile);
                         }
                     }
                 });
@@ -211,6 +217,9 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                         user.setLastName(snapshot.get("lastName", String.class));
                         user.setUUID(snapshot.getId());
                         user.setUsername(snapshot.get("username", String.class));
+                        // Load photo after selecting user
+                        user.setUrl(snapshot.get("url", String.class));
+
                         return user;
                     }
                 })
@@ -228,10 +237,12 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
 
+
                         String name = user.getFirstName() + " " + user.getLastName();
                         textViewDisplayName.setTypeface(Typeface.DEFAULT);
                         textViewDisplayName.setText(name);
                         textViewDisplayUsername.setText(user.getUsername());
+                        Picasso.get().load(user.getUrl()).into(imageViewProfile);
 
                         newOwner = user;
                     }

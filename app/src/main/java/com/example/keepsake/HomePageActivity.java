@@ -157,9 +157,9 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
                     }
 
+                    }
                 }
-            }
-        });
+            });
     }
 
     private void manageButtons(){
