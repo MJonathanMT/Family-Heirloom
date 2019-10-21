@@ -59,20 +59,21 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
         db = FirebaseFirestore.getInstance();
 
 
-        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(Objects.requireNonNull(user).getUid());
-        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                User user = documentSnapshot.toObject(User.class);
-                TextView displayName = findViewById(R.id.user_profile_name);
-                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
+        FirebaseFirestore.getInstance()
+                .collection("user")
+                .document(Objects.requireNonNull(user).getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = documentSnapshot.toObject(User.class);
+                        TextView displayName = findViewById(R.id.user_profile_name);
+                        ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
 
-                // Prints the name of the user session base on id of the view
-                displayName.setText(user.getFirstName() +" "+ user.getLastName());
-                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
-
-            }
-        });
+                        // Prints the name of the user session base on id of the view
+                        displayName.setText(user.getFirstName() +" "+ user.getLastName());
+                        Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+                    }
+                });
 
         homeItemViewing();
         getUserId();
@@ -93,18 +94,23 @@ public class UserProfileActivity extends HomePageActivity implements ItemsListAd
         db.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
                 if (e != null) {
                     Log.d(TAG, "Error: " + e.getMessage());
                 }
-                assert queryDocumentSnapshots != null;
-                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                        if (doc.getDocument().exists()){
-                            Item item = doc.getDocument().toObject(Item.class);
-                            item.setItemId(doc.getDocument().getId());
-                            if(item.getOwner()!=null && userId.compareTo(item.getOwner()) == 0) {
-                                itemList.add(item);
-                                itemsListAdapter.notifyDataSetChanged();
+
+                if (queryDocumentSnapshots != null && queryDocumentSnapshots.isEmpty()){
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                            if (doc.getDocument().exists()){
+
+                                Item item = doc.getDocument().toObject(Item.class);
+                                item.setItemId(doc.getDocument().getId());
+
+                                if(item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
+                                    itemList.add(item);
+                                    itemsListAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     }
