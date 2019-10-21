@@ -67,6 +67,9 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 User user = documentSnapshot.toObject(User.class);
 
+                // Prints the name of the user session base on id of the view
+                displayName.setText(user.getFirstName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
 
             }
         });
