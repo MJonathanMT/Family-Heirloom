@@ -182,7 +182,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     }
 
     private void openHomePageActivity() {
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 }

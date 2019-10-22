@@ -55,7 +55,7 @@ public class ViewItemActivity extends AppCompatActivity {
         imageViewItemPhoto = findViewById(R.id.imageViewItemPhoto);
         textViewItemName = findViewById(R.id.textViewItemName);
         textViewItemDescription = findViewById(R.id.textViewItemDescription);
-        textViewFamilyName = findViewById(R.id.textViewFamilyName);
+//        textViewFamilyName = findViewById(R.id.textViewFamilyName);
 
         loadItemInfo(itemID);
 
@@ -102,7 +102,7 @@ public class ViewItemActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         if (documentSnapshot.exists()){
-                                            textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+  //                                          textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
                                         }
                                     }
                                 });
