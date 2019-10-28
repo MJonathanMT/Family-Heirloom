@@ -7,6 +7,18 @@ public class Item {
     private String owner;
     private String familyID;
     private String url;
+    private String startDate;
+    private String itemID;
+
+    public Item(String name, String description, String privacy, String owner, String familyId, String url, String startDate) {
+        this.name = name;
+        this.description = description;
+        this.privacy = privacy;
+        this.owner = owner;
+        this.familyID = familyId;
+        this.url = url;
+        this.startDate = startDate;
+    }
 
     public String getName() {
         return name;
@@ -57,23 +69,20 @@ public class Item {
     }
 
     public String getItemId() {
-        return itemId;
+        return itemID;
     }
 
     public void setItemId(String itemId) {
-        this.itemId = itemId;
+        this.itemID = itemId;
     }
-
-    private String itemId;
 
     public Item(){}
 
-    public Item(String name, String description, String privacy, String owner, String familyId, String url) {
-        this.name = name;
-        this.description = description;
-        this.privacy = privacy;
-        this.owner = owner;
-        this.familyID = familyId;
-        this.url = url;
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
     }
 }

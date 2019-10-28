@@ -9,4 +9,5 @@
     <color name="colorDelete">#90FF0000</color>
     <color name="FUCK">#B3CACA</color>
     <color name="colorOffWhite">#f5f5f5</color>
+    <color name="timelineBubble">#ffffff</color>
 </resources>

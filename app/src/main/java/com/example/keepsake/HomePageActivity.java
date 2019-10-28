@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,6 +35,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class HomePageActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
     private ActionBarDrawerToggle drawerToggle;
@@ -43,6 +46,8 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
     private ItemsListAdapter itemsListAdapter;
     private List<Item> itemList;
     private User currentUser;
+    private TextView displayName;
+    private CircleImageView displayProfilePicture;
 
     private String userId;
     private ArrayList<String> userFamilyNameList = new ArrayList<>();
@@ -58,22 +63,8 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
         getUserId();
         createUserClass();
-//
-//        FirebaseFirestore.getInstance()
-//                .collection("user")
-//                .document(currentUser.getUUID())
-//                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                User user = documentSnapshot.toObject(User.class);
-//                TextView displayName = findViewById(R.id.user_header_welcome_message);
-//                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
-//
-//                // Prints the name of the user session base on id of the view
-//                displayName.setText("Welcome "+currentUser.getFirstName() +" "+ currentUser.getLastName());
-//                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
-//            }
-//        });
+        displayName = findViewById(R.id.user_header_welcome_message);
+        displayProfilePicture = findViewById(R.id.user_header_profile_image);
 
 //        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
 //        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

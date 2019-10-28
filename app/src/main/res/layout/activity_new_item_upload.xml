@@ -66,7 +66,7 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/itemDescription"
+                android:id="@+id/textViewDescription"
                 android:layout_width="401dp"
                 android:layout_height="80dp"
                 android:hint="@string/itemdescription" />
