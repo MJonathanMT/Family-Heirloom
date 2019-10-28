@@ -19,23 +19,32 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/memberRequestPage"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:text="@string/AcceptMembers"
+                android:id="@+id/buttonSettings"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/toolbar"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="363dp"
-                tools:layout_editor_absoluteY="7dp" />
+                android:layout_marginEnd="7dp"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/setting_icon"
+                app:layout_constraintEnd_toStartOf="@+id/memberRequestPage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/memberRequestPage"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/AcceptMembers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@color/colorPrimaryDark"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />

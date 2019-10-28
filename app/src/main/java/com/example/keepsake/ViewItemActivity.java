@@ -136,7 +136,7 @@ public class ViewItemActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void createNavBar(){
-        DrawerLayout drawerLayout = findViewById(R.id.drawerLayout);
+        DrawerLayout drawerLayout = findViewById(R.id.accountSettingsDrawerLayout);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         drawerToggle.setDrawerIndicatorEnabled(true);

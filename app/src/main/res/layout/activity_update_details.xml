@@ -1,145 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UpdateDetailsActivity">
+    tools:context=".UpdateDetailsActivity"
+    android:id="@+id/updateDetailsDrawerLayout">
 
-    <TextView
-        android:id="@+id/user_header_welcome_message"
-        android:layout_width="213dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="99dp"
-        android:layout_marginLeft="99dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="99dp"
-        android:layout_marginRight="99dp"
-        android:fontFamily="@font/advent_pro_bold"
-        android:gravity="center"
-        android:text="@string/UpdateDetails"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="410dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
-        android:orientation="vertical"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_header_welcome_message">
+        <Button
+            android:id="@+id/buttonSettings"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/setting_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView_profile_picture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/tv_change"
-            android:layout_width="wrap_content"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Change Profile Photo"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
+            android:minHeight="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!--<ImageView-->
-        <!--android:id="@+id/imageView_profile_picture"-->
-        <!--android:layout_width="299dp"-->
-        <!--android:layout_height="210dp"-->
-        <!--android:contentDescription="@string/image"-->
-        <!--android:src="@drawable/imageview"-->
-        <!--tools:layout_editor_absoluteX="56dp"-->
-        <!--tools:layout_editor_absoluteY="63dp" />-->
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="410dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginRight="1dp"
+            android:orientation="vertical"
+            android:padding="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-    <EditText
-        android:id="@+id/account_firstname"
-        android:layout_width="237dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginLeft="88dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="86dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/firstName"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_profile_picture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher" />
 
-    <EditText
-        android:id="@+id/account_lastname"
-        android:layout_width="237dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="87dp"
-        android:layout_marginLeft="87dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="87dp"
-        android:layout_marginRight="87dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/lastName"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_firstname" />
+            <TextView
+                android:id="@+id/tv_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Change Profile Photo"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/account_email"
-        android:layout_width="237dp"
-        android:layout_height="62dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginLeft="88dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="86dp"
-        android:layout_marginRight="86dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_lastname" />
+            <!--<ImageView-->
+            <!--android:id="@+id/imageView_profile_picture"-->
+            <!--android:layout_width="299dp"-->
+            <!--android:layout_height="210dp"-->
+            <!--android:contentDescription="@string/image"-->
+            <!--android:src="@drawable/imageview"-->
+            <!--tools:layout_editor_absoluteX="56dp"-->
+            <!--tools:layout_editor_absoluteY="63dp" />-->
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonSaveChanges"
-        android:layout_width="135dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="138dp"
-        android:layout_marginLeft="138dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="139dp"
-        android:layout_marginRight="139dp"
-        android:background="@drawable/custom_button"
-        android:text="@string/SaveChanges"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/account_email" />
+        <EditText
+            android:id="@+id/account_firstname"
+            android:layout_width="237dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginEnd="86dp"
+            android:layout_marginRight="86dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/firstName"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
-    <Button
-        android:id="@+id/button_to_delete_account"
-        android:layout_width="135dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="146dp"
-        android:layout_marginLeft="146dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="146dp"
-        android:layout_marginRight="146dp"
-        android:background="@color/colorDelete"
-        android:text="@string/DeleteAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSaveChanges" />
+        <EditText
+            android:id="@+id/account_lastname"
+            android:layout_width="237dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="87dp"
+            android:layout_marginLeft="87dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="87dp"
+            android:layout_marginRight="87dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/lastName"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_firstname" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/account_email"
+            android:layout_width="237dp"
+            android:layout_height="62dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginLeft="88dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="86dp"
+            android:layout_marginRight="86dp"
+            android:autofillHints=""
+            android:ems="10"
+            android:hint="@string/Email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_lastname" />
+
+        <Button
+            android:id="@+id/buttonSaveChanges"
+            android:layout_width="135dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="138dp"
+            android:layout_marginLeft="138dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="139dp"
+            android:layout_marginRight="139dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/SaveChanges"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/account_email" />
+
+        <Button
+            android:id="@+id/button_to_delete_account"
+            android:layout_width="135dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="146dp"
+            android:layout_marginLeft="146dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="146dp"
+            android:layout_marginRight="146dp"
+            android:background="@color/colorDelete"
+            android:text="@string/DeleteAccount"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSaveChanges" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+        app:menu="@menu/navigation_menu">
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

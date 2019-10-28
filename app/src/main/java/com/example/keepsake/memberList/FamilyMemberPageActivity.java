@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.keepsake.AccountSettingsActivity;
 import com.example.keepsake.HomePageActivity;
 import com.example.keepsake.MainActivity;
 import com.example.keepsake.R;
@@ -219,8 +220,21 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
                 openMemberRequestActivity();
             }
         });
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openAccountSettingsActivity();
+            }
+        });
     }
 
+
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
+        startActivity(intent);
+    }
     public void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
