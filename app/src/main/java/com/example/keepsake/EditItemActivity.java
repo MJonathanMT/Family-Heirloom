@@ -1,7 +1,7 @@
 package com.example.keepsake;
 
-import android.content.Context;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
@@ -50,7 +52,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -64,6 +65,7 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageButton buttonExit;
     private ImageView imageEditItemPhoto;
     private TextView tvUploadImage;
+    private Button deleteItemButton;
     private final int IMAGE_REQUEST = 71;
     private Uri mImageUri;
     private StorageReference storageReference;
@@ -98,6 +100,8 @@ public class EditItemActivity extends AppCompatActivity {
         buttonExit = findViewById(R.id.imageButtonClearOwner);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
         spinnerFamilyGroup = findViewById(R.id.spinnerFamilyGroup);
+
+        deleteItemButton = findViewById(R.id.button_to_delete_item);
 
         storageReference = FirebaseStorage.getInstance().getReference("item");
 
@@ -139,6 +143,15 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openChangeOwnerActivity();
+            }
+        });
+
+        deleteItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("deleteing Item", "item being deleted");
+                deleteItem();
+//                openProfileActivity();
             }
         });
     }
@@ -244,7 +257,7 @@ public class EditItemActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()){
                             Family family = new Family();
                             family.setFamilyName(documentSnapshot.get("familyName", String.class));
-                            family.setUUID((documentSnapshot.getId()));
+                            family.setFamilyID((documentSnapshot.getId()));
                             familyList.add(family);
 
                             if (familyList.size() == 1){
@@ -282,7 +295,7 @@ public class EditItemActivity extends AppCompatActivity {
                 buttonJoin.setVisibility(View.GONE);
 
                 familyName.setText(getItem(position).getFamilyName());
-                familyID.setText(getItem(position).getUUID());
+                familyID.setText(getItem(position).getFamilyID());
                 spinner.setScaleX((float)0.75);
                 spinner.setScaleY((float)0.75);
                 return spinner;
@@ -292,7 +305,7 @@ public class EditItemActivity extends AppCompatActivity {
             public int getPosition(Family item) {
                 int i;
                 for (i=0; i < getCount(); i++){
-                    if (getItem(i).getUUID().compareTo(item.getUUID()) == 0){
+                    if (getItem(i).getFamilyID().compareTo(item.getFamilyID()) == 0){
                         return i;
                     }
                 }
@@ -306,7 +319,7 @@ public class EditItemActivity extends AppCompatActivity {
         spinnerFamilyGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedFamilyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getUUID();
+                String selectedFamilyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getFamilyID();
                 setFamilyID(selectedFamilyID);
 
             }
@@ -373,6 +386,34 @@ public class EditItemActivity extends AppCompatActivity {
                     }
                 });
         openViewItemActivity();
+    }
+
+    private void deleteItem(){
+        // delete item from all users
+        Log.d("item id is:", itemID);
+        db.collection("item").document(itemID).collection("ownership_record")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String currentUser = document.getId();
+                                Log.d("success", "removing item from " + currentUser);
+                                db.collection("user").document(currentUser).collection("items").document(itemID).delete();
+                                db.collection("item").document(itemID).collection("ownership_record").document(currentUser).delete();
+                            }
+                            db.collection("item").document(itemID).delete();
+                            openProfileActivity();
+                        } else {
+                            Log.d("fail", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
+
+
+
     }
 
     // TODO KIREN
@@ -478,6 +519,10 @@ public class EditItemActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
 
     public void initialiseDB() {
         // TODO (naverill) put this function in a public utils class

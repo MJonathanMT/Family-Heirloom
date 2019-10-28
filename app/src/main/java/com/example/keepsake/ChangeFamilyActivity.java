@@ -89,7 +89,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                     Family family = new Family();
                                     family.setFamilyName(documentSnapshot.get("familyName", String.class));
-                                    family.setUUID((documentSnapshot.getId()));
+                                    family.setFamilyID((documentSnapshot.getId()));
                                     familyList.add(family);
 
                                     if (familyList.size() == 1){
@@ -125,7 +125,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                 buttonJoin.setVisibility(View.GONE);
 
                 familyName.setText(getItem(position).getFamilyName());
-                familyID.setText(getItem(position).getUUID());
+                familyID.setText(getItem(position).getFamilyID());
                 spinner.setScaleX((float)0.75);
                 spinner.setScaleY((float)0.75);
                 return spinner;
@@ -135,7 +135,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
             public int getPosition(Family item) {
                 int i;
                 for (i=0; i < getCount(); i++){
-                    if (getItem(i).getUUID().compareTo(item.getUUID()) == 0){
+                    if (getItem(i).getFamilyID().compareTo(item.getFamilyID()) == 0){
                         return i;
                     }
                 }
@@ -149,7 +149,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         spinnerFamilyGroup.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-              String selectedFamilyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getUUID();
+              String selectedFamilyID = ((Family) spinnerFamilyGroup.getSelectedItem()).getFamilyID();
               setFamilyID(selectedFamilyID);
 
             }

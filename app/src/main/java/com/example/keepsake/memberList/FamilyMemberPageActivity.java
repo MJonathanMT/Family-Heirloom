@@ -68,7 +68,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
 //        FirebaseFirestore.getInstance()
 //                .collection("user")
-//                .document(Objects.requireNonNull(currentUser).getUUID())
+//                .document(Objects.requireNonNull(currentUser).getUserID())
 //                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
 //            @Override
 //            public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -111,7 +111,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()){
                     currentUser = documentSnapshot.toObject(User.class);
-                    currentUser.setUUID(userId);
+                    currentUser.setUserID(userId);
                     currentFamilyId = currentUser.getUserSession();
 
                     if(currentFamilyId!=null){
@@ -149,7 +149,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
 
         db.collection("user")
-                .document(currentUser.getUUID())
+                .document(currentUser.getUserID())
                 .collection("familyGroups")
                 .document(currentFamilyId)
                 .get()

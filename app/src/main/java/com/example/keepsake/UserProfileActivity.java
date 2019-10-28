@@ -132,7 +132,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         currentUser = documentSnapshot.toObject(User.class);
                         if (currentUser != null){
-                            currentUser.setUUID(documentSnapshot.getId());
+                            currentUser.setUserID(documentSnapshot.getId());
                             Log.d("Current Id", documentSnapshot.getId());
                         }
 
@@ -149,7 +149,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
 
     @Override
     public void onNoteClick(int position) {
-        String nextItemView = itemList.get(position).getItemId();
+        String nextItemView = itemList.get(position).getItemID();
         Log.d("this item is:", nextItemView);
         Intent intent = new Intent(this, ViewItemActivity.class);
         intent.putExtra("itemId", nextItemView);

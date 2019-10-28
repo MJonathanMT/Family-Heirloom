@@ -97,7 +97,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         currentUser = documentSnapshot.toObject(User.class);
                         if (currentUser != null){
-                            currentUser.setUUID(documentSnapshot.getId());
+                            currentUser.setUserID(documentSnapshot.getId());
                         }
 
                     }
@@ -163,12 +163,12 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() ==  DocumentChange.Type.ADDED) {
                             Item item = doc.getDocument().toObject(Item.class);
-                            item.setItemId(doc.getDocument().getId());
+                            item.setItemID(doc.getDocument().getId());
                             if(userId.compareTo(item.getOwner()) == 0) {
                                 itemList.add(item);
                                 itemsListAdapter.notifyDataSetChanged();
                             }
-                            else if(userFamilyIDList.contains(item.getFamilyId())) {
+                            else if(userFamilyIDList.contains(item.getFamilyID())) {
                                 if (item.getPrivacy().compareTo("O") != 0) {
                                     itemList.add(item);
                                     itemsListAdapter.notifyDataSetChanged();
@@ -290,7 +290,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
     @Override
     public void onNoteClick(int position) {
-        String nextItemView = itemList.get(position).getItemId();
+        String nextItemView = itemList.get(position).getItemID();
         Log.d("this item is:", nextItemView);
         Intent intent = new Intent(this, ViewItemActivity.class);
         intent.putExtra("itemId", nextItemView);

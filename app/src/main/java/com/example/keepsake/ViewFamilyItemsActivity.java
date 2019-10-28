@@ -55,7 +55,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
 //        FirebaseFirestore.getInstance()
 //                .collection("user")
-//                .document(currentUser.getUUID())
+//                .document(currentUser.getUserID())
 //                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
 //            @Override
 //            public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -84,9 +84,9 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
                         currentUser = documentSnapshot.toObject(User.class);
 
                         if (currentUser != null){
-                            currentUser.setUUID(documentSnapshot.getId());
+                            currentUser.setUserID(documentSnapshot.getId());
 
-                            if (!currentUser.getUUID().isEmpty()){
+                            if (!currentUser.getUserID().isEmpty()){
                                 loadFamilyItemViews();
                             }
                         }
@@ -144,10 +144,10 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
                                     if (doc.getDocument().exists()){
                                         Item item = doc.getDocument().toObject(Item.class);
-                                        item.setItemId(doc.getDocument().getId());
+                                        item.setItemID(doc.getDocument().getId());
 
                                         // temporary guard until database is cleaned Up
-                                        if (item.getFamilyId() == null || item.getOwner() == null) {
+                                        if (item.getFamilyID() == null || item.getOwner() == null) {
                                             continue;
                                         }
 
@@ -156,7 +156,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
                                             itemsListAdapter.notifyDataSetChanged();
                                         }
 
-                                        else if (currentUser.getUserSession().compareTo(item.getFamilyId()) == 0){
+                                        else if (currentUser.getUserSession().compareTo(item.getFamilyID()) == 0){
                                             if(item.getPrivacy().compareTo("O") != 0){
                                                 itemList.add(item);
                                                 itemsListAdapter.notifyDataSetChanged();
@@ -275,7 +275,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
     @Override
     public void onNoteClick(int position) {
-        String nextItemView = itemList.get(position).getItemId();
+        String nextItemView = itemList.get(position).getItemID();
         Intent intent = new Intent(this, ViewItemActivity.class);
         intent.putExtra("itemId", nextItemView);
         startActivity(intent);

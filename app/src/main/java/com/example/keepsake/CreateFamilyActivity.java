@@ -161,7 +161,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                         User user = new User();
                         user.setFirstName((String) snapshot.get("firstName"));
                         user.setLastName((String) snapshot.get("lastName"));
-                        user.setUUID(snapshot.getId());
+                        user.setUserID(snapshot.getId());
                         user.setUsername(snapshot.get("username", String.class));
                         return user;
                     }
@@ -178,7 +178,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
                 holder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        memberList.add(user.getUUID());
+                        memberList.add(user.getUserID());
                         myDialog.dismiss();
                         userView.removeView(view);
                         memberListLayout.addView(view);

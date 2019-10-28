@@ -10,11 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -110,7 +108,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
 
                         if(snapshot.exists()){
                             family.setFamilyName(snapshot.get("familyName", String.class));
-                            family.setUUID(snapshot.getId());
+                            family.setFamilyID(snapshot.getId());
                         }
                         return family;
 
@@ -127,7 +125,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
                 holder.setButtonOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sendFamilyRequest(family.getUUID());
+                        sendFamilyRequest(family.getFamilyID());
                         openRequestFamilyGroupActivity();
                     }
                 });
@@ -223,7 +221,7 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
                                                     }
                                                 });
 
-                                        family.setUUID(familyID);
+                                        family.setFamilyID(familyID);
                                     }
                                     return family;
 
