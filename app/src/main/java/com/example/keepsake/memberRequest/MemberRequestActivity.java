@@ -197,7 +197,7 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()){
                             User user = new User();
-                            user.setUUID(userID);
+                            user.setUserID(userID);
                             user.setUsername(documentSnapshot.get("username", String.class));
                             user.setFirstName(documentSnapshot.get("firstName", String.class));
                             user.setLastName(documentSnapshot.get("lastName", String.class));
@@ -244,7 +244,7 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
     @Override
     public void onAcceptClick(int position) {
         // Add current userId to family_group's members
-        final String userID = memberRequestsList.get(position).getUUID();
+        final String userID = memberRequestsList.get(position).getUserID();
 
         addMemberToFamilyGroup(userID);
         acceptUser(userID);
@@ -256,7 +256,7 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
 
     @Override
     public void onDeclineClick(int position) {
-        final String userID = memberRequestsList.get(position).getUUID();
+        final String userID = memberRequestsList.get(position).getUserID();
 
         memberRequestsList.remove(position);
         memberRequestListAdapter.notifyItemRemoved(position);
@@ -310,7 +310,7 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
                         User user = new User();
                         user.setFirstName((String) snapshot.get("firstName"));
                         user.setLastName((String) snapshot.get("lastName"));
-                        user.setUUID(snapshot.getId());
+                        user.setUserID(snapshot.getId());
                         user.setUsername(snapshot.get("username", String.class));
                         return user;
                     }

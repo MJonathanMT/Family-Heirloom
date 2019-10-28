@@ -10,12 +10,12 @@ public class Item {
     private String startDate;
     private String itemID;
 
-    public Item(String name, String description, String privacy, String owner, String familyId, String url, String startDate) {
+    public Item(String name, String description, String privacy, String owner, String familyID, String url, String startDate) {
         this.name = name;
         this.description = description;
         this.privacy = privacy;
         this.owner = owner;
-        this.familyID = familyId;
+        this.familyID = familyID;
         this.url = url;
         this.startDate = startDate;
     }
@@ -52,12 +52,12 @@ public class Item {
         this.owner = owner;
     }
 
-    public String getFamilyId() {
+    public String getFamilyID() {
         return familyID;
     }
 
-    public void setFamilyId(String familyId) {
-        this.familyID = familyID;
+    public void setFamilyID(String familyID) {
+        this.familyID = this.familyID;
     }
 
     public String getUrl() {
@@ -68,12 +68,12 @@ public class Item {
         this.url = url;
     }
 
-    public String getItemId() {
+    public String getItemID() {
         return itemID;
     }
 
-    public void setItemId(String itemId) {
-        this.itemID = itemId;
+    public void setItemID(String itemID) {
+        this.itemID = itemID;
     }
 
     public Item(){}

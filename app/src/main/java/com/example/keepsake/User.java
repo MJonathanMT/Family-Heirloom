@@ -1,7 +1,7 @@
 package com.example.keepsake;
 
 public class User {
-    private String firstName, lastName, email, userSession, username, uuid, url;
+    private String firstName, lastName, email, userSession, username, userID, url;
 
     public User(String firstname, String lastname, String email, String url, String username, String userSession) {
         this.firstName = firstname;
@@ -59,12 +59,10 @@ public class User {
         return userSession;
     }
 
-    public String getUUID() {
-        return uuid;
-    }
+    public String getUserID() { return userID; }
 
-    public void setUUID(String id) {
-        this.uuid = id;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public void setUserSession(String userSession) {

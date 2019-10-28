@@ -1,6 +1,5 @@
 package com.example.keepsake;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ public class FamilyViewHolder extends RecyclerView.ViewHolder {
         joinButton = mView.findViewById(R.id.buttonJoin);
 
         familyNameText.setText(family.getFamilyName());
-        familyIDText.setText(family.getUUID());
+        familyIDText.setText(family.getFamilyID());
     }
 
     public void setOnClickListener(View.OnClickListener listener){

@@ -1,22 +1,22 @@
 package com.example.keepsake;
 
 public class Family {
-    private String familyName, UUID;
+    private String familyName, familyID;
 
-    public Family(String name, String uuid) {
+    public Family(String name, String familyID) {
         this.familyName = name;
-        this.UUID = uuid;
+        this.familyID = familyID;
     }
 
     public Family() {
     }
 
-    public String getUUID() {
-        return UUID;
+    public String getFamilyID() {
+        return familyID;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setFamilyID(String familyID) {
+        this.familyID = familyID;
     }
 
     public String getFamilyName() {

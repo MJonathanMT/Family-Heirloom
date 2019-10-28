@@ -216,7 +216,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                         User user = new User();
                         user.setFirstName(snapshot.get("firstName", String.class));
                         user.setLastName(snapshot.get("lastName", String.class));
-                        user.setUUID(snapshot.getId());
+                        user.setUserID(snapshot.getId());
                         user.setUsername(snapshot.get("username", String.class));
                         // Load photo after selecting user
                         user.setUserSession(snapshot.get("userSession", String.class));
@@ -316,7 +316,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                             }};
 
                             db.collection("user")
-                                    .document(newOwner.getUUID())
+                                    .document(newOwner.getUserID())
                                     .collection("items")
                                     .document(itemId)
                                     .set(data);
@@ -360,7 +360,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         final Map<String, String> newOwnerData = new HashMap<String, String>() {{
             put("startDate", formatter.format(date));
             put("privacy", "O");
-            put("ownerID", newOwner.getUUID());
+            put("ownerID", newOwner.getUserID());
             put("familyID", newOwner.getUserSession());
         }};
 
@@ -368,7 +368,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
 
         docRef.update("startDate", formatter.format(date));
         docRef.update("privacy", "O");
-        docRef.update("owner", newOwner.getUUID());
+        docRef.update("owner", newOwner.getUserID());
         docRef.update("familyID", newOwner.getUserSession());
     }
 
