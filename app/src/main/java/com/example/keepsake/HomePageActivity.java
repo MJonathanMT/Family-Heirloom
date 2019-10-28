@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -91,6 +93,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         createFamilyList();
         loadItemViews();
         createNavBar();
+        manageButtons();
     }
 
     private void createUserClass(){
@@ -234,6 +237,34 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
                 return true;
             }
         });
+    }
+    private void manageButtons(){
+
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        Button buttonUpload = findViewById(R.id.buttonUpload);
+
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openAccountSettingsActivity();
+            }
+        });
+
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openNewItemUploadActivity();
+            }
+        });
+    }
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openNewItemUploadActivity() {
+        Intent intent = new Intent(this, NewItemUploadActivity.class);
+        startActivity(intent);
     }
 
     @Override

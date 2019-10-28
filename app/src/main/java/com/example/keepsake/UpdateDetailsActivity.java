@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -13,13 +14,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,11 +52,14 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     StorageTask uploadTask;
     FirebaseFirestore mFirebaseFirestore;
     StorageReference storageReference;
+    private ActionBarDrawerToggle drawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_details);
+        createNavBar();
+        manageButtons();
 
         buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
         buttonDelete = findViewById(R.id.button_to_delete_account);
@@ -185,4 +194,84 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
+    private void createNavBar(){
+        DrawerLayout drawerLayout = findViewById(R.id.updateDetailsDrawerLayout);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerLayout.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Update Details");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
+        NavigationView nav_view = findViewById(R.id.nav_view);
+        nav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.ButtonHomepageAccess) {
+                    openHomePageActivity();
+                } else if (id == R.id.ButtonFamilyItemsAccess) {
+                    openViewFamilyItemsActivity();
+                } else if (id == R.id.ButtonFamilyMembersAccess) {
+                    openFamilyMemberPageActivity();
+                } else if (id == R.id.ButtonProfileAccess) {
+                    openProfileActivity();
+                } else if (id == R.id.ButtonLogOutAccess) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(UpdateDetailsActivity.this, "Signout successful!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
+    }
+    private void openViewFamilyItemsActivity() {
+        Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
+        startActivity(intent);
+    }
+
+    private void openFamilyMemberPageActivity() {
+        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
+        startActivity(intent);
+    }
+
+    private void openProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void manageButtons(){
+
+        Button buttonSettings = findViewById(R.id.buttonSettings);
+        buttonSettings.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                openAccountSettingsActivity();
+            }
+        });
+    }
+
+    private void openAccountSettingsActivity() {
+        Intent intent = new Intent(this, AccountSettingsActivity.class);
+        startActivity(intent);
+    }
+
 }
