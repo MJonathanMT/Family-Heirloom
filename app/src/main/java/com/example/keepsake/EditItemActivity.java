@@ -105,7 +105,6 @@ public class EditItemActivity extends AppCompatActivity {
                 .document(itemID);
 
         populatePrivacyLevelSpinner();
-        populateFamilyGroupSpinner();
         loadItemInfo(docRef);
 
         imageEditItemPhoto.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +173,8 @@ public class EditItemActivity extends AppCompatActivity {
                                 }
 
                                 spinnerPrivacy.setSelection(selectedIndex, true);
+                                populateFamilyGroupSpinner();
+
                             } else {
                                 //TODO(naverill) notify user of failure
                             }
@@ -240,19 +241,21 @@ public class EditItemActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Family family = new Family();
-                        family.setFamilyName(documentSnapshot.get("familyName", String.class));
-                        family.setUUID((documentSnapshot.getId()));
-                        familyList.add(family);
+                        if (documentSnapshot.exists()){
+                            Family family = new Family();
+                            family.setFamilyName(documentSnapshot.get("familyName", String.class));
+                            family.setUUID((documentSnapshot.getId()));
+                            familyList.add(family);
 
-                        if (familyList.size() == 1){
-                            createFamilySpinner(familyList);
-                        }
+                            if (familyList.size() == 1){
+                                createFamilySpinner(familyList);
+                            }
 
-                        int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
-                        if (position != -1){
-                            spinnerFamilyGroup.setSelection(position, true);
+                            int position = ((ArrayAdapter)spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
+                            if (position != -1){
+                                spinnerFamilyGroup.setSelection(position, true);
 
+                            }
                         }
                     }
                 });

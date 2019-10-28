@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -44,6 +45,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class NewItemUploadActivity extends AppCompatActivity {
@@ -70,7 +73,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
         //btnbrowse = findViewById(R.id.chooseBtn);
         btnupload = findViewById(R.id.uploadBtn);
         itemName = findViewById(R.id.itemName);
-        itemDescription = findViewById(R.id.itemDescription);
+        itemDescription = findViewById(R.id.textViewDescription);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
         spinnerFamilyGroup = findViewById(R.id.spinnerFamilyGroup);
         mStorageRef = FirebaseStorage.getInstance().getReference("item");
@@ -287,28 +290,30 @@ public class NewItemUploadActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Uri> task) {
                         if(task.isSuccessful()) {
                             final String url = Objects.requireNonNull(task.getResult()).toString();
-                            UploadInfo upload = new UploadInfo(
+                            Item item = new Item(
                                     name,
-                                    familyID,
+                                    description,
                                     privacy,
                                     userID,
-                                    description,
+                                    familyID,
                                     url,
-                                    timeStamp.format(new Date()).toString().trim()
+                                    timeStamp.format(new Date()).trim()
                             );
 
-                            db.collection("item").document()
-                                    .set(upload)
+                            final DocumentReference itemRef = db.collection("item")
+                                    .document();
+
+                            itemRef.set(item)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Toast.makeText(NewItemUploadActivity.this, "Images is uploaded", Toast.LENGTH_LONG).show();
-                                            startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+                                            addOwnershipRecord(itemRef, item);
+                                            openUserProfileActivity();
                                         }
                                     }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(NewItemUploadActivity.this, "Failed to upload", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(NewItemUploadActivity.this, "Upload Failed", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -326,6 +331,25 @@ public class NewItemUploadActivity extends AppCompatActivity {
         catch(Exception e) {
             Toast.makeText(NewItemUploadActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void openUserProfileActivity(){
+        Toast.makeText(NewItemUploadActivity.this, "Successfully uploaded", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+    }
+
+    public void addOwnershipRecord(DocumentReference itemRef, Item item){
+        Map<String, String> data = new HashMap<String, String>() {{
+            put("ownerID", item.getOwner());
+            put("startDate", item.getStartDate());
+            put("memory", item.getDescription());
+            put("privacy", item.getPrivacy());
+            put("familyID", item.getFamilyId());
+        }};
+
+        itemRef.collection("ownership_record")
+                .document()
+                .set(data);
     }
 
     @Override

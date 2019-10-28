@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private TextView textViewItemDescription;
     private ImageButton buttonExit;
     private TextView textViewFamilyName;
+    private Button buttonViewTimeline;
     private String itemID;
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -47,7 +49,6 @@ public class ViewItemActivity extends AppCompatActivity {
         Intent intent = getIntent();
         itemID = intent.getStringExtra("itemId");
 
-//        itemId = "Q5SWGQ3jNngl5DDtHni4";
         initialiseDB();
 
         buttonEdit = findViewById(R.id.buttonEdit);
@@ -55,7 +56,8 @@ public class ViewItemActivity extends AppCompatActivity {
         imageViewItemPhoto = findViewById(R.id.imageViewItemPhoto);
         textViewItemName = findViewById(R.id.textViewItemName);
         textViewItemDescription = findViewById(R.id.textViewItemDescription);
-//        textViewFamilyName = findViewById(R.id.textViewFamilyName);
+        textViewFamilyName = findViewById(R.id.textViewFamilyName);
+        buttonViewTimeline = findViewById(R.id.buttonViewTimeline);
 
         loadItemInfo(itemID);
 
@@ -70,6 +72,13 @@ public class ViewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openPreviousActivity();
+            }
+        });
+
+        buttonViewTimeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openViewItemTimelineActivity(itemID);
             }
         });
 
@@ -127,6 +136,12 @@ public class ViewItemActivity extends AppCompatActivity {
 
     public final void openEditItemActivity(String itemID) {
         Intent intent = new Intent(this, EditItemActivity.class);
+        intent.putExtra("itemId", itemID);
+        startActivity(intent);
+    }
+
+    public final void openViewItemTimelineActivity(String itemID) {
+        Intent intent = new Intent(this, ViewItemTimelineActivity.class);
         intent.putExtra("itemId", itemID);
         startActivity(intent);
     }

@@ -46,6 +46,7 @@
         <activity android:name=".FamilySetupActivity"
             tools:ignore="DuplicateActivity" />
         <activity android:name=".CreateFamilyActivity" />
+        <activity android:name=".ViewItemTimelineActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -39,6 +39,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -218,6 +219,7 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
                         user.setUUID(snapshot.getId());
                         user.setUsername(snapshot.get("username", String.class));
                         // Load photo after selecting user
+                        user.setUserSession(snapshot.get("userSession", String.class));
                         user.setUrl(snapshot.get("url", String.class));
 
                         return user;
@@ -330,25 +332,39 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         final Date date = new Date();
         final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 
-        final Map<String, String> oldOwnerData = new HashMap<String, String>() {{
-            put("startDate", document.get("start_date", String.class));
-            put("privacy", ownerPrivacy);
-            put("endDate", formatter.format(date));
-            put("ownerID", userID);
-            put("familyID", document.get("familyID", String.class));
-        }};
+        docRef.collection("ownership_record")
+                .whereEqualTo("startDate", document.get("startDate", String.class))
+                .whereEqualTo("ownerID", document.get("owner", String.class))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            QuerySnapshot querySnapshot = task.getResult();
+                            for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()){
+                                DocumentReference docRef = documentSnapshot.getReference();
 
-        docRef.collection("ownership_record").document().set(oldOwnerData);
+                                docRef.update("privacy", ownerPrivacy);
+                                docRef.update("endDate", formatter.format(date));
+                                docRef.update("memory", document.get("description", String.class));
+                                docRef.update("familyID", document.get("familyID", String.class));
+
+
+                            }
+                        }
+                    }
+                });
+
 
         //todo (naverill) refine how the item is transferred into new family
-//        final Map<String, String> newOwnerData = new HashMap<String, String>() {{
-//            put("start_date", formatter.format(date));
-//            put("privacy", "O");
-//            put("ownerID", newOwner.getUUID());
-//            put("familyID", newOwner.getUserSession());
-//        }};
-//
-//        docRef.collection("ownership_record").document().set(newOwnerData);
+        final Map<String, String> newOwnerData = new HashMap<String, String>() {{
+            put("startDate", formatter.format(date));
+            put("privacy", "O");
+            put("ownerID", newOwner.getUUID());
+            put("familyID", newOwner.getUserSession());
+        }};
+
+        docRef.collection("ownership_record").document().set(newOwnerData);
 
         docRef.update("startDate", formatter.format(date));
         docRef.update("privacy", "O");
