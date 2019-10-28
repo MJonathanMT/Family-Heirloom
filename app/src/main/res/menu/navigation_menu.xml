@@ -7,13 +7,13 @@
         android:icon="@drawable/baseline_perm_identity_24"
         >
     </item>
-    <item
+    <!--item
         android:id="@+id/ButtonHomepageAccess"
         android:title="Timeline"
         android:icon="@drawable/home_black"
         >
 
-    </item>
+    </item-->
 
     <item
         android:id="@+id/ButtonFamilyItemsAccess"

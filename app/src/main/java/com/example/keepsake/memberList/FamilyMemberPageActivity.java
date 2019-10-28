@@ -258,9 +258,7 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if (id == R.id.ButtonHomepageAccess) {
-                    openHomePageActivity();
-                } else if (id == R.id.ButtonFamilyItemsAccess) {
+                if (id == R.id.ButtonFamilyItemsAccess) {
                     openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openFamilyMemberPageActivity();

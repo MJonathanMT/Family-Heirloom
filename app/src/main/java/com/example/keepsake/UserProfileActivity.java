@@ -61,8 +61,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
         getUserId();
         createUserClass();
 
-        FirebaseFirestore.getInstance()
-                .collection("user")
+        db.collection("user")
                 .document(user.getUid())
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -77,13 +76,13 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
                     }
                 });
 
-        homeItemViewing();
         getUserId();
+        loadItems();
         createNavBar();
         manageButtons();
     }
 
-    private void homeItemViewing(){
+    private void loadItems(){
         itemList = new ArrayList<>();
         itemsListAdapter = new ItemsListAdapter(itemList, this);
 
@@ -93,32 +92,34 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
         posts.setAdapter(itemsListAdapter);
 
         // get all the items relevant to the current user
-        db.collection("item").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+        db.collection("item")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                if (e != null) {
-                    Log.d(TAG, "Error: " + e.getMessage());
-                }
+                        if (e != null) {
+                            Log.d(TAG, "Error: " + e.getMessage());
+                        }
 
-                if (queryDocumentSnapshots != null && queryDocumentSnapshots.isEmpty()){
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() ==  DocumentChange.Type.ADDED) {
-                            if (doc.getDocument().exists()){
+                        if (queryDocumentSnapshots != null){
+                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                if (doc.getType() ==  DocumentChange.Type.ADDED) {
+                                    if (doc.getDocument().exists()){
 
-                                Item item = doc.getDocument().toObject(Item.class);
-                                item.setItemId(doc.getDocument().getId());
-
-                                if(item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
-                                    itemList.add(item);
-                                    itemsListAdapter.notifyDataSetChanged();
+                                        Item item = doc.getDocument().toObject(Item.class);
+                                        item.setItemId(doc.getDocument().getId());
+                                        Log.d("Item owner", " " + item.getOwner());
+                                        Log.d("User ID", " " + userId);
+                                        if(item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
+                                            itemList.add(item);
+                                            itemsListAdapter.notifyDataSetChanged();
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            }
-        });
+                });
     }
 
     private void createUserClass(){
@@ -178,9 +179,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
 
-                if (id == R.id.ButtonHomepageAccess) {
-                    openHomePageActivity();
-                } else if (id == R.id.ButtonFamilyItemsAccess) {
+                if (id == R.id.ButtonFamilyItemsAccess) {
                     openViewFamilyItemsActivity();
                 } else if (id == R.id.ButtonFamilyMembersAccess) {
                     openFamilyMemberPageActivity();
