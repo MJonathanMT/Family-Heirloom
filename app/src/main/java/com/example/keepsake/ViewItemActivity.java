@@ -2,6 +2,7 @@ package com.example.keepsake;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -22,12 +23,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 public class ViewItemActivity extends AppCompatActivity {
+
+    private User currentUser;
+    private String userId;
+
     private FirebaseFirestore db;
     private ImageButton buttonEdit;
     ImageView imageViewItemPhoto;
@@ -44,6 +50,9 @@ public class ViewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
+
+        getUserId();
+        createUserClass();
         createNavBar();
 
         Intent intent = getIntent();
@@ -154,6 +163,21 @@ public class ViewItemActivity extends AppCompatActivity {
         DrawerLayout drawerLayout = findViewById(R.id.accountSettingsDrawerLayout);
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUserID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
+
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
@@ -182,6 +206,32 @@ public class ViewItemActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUserID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
+    }
+
+    private void getUserId(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            userId = user.getUid();
+        }
+    }
+
     private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +31,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ChangeFamilyActivity extends AppCompatActivity {
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private User currentUser;
+
+
     private FirebaseFirestore db;
     private String userId;
     private ArrayList<String> userFamilyNameList = new ArrayList<>();
@@ -62,6 +69,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         });
 
         getUserId();
+        createUserClass();
         createNavBar();
         populateFamilyGroupSpinner();
         manageButtons();
@@ -226,6 +234,21 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         DrawerLayout drawerLayout = findViewById(R.id.changeFamilyDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -261,6 +284,24 @@ public class ChangeFamilyActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUserID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
     }
 
     @Override

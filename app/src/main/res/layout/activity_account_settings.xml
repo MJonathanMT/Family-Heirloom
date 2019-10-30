@@ -29,12 +29,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="96dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:fontFamily="@font/cousine_bold"
             android:text="@string/AccountSettings"
             android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonUpdateDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -50,7 +51,6 @@
             android:text="@string/UpdateDetails"
             app:layout_constraintBottom_toTopOf="@+id/textViewFamilySettings"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewAccountSettings" />
 
@@ -59,7 +59,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="68dp"
-            android:layout_marginTop="48dp"
             android:layout_marginEnd="69dp"
             android:fontFamily="@font/advent_pro_bold"
             android:text="@string/FamilySettings"
@@ -67,6 +66,7 @@
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonChangeCurrentFamily"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDetails" />
 
@@ -82,7 +82,6 @@
             android:text="@string/ChangeCurrentFamily"
             app:layout_constraintBottom_toTopOf="@+id/buttonAddFamily"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewFamilySettings" />
 
@@ -99,7 +98,6 @@
             android:text="@string/AddFamily"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonChangeCurrentFamily" />
 
@@ -114,6 +112,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -121,6 +120,5 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header"
 
-        app:menu="@menu/navigation_menu">
-    </com.google.android.material.navigation.NavigationView>
+        app:menu="@menu/navigation_menu"></com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

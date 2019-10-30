@@ -2,9 +2,12 @@ package com.example.keepsake;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,23 +17,54 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.keepsake.memberList.FamilyMemberPageActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 public class AccountSettingsActivity extends AppCompatActivity {
 
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ActionBarDrawerToggle drawerToggle;
+    private FirebaseFirestore db;
+    private User currentUser;
+    private String userId;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
+
+        db = FirebaseFirestore.getInstance();
+
+        getUserId();
+        createUserClass();
         createNavBar();
         manageButtons();
     }
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.accountSettingsDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -73,6 +107,32 @@ public class AccountSettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
+
+    private void getUserId(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            userId = user.getUid();
+        }
+    }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUserID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
+    }
+
 
 
 

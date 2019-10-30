@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +29,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,9 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     private ActionBarDrawerToggle drawerToggle;
     private FirebaseFirestore db;
@@ -181,6 +187,21 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.itemsDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
+
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

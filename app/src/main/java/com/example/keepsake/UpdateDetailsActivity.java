@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -43,6 +44,14 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class UpdateDetailsActivity extends AppCompatActivity {
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private User currentUser;
+    private String userId;
+    private FirebaseFirestore db;
+
+
+
     Button buttonSaveChanges, buttonDelete;
     FirebaseUser firebaseUser;
     EditText firstname, lastname, email;
@@ -58,6 +67,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_details);
+        getUserId();
+        createUserClass();
         createNavBar();
         manageButtons();
 
@@ -198,6 +209,20 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         DrawerLayout drawerLayout = findViewById(R.id.updateDetailsDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -235,6 +260,31 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void createUserClass(){
+        // create a user class for the current user
+        db.collection("user")
+                .document(userId)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        currentUser = documentSnapshot.toObject(User.class);
+                        if (currentUser != null){
+                            currentUser.setUserID(documentSnapshot.getId());
+                            Log.d("Current Id", documentSnapshot.getId());
+                        }
+
+                    }
+                });
+    }
+
+    private void getUserId(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            userId = user.getUid();
+        }
     }
 
     @Override

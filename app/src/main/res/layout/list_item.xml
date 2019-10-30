@@ -17,7 +17,7 @@
         android:paddingBottom="5dp">
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/timelineFamilyName"
             android:layout_width="275dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -61,7 +61,7 @@
             android:id="@+id/imageView"
             android:layout_width="275dp"
             android:layout_height="5dp"
-            android:layout_below="@id/name"
+            android:layout_below="@id/timelineFamilyName"
             android:layout_marginLeft="125dp"
             android:layout_marginTop="2dp"
             app:srcCompat="@drawable/custom_divider" />
