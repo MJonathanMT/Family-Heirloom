@@ -1,6 +1,7 @@
 package com.example.keepsake;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -32,15 +33,14 @@ import com.squareup.picasso.Picasso;
 public class ViewItemActivity extends AppCompatActivity {
 
     private User currentUser;
-    private String userId;
 
     private FirebaseFirestore db;
-    private ImageButton buttonEdit;
-    ImageView imageViewItemPhoto;
+    private Button buttonEdit;
+    private ImageView imageViewItemPhoto;
     private TextView textViewItemName;
     private TextView textViewItemDescription;
-    private ImageButton buttonExit;
     private TextView textViewFamilyName;
+    private TextView textViewFamilyID;
     private Button buttonViewTimeline;
     private String itemID;
     private String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -51,21 +51,20 @@ public class ViewItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_item);
 
-        getUserId();
+        initialiseDB();
+
         createUserClass();
         createNavBar();
 
         Intent intent = getIntent();
         itemID = intent.getStringExtra("itemId");
 
-        initialiseDB();
-
         buttonEdit = findViewById(R.id.buttonEdit);
-        buttonExit = findViewById(R.id.imageButtonClearOwner);
         imageViewItemPhoto = findViewById(R.id.imageViewItemPhoto);
         textViewItemName = findViewById(R.id.textViewItemName);
         textViewItemDescription = findViewById(R.id.textViewItemDescription);
         textViewFamilyName = findViewById(R.id.textViewFamilyName);
+        textViewFamilyID = findViewById(R.id.textViewFamilyID);
         buttonViewTimeline = findViewById(R.id.buttonViewTimeline);
 
         loadItemInfo(itemID);
@@ -74,13 +73,6 @@ public class ViewItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openEditItemActivity(itemID);
-            }
-        });
-
-        buttonExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPreviousActivity();
             }
         });
 
@@ -109,20 +101,28 @@ public class ViewItemActivity extends AppCompatActivity {
                                 textViewItemDescription.setText(document.get("description", String.class));
                                 Picasso.get().load(document.get("url", String.class)).into(imageViewItemPhoto);
 
+                                Point size = new Point();
+                                getWindowManager().getDefaultDisplay().getSize(size);
+                                float scale = (size.x / (imageViewItemPhoto.getWidth()));
+                                imageViewItemPhoto.setScaleX(scale);
+                                imageViewItemPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
                                 String familyID = document.get("familyID", String.class);
 
                                 if (familyID == null){
                                     return;
                                 }
 
-                                db.collection("family_group").document(familyID)
+                                db.collection("family_group")
+                                        .document(familyID)
                                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        if (documentSnapshot.exists()){
-  //                                          textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if (documentSnapshot.exists()){
+                                                textViewFamilyName.setText(documentSnapshot.get("familyName", String.class));
+                                                textViewFamilyID.setText(documentSnapshot.getId());
+                                            }
                                         }
-                                    }
                                 });
 
                                 if (userID.compareTo(document.get("owner", String.class)) != 0){
@@ -164,7 +164,7 @@ public class ViewItemActivity extends AppCompatActivity {
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         db.collection("user")
-                .document(userId)
+                .document(userID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -210,7 +210,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private void createUserClass(){
         // create a user class for the current user
         db.collection("user")
-                .document(userId)
+                .document(userID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -223,13 +223,6 @@ public class ViewItemActivity extends AppCompatActivity {
 
                     }
                 });
-    }
-
-    private void getUserId(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            userId = user.getUid();
-        }
     }
 
     private void openProfileActivity() {

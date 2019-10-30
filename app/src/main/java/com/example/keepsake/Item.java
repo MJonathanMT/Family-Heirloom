@@ -57,7 +57,7 @@ public class Item {
     }
 
     public void setFamilyID(String familyID) {
-        this.familyID = this.familyID;
+        this.familyID = familyID;
     }
 
     public String getUrl() {

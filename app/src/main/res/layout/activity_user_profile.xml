@@ -16,7 +16,7 @@
             android:id="@+id/userProfileToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/gradient_box"
             android:minHeight="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userProfileToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/userProfileToolbar"
+            android:overScrollMode="always" />
 
         <Button
             android:id="@+id/buttonSettings"
@@ -111,6 +112,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:scrollbars="vertical"
         app:headerLayout="@layout/navigation_header"
         app:menu="@menu/navigation_menu"></com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

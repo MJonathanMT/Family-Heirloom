@@ -49,7 +49,6 @@ import javax.annotation.Nullable;
 public class MemberRequestActivity extends AppCompatActivity implements MemberRequestListAdapter.OnNoteListener{
 
     private static final String TAG = "FireLog";
-    private ImageButton imageButtonExit;
     private FirebaseFirestore db;
 
     private User currentUser;
@@ -85,13 +84,6 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         userView.setHasFixedSize(true);
         userView.setLayoutManager(new LinearLayoutManager(this));
 
-        imageButtonExit = findViewById(R.id.imageButtonExit);
-        imageButtonExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openFamilyMemberPageActivity();
-            }
-        });
 
         imageButtonCancel = findViewById(R.id.imageButtonCancel);
         imageButtonCancel.setVisibility(View.GONE);
