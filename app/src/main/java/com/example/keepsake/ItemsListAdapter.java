@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,7 +66,7 @@ public class ItemsListAdapter extends RecyclerView.Adapter<ItemsListAdapter.View
         ViewHolder(@NonNull View itemView, OnNoteListener onNoteListener) {
             super(itemView);
             mView = itemView;
-            nameText = mView.findViewById(R.id.name);
+            nameText = mView.findViewById(R.id.timelineFamilyName);
             descriptionText = mView.findViewById(R.id.description);
             urlText = mView.findViewById(R.id.url);
             urlView = mView.findViewById(R.id.urlView);

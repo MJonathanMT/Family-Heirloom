@@ -60,23 +60,6 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
 
         getUserId();
         createUserClass();
-
-        db.collection("user")
-                .document(user.getUid())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        User user = documentSnapshot.toObject(User.class);
-                        TextView displayName = findViewById(R.id.user_profile_name);
-                        ImageView displayProfilePicture = findViewById(R.id.user_header_profile_image);
-
-                        // Prints the name of the user session base on id of the view
-                        displayName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
-                        Picasso.get().load(user.getUrl()).into(displayProfilePicture);
-                    }
-                });
-
-        getUserId();
         loadItems();
         createNavBar();
         manageButtons();
@@ -107,7 +90,7 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
                                     if (doc.getDocument().exists()){
 
                                         Item item = doc.getDocument().toObject(Item.class);
-                                        item.setItemId(doc.getDocument().getId());
+                                        item.setItemID(doc.getDocument().getId());
                                         Log.d("Item owner", " " + item.getOwner());
                                         Log.d("User ID", " " + userId);
                                         if(item.getOwner() != null && userId.compareTo(item.getOwner()) == 0) {
@@ -159,6 +142,25 @@ public class UserProfileActivity extends AppCompatActivity implements ItemsListA
         DrawerLayout drawerLayout = findViewById(R.id.userProfileDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView profileName = findViewById(R.id.user_profile_name);
+                ImageView profilePicture = findViewById(R.id.user_profile_picture);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                profileName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(profilePicture);
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.userProfileToolbar);
         setSupportActionBar(toolbar);

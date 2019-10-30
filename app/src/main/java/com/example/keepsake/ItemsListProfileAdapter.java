@@ -61,7 +61,7 @@ public class ItemsListProfileAdapter extends RecyclerView.Adapter<ItemsListProfi
 
             mView = itemView;
 
-            nameText = (TextView) mView.findViewById(R.id.name);
+            nameText = (TextView) mView.findViewById(R.id.timelineFamilyName);
             descriptionText = (TextView) mView.findViewById(R.id.description);
             urlText =  mView.findViewById(R.id.url);
             urlView = mView.findViewById(R.id.urlView);

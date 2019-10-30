@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +52,7 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
     private CircleImageView displayProfilePicture;
 
     private String userId;
-    private ArrayList<String> userFamilyNameList = new ArrayList<>();
+//    private ArrayList<String> userFamilyNameList = new ArrayList<>();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     private ArrayList<String> userFamilyIDList = new ArrayList<>();
 
@@ -63,9 +65,6 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 
         getUserId();
         createUserClass();
-        displayName = findViewById(R.id.user_header_welcome_message);
-        displayProfilePicture = findViewById(R.id.user_header_profile_image);
-
 //        DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
 //        reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
 //            @Override
@@ -78,6 +77,14 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
 //                displayName.setText(user.getFirstName());
 //                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
 //
+//            }
+//        });
+
+
+                // Prints the name of the user session base on id of the view
+//                displayName.setText(user.getFirstName());
+//                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+
 //            }
 //        });
 
@@ -189,6 +196,30 @@ public class HomePageActivity extends AppCompatActivity implements ItemsListAdap
         DrawerLayout drawerLayout = findViewById(R.id.homeDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
+        db = FirebaseFirestore.getInstance();
+
+        getUserId();
+        createUserClass();
+
+        db.collection("user")
+                .document(user.getUid())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                User user = documentSnapshot.toObject(User.class);
+                TextView profileName = findViewById(R.id.user_profile_name);
+                ImageView profilePicture = findViewById(R.id.user_profile_picture);
+                TextView displayMessage = findViewById(R.id.user_header_welcome_message);
+                ImageView displayProfilePicture = findViewById(R.id.user_header_profile_picture);
+
+
+                // Prints the name of the user session base on id of the view
+                displayMessage.setText(currentUser.getFirstName()+ " " + currentUser.getLastName());
+                profileName.setText(currentUser.getFirstName() +" "+ currentUser.getLastName());
+                Picasso.get().load(user.getUrl()).into(profilePicture);
+                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
+            }
+        });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
