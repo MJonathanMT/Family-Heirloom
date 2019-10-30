@@ -3,8 +3,10 @@ package com.example.keepsake;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     TextInputEditText mEmail, mPassword;
+    TextView forgotPassword;
     Button buttonLogIn;
     private FirebaseAuth mAuth;
 
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mEmail = findViewById(R.id.mEmail);
         mPassword = findViewById(R.id.mPassword);
+        forgotPassword = findViewById(R.id.tv_forget_password);
         buttonLogIn = findViewById(R.id.buttonLogIn);
 
         mAuth = FirebaseAuth.getInstance();
@@ -43,12 +47,19 @@ public class MainActivity extends AppCompatActivity {
 
                 // Check if email input is empty
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(MainActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please Enter Email", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                // Check if valid email pattern
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    Toast.makeText(MainActivity.this, "Invalid Email Address", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // Check if password input is empty
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(MainActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please Enter Password", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -60,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
-
+                                    finish();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Toast.makeText(MainActivity.this, "Login failed!", Toast.LENGTH_SHORT).show();
@@ -70,7 +81,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
+            }
+        });
+    }
 
+    // Check if user is already signed in
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+        }
     }
 
     // Redirect to signup page
