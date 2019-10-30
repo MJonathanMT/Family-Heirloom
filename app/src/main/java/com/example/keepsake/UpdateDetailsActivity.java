@@ -67,6 +67,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_details);
+        db = FirebaseFirestore.getInstance();
         getUserId();
         createUserClass();
         createNavBar();
@@ -83,6 +84,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageReference = FirebaseStorage.getInstance().getReference("user");
 
+        // Loads user information into page
         DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(Objects.requireNonNull(firebaseUser).getUid());
         reference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -95,6 +97,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
             }
         });
 
+        // Allows user to choose and change profile photo
         tv_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +107,8 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                         .start(UpdateDetailsActivity.this);
             }
         });
+
+        // Image view for user profile photo
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,10 +125,27 @@ public class UpdateDetailsActivity extends AppCompatActivity {
                         lastname.getText().toString(),
                         email.getText().toString());
                 openHomePageActivity();
+                finish();
+            }
+        });
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(UpdateDetailsActivity.this, "User account deleted", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+                    }
+                });
             }
         });
     }
 
+    // Updates user profile information
     private void updateProfile(String firstname, String lastname, String email) {
         DocumentReference reference = FirebaseFirestore.getInstance().collection("user").document(firebaseUser.getUid());
 
@@ -135,6 +157,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         reference.update(hashMap);
     }
 
+    // Get file extension of the file selected
     private String getExtension(Uri uri) {
         try {
             ContentResolver contentResolver = getContentResolver();
@@ -147,6 +170,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         return null;
     }
 
+    // Updates user profile photo
     private void uploadImage() {
         if(mImageUri != null) {
             String imgName = System.currentTimeMillis()+"."+getExtension(mImageUri);
@@ -171,6 +195,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
 
                         reference.update(hashMap);
                         startActivity(new Intent(getApplicationContext(), UpdateDetailsActivity.class));
+                        finish();
                     }
                     else {
                         Toast.makeText(UpdateDetailsActivity.this, "Failed to update", Toast.LENGTH_LONG).show();
@@ -188,6 +213,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         }
     }
 
+    // Activity to check result of uploading
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -201,6 +227,7 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         }
     }
 
+    // Redirect user to user profile page
     private void openHomePageActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);

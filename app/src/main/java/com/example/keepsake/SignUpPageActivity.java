@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -69,7 +70,6 @@ public class SignUpPageActivity extends AppCompatActivity {
                 final String firstname = mFirstname.getText().toString().trim();
                 final String lastname = mLastname.getText().toString().trim();
                 final String email = mEmail.getText().toString().trim();
-                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 String password = mPassword.getText().toString().trim();
                 String confirmPassword = mConfirmPassword.getText().toString().trim();
 
@@ -97,8 +97,8 @@ public class SignUpPageActivity extends AppCompatActivity {
                 }
 
                 // Check if valid email pattern
-                if (!email.matches(emailPattern)){
-                    Toast.makeText(getApplicationContext(),"Invalid Email address", Toast.LENGTH_LONG).show();
+                if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    Toast.makeText(SignUpPageActivity.this,"Invalid Email Address", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -191,6 +191,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         });
     }
 
+    // Allows user to choose image from gallery
     private void chooseImage() {
         try {
             Intent intent = new Intent();
@@ -203,6 +204,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         }
     }
 
+    // Get file extension of the file selected
     private String getExtension(Uri uri) {
         try {
             ContentResolver contentResolver = getContentResolver();

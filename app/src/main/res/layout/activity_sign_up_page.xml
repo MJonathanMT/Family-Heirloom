@@ -11,8 +11,8 @@
         android:id="@+id/textView_sign_up_title"
         android:layout_width="308dp"
         android:layout_height="42dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
@@ -25,26 +25,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImageView"
-        android:layout_width="307dp"
-        android:layout_height="188dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_width="301dp"
+        android:layout_height="146dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="54dp"
+        android:layout_marginLeft="54dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="54dp"
         android:layout_marginRight="54dp"
+        android:src="@drawable/circle_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_sign_up_title"
-        app:srcCompat="@drawable/imageview" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_sign_up_title" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="306dp"
         android:layout_height="339dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="55dp"
         android:layout_marginRight="55dp"
         android:orientation="vertical"

@@ -137,17 +137,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
 
     private void manageButtons(){
-        Button buttonSettings = findViewById(R.id.buttonSettings);
         Button buttonUpdateDetails = findViewById(R.id.buttonUpdateDetails);
         Button buttonChangeFamily = findViewById(R.id.buttonChangeCurrentFamily);
         Button buttonAddFamily = findViewById(R.id.buttonAddFamily);
-
-        buttonSettings.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                openAccountSettingsActivity();
-            }
-        });
 
         buttonUpdateDetails.setOnClickListener(new View.OnClickListener() {
             @Override
