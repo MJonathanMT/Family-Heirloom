@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -61,11 +62,10 @@ public class EditItemActivity extends AppCompatActivity {
     private ImageButton updateItem;
     private EditText editName;
     private EditText editDescription;
-    private ImageButton changeOwnerButton;
-    private ImageButton buttonExit;
+    private Button changeOwnerButton;
     private ImageView imageEditItemPhoto;
-    private TextView tvUploadImage;
-    private Button deleteItemButton;
+    private ImageButton imageButtonUploadImage;
+    private ImageButton deleteItemButton;
     private final int IMAGE_REQUEST = 71;
     private Uri mImageUri;
     private StorageReference storageReference;
@@ -94,14 +94,13 @@ public class EditItemActivity extends AppCompatActivity {
         editName = findViewById(R.id.editTextEditName);
         editDescription = findViewById(R.id.editTextEditDescription);
         imageEditItemPhoto = findViewById(R.id.imageViewItemPhoto);
-        tvUploadImage = findViewById(R.id.tv_change);
+        imageButtonUploadImage = findViewById(R.id.imageButtonUploadImage);
         changeOwnerButton = findViewById(R.id.imageButtonChangeOwner);
         updateItem = findViewById(R.id.imageButtonUploadItem);
-        buttonExit = findViewById(R.id.imageButtonClearOwner);
         spinnerPrivacy = findViewById(R.id.spinnerPrivacy);
         spinnerFamilyGroup = findViewById(R.id.spinnerFamilyGroup);
 
-        deleteItemButton = findViewById(R.id.button_to_delete_item);
+        deleteItemButton = findViewById(R.id.imageButtonDeleteItem);
 
         storageReference = FirebaseStorage.getInstance().getReference("item");
 
@@ -118,17 +117,10 @@ public class EditItemActivity extends AppCompatActivity {
             }
         });
 
-        tvUploadImage.setOnClickListener(new View.OnClickListener() {
+        imageButtonUploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 chooseImage();
-            }
-        });
-
-        buttonExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openViewItemActivity(itemID);
             }
         });
 
@@ -173,6 +165,11 @@ public class EditItemActivity extends AppCompatActivity {
                                 familyID = document.get("familyID", String.class);
                                 Picasso.get().load(document.get("url", String.class)).into(imageEditItemPhoto);
 
+                                Point size = new Point();
+                                getWindowManager().getDefaultDisplay().getSize(size);
+                                float scale = (size.x / (imageEditItemPhoto.getWidth()));
+                                imageEditItemPhoto.setScaleX(scale);
+                                imageEditItemPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                                 int selectedIndex;
                                 if (itemPrivacy == "O"){

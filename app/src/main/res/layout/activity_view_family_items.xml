@@ -40,7 +40,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/gradient_box"
             app:layout_constraintBottom_toTopOf="@+id/viewFamilyItemsContent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +49,8 @@
 
         <RelativeLayout
             android:id="@+id/viewFamilyItemsContent"
-            android:layout_width="411dp"
-            android:layout_height="675dp"
+            android:layout_width="397dp"
+            android:layout_height="602dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"

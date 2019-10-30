@@ -65,8 +65,7 @@
             <padding
                 android:bottom="2dp"
                 />
-            <!--gradient android:startColor="#FFFF0000" android:endColor="#80FF00FF"
-                android:angle="270"/-->
+
             <size
                 android:width="75dp"/>
         </shape>

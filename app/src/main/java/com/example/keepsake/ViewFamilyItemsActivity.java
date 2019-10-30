@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.keepsake.memberList.FamilyMemberPageActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
@@ -38,12 +39,9 @@ import javax.annotation.Nullable;
 
 public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
 
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
     private ActionBarDrawerToggle drawerToggle;
     private FirebaseFirestore db;
-    private String userId;
+    private String userID  = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private List<Item> itemList;
     private ItemsListAdapter itemsListAdapter;
     private RecyclerView posts;
@@ -54,9 +52,9 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_family_items);
-        db = FirebaseFirestore.getInstance();
+        initialiseDB();
 
-        getUserId();
+        itemList = new ArrayList<>();
         createUserClass();
 
 //        FirebaseFirestore.getInstance()
@@ -74,7 +72,6 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 //                Picasso.get().load(user.getUrl()).into(displayProfilePicture);
 //            }
 //        });
-        createFamilyItemView();
         createNavBar();
         manageButtons();
     }
@@ -82,7 +79,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     private void createUserClass(){
         // create a user class for the current user
         db.collection("user")
-                .document(userId)
+                .document(userID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -94,6 +91,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
                             if (!currentUser.getUserID().isEmpty()){
                                 loadFamilyItemViews();
+                                Log.d("currentUser", currentUser.getUserID());
                             }
                         }
 
@@ -102,20 +100,20 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     }
 
     private void createFamilyItemView(){
-        itemList = new ArrayList<>();
         itemsListAdapter = new ItemsListAdapter(itemList, this);
 
         posts = findViewById(R.id.main_list);
         posts.setHasFixedSize(true);
         posts.setLayoutManager(new LinearLayoutManager(this));
         posts.setAdapter(itemsListAdapter);
+        itemsListAdapter.notifyDataSetChanged();
     }
 
     private void loadFamilyItemViews(){
         // get all the items relevant to the current user
         if(currentUser.getUserSession() != null) {
             db.collection("user")
-                    .document(userId)
+                    .document(userID)
                     .collection("familyGroups")
                     .document(currentUser.getUserSession())
                     .get()
@@ -128,6 +126,8 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
 
                                         if (acceptedString.compareTo("1") == 0){
                                             loadItems();
+                                            Log.d("accepted", "1");
+
                                         }
                                     }
                                 }
@@ -137,6 +137,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     }
 
     private void loadItems(){
+        Log.d("userSession", currentUser.getUserSession());
         db.collection("item")
                 .whereEqualTo("familyID", currentUser.getUserSession())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -145,43 +146,43 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
                         if (e != null) {
                             Log.d("ERROR", "Error: " + e.getMessage());
                         }
+
                         if (queryDocumentSnapshots != null) {
                             for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                if (doc.getType() == DocumentChange.Type.ADDED) {
                                     if (doc.getDocument().exists()){
                                         Item item = doc.getDocument().toObject(Item.class);
                                         item.setItemID(doc.getDocument().getId());
+                                        Log.d("itemID", item.getItemID());
+                                        Log.d("size:", String.valueOf(itemList.size()));
+                                        Log.d("familyID:", " " + item.getFamilyID());
+                                        Log.d("owner:", " " + item.getOwner());
 
                                         // temporary guard until database is cleaned Up
                                         if (item.getFamilyID() == null || item.getOwner() == null) {
                                             continue;
                                         }
 
-                                        if (userId.compareTo(item.getOwner()) == 0){
+                                        if (userID.compareTo(item.getOwner()) == 0){
                                             itemList.add(item);
-                                            itemsListAdapter.notifyDataSetChanged();
                                         }
 
                                         else if (currentUser.getUserSession().compareTo(item.getFamilyID()) == 0){
+                                            Log.d("itemID", item.getItemID());
                                             if(item.getPrivacy().compareTo("O") != 0){
                                                 itemList.add(item);
-                                                itemsListAdapter.notifyDataSetChanged();
                                             }
                                         }
 
+                                        if (itemList.size() == 1){
+                                            createFamilyItemView();
+                                        }
                                     }
+
+
                                 }
                             }
-                        }
                     }
                 });
-    }
-
-    private void getUserId(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            userId = user.getUid();
-        }
     }
 
     private void createNavBar(){
@@ -189,7 +190,7 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
 
         db.collection("user")
-                .document(user.getUid())
+                .document(userID)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -246,10 +247,6 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         startActivity(intent);
     }
 
-    public void openHomePageActivity() {
-        Intent intent = new Intent(this, HomePageActivity.class);
-        startActivity(intent);
-    }
     public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
@@ -300,5 +297,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         Intent intent = new Intent(this, ViewItemActivity.class);
         intent.putExtra("itemId", nextItemView);
         startActivity(intent);
+    }
+
+    public void initialiseDB() {
+        // TODO (naverill) put this function in a public utils class
+        FirebaseApp.initializeApp(this);
+        db = FirebaseFirestore.getInstance();
     }
 }
