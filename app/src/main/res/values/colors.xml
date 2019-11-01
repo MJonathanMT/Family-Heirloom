@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#73B5B9</color>
-    <color name="colorPrimaryDark">#92C0B6</color>
+    <color name="colorPrimaryDark">#434E5C</color>
     <color name="colorPrimaryTransparent">#7992C0B6</color>
     <color name="colorPrimaryLight">#71B0B4</color>
     <color name="colorAccent">#E90D27</color>
@@ -11,4 +11,5 @@
     <color name="FUCK">#B3CACA</color>
     <color name="colorOffWhite">#f5f5f5</color>
     <color name="timelineBubble">#ffffff</color>
+    <color name="inputgrey">#262A3E5A</color>
 </resources>

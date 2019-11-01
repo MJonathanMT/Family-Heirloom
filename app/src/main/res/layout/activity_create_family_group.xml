@@ -54,7 +54,7 @@
         android:layout_width="358dp"
         android:layout_height="44dp"
         android:layout_marginTop="40dp"
-        android:fontFamily="@font/advent_pro_bold"
+        android:fontFamily="@font/sf_pro_display_bold"
         android:text="@string/CreateNewFamily"
         android:textAlignment="center"
         android:textAllCaps="false"

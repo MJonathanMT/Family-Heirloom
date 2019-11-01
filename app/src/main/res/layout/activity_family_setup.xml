@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:fontFamily="@font/advent_pro_bold" />
+        tools:fontFamily="@font/sf_pro_display_bold" />
 
     <TextView
         android:id="@+id/textView2"
