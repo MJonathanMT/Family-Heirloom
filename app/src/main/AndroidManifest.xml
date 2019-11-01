@@ -22,6 +22,15 @@
         <activity
             android:name=".memberRequest.MemberRequestActivity"
             android:exported="true" />
+        <activity android:name=".NewLoginActivity"></activity>
+        <activity android:name=".NewMain"
+            android:exported="true"/>
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".memberRequest.MemberRequestActivity"
+            android:exported="true" />
         <activity android:name=".ChangeFamilyActivity" />
         <activity android:name=".ChangeItemOwnerActivity" />
         <activity android:name=".UpdateDetailsActivity" />

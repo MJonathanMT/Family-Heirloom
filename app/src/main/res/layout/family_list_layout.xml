@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/advent_pro_bold"
+        android:fontFamily="@font/sf_pro_display_bold"
         android:text="Name"
         android:textColor="#555555"
         android:textSize="25sp" />
@@ -28,7 +28,7 @@
         android:layout_below="@id/textViewFamilyName"
         android:layout_marginStart="20dp"
         android:layout_marginTop="0dp"
-        android:fontFamily="@font/advent_pro_semibold"
+        android:fontFamily="@font/sf_pro_display_regular"
         android:text="familyID"
         android:textColor="#999999"
         android:textSize="14sp" />
