@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".JoinFamilyGroupActivity">
+
+    <TextView
+        android:id="@+id/textViewJoinFamily"
+        android:layout_width="374dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="83dp"
+        android:fontFamily="@font/sf_pro_display_bold"
+        android:text="@string/JoinExistingFamily"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="402dp"
+        android:layout_height="537dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJoinFamily"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="59dp">
+
+            <EditText
+                android:id="@+id/editTextSearch"
+                android:layout_width="320dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="0dp"
+                android:layout_weight="1"
+                android:capitalize="words"
+                android:drawableEnd="@color/common_google_signin_btn_text_light_default"
+                android:fontFamily="sans-serif-thin"
+                android:foregroundTint="#807D7D"
+                android:gravity="start|left|center_vertical"
+                android:hint="Search families"
+                android:selectAllOnFocus="false"
+                android:shadowColor="#00202020"
+                android:singleLine="true"
+                android:textAlignment="textStart"
+                android:textColor="#A8858181"
+                android:textColorHint="#A8858181"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="415dp"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="485dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewFamilies"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+
+        </TableRow>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/ButtonProfileAccess"
+        android:title="Profile"
+        android:icon="@drawable/baseline_perm_identity_24"
+        >
+    </item>
+    <!--item
+        android:id="@+id/ButtonHomepageAccess"
+        android:title="Timeline"
+        android:icon="@drawable/home_black"
+        >
+
+    </item-->
+
+    <item
+        android:id="@+id/ButtonFamilyItemsAccess"
+        android:title="Item"
+        android:icon="@drawable/items_black"
+        >
+
+    </item>
+    <item
+        android:id="@+id/ButtonFamilyMembersAccess"
+        android:title="Member"
+        android:icon="@drawable/baseline_supervisor_account_24"
+        >
+
+    </item>
+    <item
+        android:id="@+id/ButtonLogOutAccess"
+        android:icon="@drawable/password_icon"
+        android:title="Log Out">
+
+    </item>
+
+</menu>

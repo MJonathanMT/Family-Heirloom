@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!---->
+    <item android:top="30dp">
+        <rotate
+            android:fromDegrees="-45"
+            android:pivotX="0%"
+            android:pivotY="0%"
+            android:toDegrees="0" >
+            <shape android:shape="rectangle" >
+                <solid android:color="#01000000" />
+                <corners
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="@dimen/speech_bubble_corners"
+                    android:bottomLeftRadius="@dimen/speech_bubble_corners"
+                    android:bottomRightRadius="@dimen/speech_bubble_corners"/>
+                <padding
+                    android:bottom="3px"
+                    android:left="3px"
+                    android:right="3px" />
+            </shape>
+        </rotate>
+    </item>
+    <item android:left="20dp">
+        <shape android:shape="rectangle" >
+            <solid android:color="#01000000"/>
+            <corners android:radius="5dp" />
+            <padding
+                android:bottom="3px"
+                android:left="3px"
+                android:right="3px" />
+        </shape>
+    </item>
+
+    <!---->
+    <item android:top="30dp">
+        <rotate
+            android:fromDegrees="-45"
+            android:pivotX="0%"
+            android:pivotY="0%"
+            android:toDegrees="0" >
+            <shape android:shape="rectangle" >
+                <solid android:color="#09000000" />
+                <corners
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="@dimen/speech_bubble_corners"
+                    android:bottomLeftRadius="@dimen/speech_bubble_corners"
+                    android:bottomRightRadius="@dimen/speech_bubble_corners"/>
+                <padding android:bottom="3px" />
+            </shape>
+        </rotate>
+    </item>
+    <item android:left="20dp">
+        <shape android:shape="rectangle" >
+            <solid android:color="#09000000"/>
+            <corners android:radius="5dp" />
+            <padding android:bottom="3px" />
+        </shape>
+    </item>
+
+    <!---->
+    <item android:top="30dp">
+        <rotate
+            android:fromDegrees="-45"
+            android:pivotX="0%"
+            android:pivotY="0%"
+            android:toDegrees="0" >
+            <shape android:shape="rectangle" >
+                <solid android:color="#10000000"  />
+                <corners
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="@dimen/speech_bubble_corners"
+                    android:bottomLeftRadius="@dimen/speech_bubble_corners"
+                    android:bottomRightRadius="@dimen/speech_bubble_corners"/>
+                <padding
+                    android:bottom="1px"
+                    android:left="1px"
+                    android:right="1px" />
+            </shape>
+        </rotate>
+    </item>
+    <item android:left="20dp">
+        <shape android:shape="rectangle" >
+            <solid android:color="#10000000"/>
+            <corners android:radius="5dp" />
+            <padding
+                android:bottom="1px"
+                android:left="1px"
+                android:right="1px" />
+        </shape>
+    </item>
+
+    <!---->
+    <item android:top="30dp">
+    <rotate
+            android:fromDegrees="-45"
+            android:pivotX="0%"
+            android:pivotY="0%"
+            android:toDegrees="0" >
+            <shape android:shape="rectangle" >
+                <solid android:color="@color/timelineBubble" />
+                <corners
+                    android:topLeftRadius="0dp"
+                    android:topRightRadius="@dimen/speech_bubble_corners"
+                    android:bottomLeftRadius="@dimen/speech_bubble_corners"
+                    android:bottomRightRadius="@dimen/speech_bubble_corners"/>
+            </shape>
+        </rotate>
+    </item>
+    <item android:left="20dp">
+    <shape android:shape="rectangle" >
+            <solid android:color="@color/timelineBubble"/>
+            <corners android:radius="5dp" />
+        </shape>
+    </item>
+
+</layer-list>

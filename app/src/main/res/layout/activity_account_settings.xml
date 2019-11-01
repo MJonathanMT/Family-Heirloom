@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accountSettingsDrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    tools:context=".AccountSettingsActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_box"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewAccountSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="96dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:fontFamily="@font/sf_pro_display_bold"
+            android:text="@string/AccountSettings"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonUpdateDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+        <Button
+            android:id="@+id/buttonUpdateDetails"
+            android:layout_width="210dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="24dp"
+
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/UpdateDetails"
+            app:layout_constraintBottom_toTopOf="@+id/textViewFamilySettings"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewAccountSettings" />
+
+        <TextView
+            android:id="@+id/textViewFamilySettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="68dp"
+            android:layout_marginEnd="69dp"
+            android:fontFamily="@font/sf_pro_display_bold"
+            android:text="@string/FamilySettings"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonChangeCurrentFamily"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonUpdateDetails" />
+
+        <Button
+            android:id="@+id/buttonChangeCurrentFamily"
+            android:layout_width="210dp"
+            android:layout_height="54dp"
+
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="101dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/ChangeCurrentFamily"
+            app:layout_constraintBottom_toTopOf="@+id/buttonAddFamily"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewFamilySettings" />
+
+        <Button
+            android:id="@+id/buttonAddFamily"
+            android:layout_width="210dp"
+            android:layout_height="54dp"
+
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="101dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/custom_button"
+            android:text="@string/AddFamily"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonChangeCurrentFamily" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/navigation_header"
+
+        app:menu="@menu/navigation_menu"></com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -1,3 +1,93 @@
 <resources>
     <string name="app_name">KeepSake</string>
+    <string name="Open">KeepSake</string>
+    <string name="Close">KeepSake</string>
+
+    <!--Account Settings Strings-->
+    <string name="AccountSettings">Account Settings</string>
+    <string name="UpdateDetails">Update Details</string>
+    <string name="SecurityAndPrivacy">Security and Privacy</string>
+    <string name="LogOut">Log Out</string>
+    <string name="ChangeCurrentFamily">Change Current Family</string>
+    <string name="FamilySettings">Family Settings</string>
+    <string name="AddFamily">Add Family</string>
+
+    <!--Change Family Strings-->
+    <string name="ChooseFamilyToChangeTo">Choose family to change to:</string>
+    <string name="Change">Change</string>
+
+    <!--Create Family Group-->
+    <string name="CreateNewFamily">Create New Family</string>
+    <string name="EnterFamilyId">Enter Last Name / Family Name</string>
+    <string name="FinishSignUp">Finish Sign Up</string>
+
+    <!--Family Member Page-->
+    <string name="FamilyMembers">Family Members</string>
+    <string name="AcceptMembers">+</string>
+
+    <!--Family Set Up-->
+    <string name="FamilySetUp">Family Setup</string>
+    <string name="CreateOrJoin">Is your family group registered?</string>
+    <string name="JoinExistingFamily">Join Existing Family</string>
+
+    <!--Home Page-->
+    <string name="TemporaryName">Rick and Morty</string>
+    <string name="TemporaryDescription">Temporary Image Description</string>
+    <string name="Settings">Settings</string>
+    <string name="Upload">Upload</string>
+    <string name="TemporaryText1">I own a portal gun that belongs to me because my useless grandson can\'t take care of it</string>
+    <string name="TemporaryText2">I have a piece of Jessica\'s hair with me</string>
+
+    <!--Join Family Group-->
+    <string name="RequestJoin">Request to Join</string>
+
+    <!--Main Activity-->
+    <string name="SignUp">Sign Up</string>
+    <string name="LogIn">Log In</string>
+    <string name="EnterUseId">User ID (Email)</string>
+    <string name="EnterPassword">Enter Password</string>
+
+    <!--New ItemActivity Upload-->
+    <string name="NewItemUpload">New Item Upload</string>
+    <string name="ItemName">Item Name</string>
+    <string name="ItemDescription">Item Description</string>
+    <string name="PhotoOption">Take photo/ Add picture from gallery</string>
+
+    <!--Request Join Family Group-->
+    <string name="RequestSent">Request Sent to Family ID</string>
+    <string name="EmailConfirmation">Check your email for confirmation</string>
+    <string name="Continue">Continue</string>
+
+    <!--Sign Up Page-->
+    <string name="AccountSignUp">Account Sign Up</string>
+    <string name="GivenName">Name (Given Name)</string>
+    <string name="LastName">Last Name</string>
+    <string name="Email">E-mail</string>
+    <string name="ConfirmPassword">Confirm Password</string>
+
+    <!--Update Details-->
+    <string name="SaveChanges">Save Changes</string>
+    <string name="FirstChange">First Change</string>
+    <string name="SecondChange">Second Change</string>
+    <string name="DeleteAccount">Delete Account</string>
+
+    <!--View Family Item-->
+    <string name="DateReceived">Date Received</string>
+
+    <!--Enter Last Name / Family Name-->
+    <string-array name="privacyLevels">
+        <item>Owner</item>
+        <item>Family</item>
+        <item>Public</item>
+    </string-array>
+    <string name="title_activity_view_family_items">ViewFamilyItems</string>
+    <string name="itemname">ItemName</string>
+    <string name="itemdescription">ItemDescription</string>
+    <string name="choose_photo">Choose Photo</string>
+    <string name="upload">Upload</string>
+    <string name="image">Image</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+
+
 </resources>
