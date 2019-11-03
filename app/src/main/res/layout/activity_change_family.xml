@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/changeFamilyDrawerLayout"
     android:background="#FFFFFF"
-    tools:context=".ChangeFamilyActivity">
+    tools:context=".activities.ChangeFamilyActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

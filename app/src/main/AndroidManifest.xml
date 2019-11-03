@@ -15,54 +15,51 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ResetPasswordActivity"></activity>
+        <activity android:name=".activities.ResetPasswordActivity"></activity>
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".activities.UserProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".memberRequest.MemberRequestActivity"
+            android:name=".activities.MemberRequestActivity"
             android:exported="true" />
-        <activity android:name=".NewLoginActivity"></activity>
-        <activity android:name=".NewMain"
+        <activity android:name=".activities.NewLoginActivity"></activity>
+        <activity android:name=".activities.NewMain"
             android:exported="true"/>
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".activities.UserProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".memberRequest.MemberRequestActivity"
+            android:name=".activities.MemberRequestActivity"
             android:exported="true" />
-        <activity android:name=".ChangeFamilyActivity" />
-        <activity android:name=".ChangeItemOwnerActivity" />
-        <activity android:name=".UpdateDetailsActivity" />
-        <activity android:name=".memberList.FamilyMemberPageActivity" />
+        <activity android:name=".activities.ChangeFamilyActivity" />
+        <activity android:name=".activities.ChangeItemOwnerActivity" />
+        <activity android:name=".activities.UpdateDetailsActivity" />
+        <activity android:name=".activities.FamilyMemberPageActivity" />
         <activity
-            android:name=".ViewFamilyItemsActivity"
+            android:name=".activities.ViewFamilyItemsActivity"
             android:label="@string/title_activity_view_family_items"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUpPageActivity" />
-        <activity android:name=".RequestFamilyGroupActivity" />
-        <activity android:name=".AccountSettingsActivity" />
+        <activity android:name=".activities.SignUpPageActivity" />
+        <activity android:name=".activities.RequestFamilyGroupActivity" />
+        <activity android:name=".activities.AccountSettingsActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".activities.FamilySetupActivity" />
         <activity
-            android:name=".HomePageActivity"
-            android:exported="true" /> <!-- <activity android:name=".JoinFamilyGroupActivity" /> -->
-        <activity android:name=".FamilySetupActivity" />
-        <activity
-            android:name=".JoinFamilyGroupActivity"
+            android:name=".activities.JoinFamilyGroupActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".NewItemUploadActivity"
+            android:name=".activities.NewItemUploadActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity android:name=".EditItemActivity" />
-        <activity android:name=".ViewItemActivity" />
+        <activity android:name=".activities.EditItemActivity" />
+        <activity android:name=".activities.ViewItemActivity" />
         <activity
-            android:name=".FamilySetupActivity"
+            android:name=".activities.FamilySetupActivity"
             tools:ignore="DuplicateActivity" />
-        <activity android:name=".CreateFamilyActivity" />
-        <activity android:name=".ViewItemTimelineActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.CreateFamilyActivity" />
+        <activity android:name=".activities.ViewItemTimelineActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
