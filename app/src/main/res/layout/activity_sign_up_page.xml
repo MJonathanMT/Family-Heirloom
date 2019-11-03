@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".SignUpPageActivity">
+    tools:context=".activities.SignUpPageActivity">
 
     <TextView
         android:id="@+id/textView_sign_up_title"

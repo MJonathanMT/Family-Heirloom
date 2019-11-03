@@ -5,9 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewFamilyItemsActivity"
+    tools:context=".activities.ViewFamilyItemsActivity"
     android:orientation="vertical"
-    android:id="@+id/itemsDrawerLayout"
+    android:id="@+id/viewFamilyItemsDrawer"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,12 +54,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:context=".HomePageActivity">
+            tools:context=".activities.ViewFamilyItemsActivity">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

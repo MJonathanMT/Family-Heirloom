@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewFamilyItemsActivity"
+    tools:context=".activities.ViewFamilyItemsActivity"
     android:orientation="vertical"
     android:id="@+id/familyMembersLayout"
     >
@@ -35,6 +35,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/AcceptMembers"
+                android:background="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +58,7 @@
                 app:layout_constraintEnd_toEndOf="@id/memberRequestPage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/memberRequestPage"
-                tools:context=".HomePageActivity">
+                tools:context=".activities.FamilyMemberPageActivity">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/member_list"

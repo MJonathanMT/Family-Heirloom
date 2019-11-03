@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/accountSettingsDrawerLayout"
-    tools:context=".ViewItemActivity"
+    android:id="@+id/viewItemDrawerLayout"
+    tools:context=".activities.ViewItemActivity"
     android:background="@color/colorOffWhite">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,8 +69,8 @@
 
         <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="wrap_content"
-            android:layout_height="546dp"
+            android:layout_width="415dp"
+            android:layout_height="521dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/buttonViewTimeline"
@@ -87,13 +87,12 @@
                 android:orientation="vertical">
 
 
-                <com.example.keepsake.ProportionalImageView
+                <com.example.keepsake.utils.ProportionalImageView
                     android:id="@+id/imageViewItemPhoto"
                     android:layout_width="410dp"
                     android:layout_height="220dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="16dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/image"
                     android:maxHeight="420dp"
