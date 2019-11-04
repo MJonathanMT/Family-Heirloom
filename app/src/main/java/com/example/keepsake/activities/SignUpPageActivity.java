@@ -13,29 +13,16 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.keepsake.R;
-import com.example.keepsake.database.firebaseAdapter.FirebaseAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseAuthAdapter;
-import com.example.keepsake.database.firebaseAdapter.FirebaseItemAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseUserAdapter;
 import com.example.keepsake.database.firebaseSnapshot.User;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -51,6 +38,11 @@ public class SignUpPageActivity extends AppCompatActivity {
     private String imageURL;
     public final int IMAGE_REQUEST = 71;
 
+    /**
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +51,15 @@ public class SignUpPageActivity extends AppCompatActivity {
         bindViews();
     }
 
+    /**
+     * Allows a user to register for an account
+     * @param firstName user firstname information
+     * @param lastName user lastname information
+     * @param email user email information
+     * @param password user chosen password
+     * @param confirmPassword user confirms chosen password to match
+     */
     private void uploadUserDetails(String firstName, String lastName, String email, String password, String confirmPassword){
-
         // If all the inputs are correct and valid, will create new user entry into database
         if (validateInput(firstName, lastName, email, password, confirmPassword)) {
             if (filePath != null) {
@@ -100,6 +99,15 @@ public class SignUpPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Validates the information inputted by the user
+     * @param firstName user firstname
+     * @param lastName user lastname
+     * @param email user email
+     * @param password user chosen password
+     * @param confirmPassword user confirms chosen password to match
+     * @return a boolean value
+     */
     private boolean validateInput(String firstName, String lastName, String email, String password, String confirmPassword){
         // Check if image view is empty
         if (filePath == null) {
@@ -114,7 +122,7 @@ public class SignUpPageActivity extends AppCompatActivity {
 
         // Check if last name input is empty
         if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(SignUpPageActivity.this, "Please Enter Full Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(SignUpPageActivity.this, "Please Enter Last Name", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -157,7 +165,9 @@ public class SignUpPageActivity extends AppCompatActivity {
         return true;
     }
 
-    // Allows user to choose image from gallery
+    /**
+     * Allows an user to choose an image via gallery
+     */
     private void chooseImage() {
         try {
             Intent intent = new Intent();
@@ -170,7 +180,11 @@ public class SignUpPageActivity extends AppCompatActivity {
         }
     }
 
-    // Get file extension of the file selected
+    /**
+     * Get the file extension of a file
+     * @param uri uniform resource identifies for publicly-accessible resource
+     * @return the extension of the file
+     */
     private String getExtension(Uri uri) {
         try {
             ContentResolver contentResolver = getContentResolver();
@@ -183,6 +197,10 @@ public class SignUpPageActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         mUserImage = findViewById(R.id.userImageView);
         mFirstname = findViewById(R.id.mFirstname);
@@ -192,6 +210,7 @@ public class SignUpPageActivity extends AppCompatActivity {
         mConfirmPassword = findViewById(R.id.mConfirmPassword);
         buttonFamilySetup = findViewById(R.id.buttonFamilySetup);
 
+        // Continue button
         buttonFamilySetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View c) {
@@ -206,6 +225,7 @@ public class SignUpPageActivity extends AppCompatActivity {
             }
         });
 
+        // User image view
         mUserImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,11 +234,18 @@ public class SignUpPageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Callback method  to get the message form other activity
+     * @param requestCode check which request we're responding to
+     * @param resultCode make sure the request was successfuls
+     * @param data the intent's data uri identifies which contact was selected
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                // Get the URI that points to the selected contact
                 filePath = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
@@ -235,6 +262,10 @@ public class SignUpPageActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This function redirects the current Intent to the FamilySetupActivity
+     * and starts the next activity.
+     */
     public void openFamilySetupActivity(){
         startActivity(new Intent(getApplicationContext(), FamilySetupActivity.class));
     }

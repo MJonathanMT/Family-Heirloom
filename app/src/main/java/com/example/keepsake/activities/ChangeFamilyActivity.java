@@ -2,7 +2,6 @@ package com.example.keepsake.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,21 +20,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.keepsake.database.firebaseAdapter.FirebaseAdapter;
+import com.example.keepsake.R;
 import com.example.keepsake.database.firebaseAdapter.FirebaseAuthAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseFamilyAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseUserAdapter;
 import com.example.keepsake.database.firebaseSnapshot.Family;
-import com.example.keepsake.R;
 import com.example.keepsake.database.firebaseSnapshot.User;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
@@ -309,6 +304,7 @@ public class ChangeFamilyActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 currentUser = documentSnapshot.toObject(User.class);
+                // Checks if current user is null
                 if (currentUser != null){
                     currentUser.setUserID(documentSnapshot.getId());
                 }

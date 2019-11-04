@@ -2,34 +2,24 @@ package com.example.keepsake.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.keepsake.R;
-import com.example.keepsake.database.firebaseAdapter.FirebaseAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseAuthAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "Main";
 
     Button buttonLogIn, buttonSignUp;
 
+    /**
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +28,15 @@ public class MainActivity extends AppCompatActivity {
         bindViews();
     }
 
+    /**
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonLogIn = findViewById(R.id.buttonToLogin);
 
+        // Login button
         buttonLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Sign up button
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Check if user is already signed in
+    /**
+     * Checks if user is already signed in using onStart() method of the application
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -67,11 +65,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Redirect to signup page
+    /**
+     * This function redirects the current Intent to the SignUpPageActivity
+     * and starts the next activity.
+     */
     public void openSignupPageActivity(View view){
         startActivity(new Intent(getApplicationContext(), SignUpPageActivity.class));
     }
 
+    /**
+     * This function redirects the current Intent to the LoginActivity
+     * and starts the next activity.
+     */
     public void openLoginPageActivity(View view){
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
