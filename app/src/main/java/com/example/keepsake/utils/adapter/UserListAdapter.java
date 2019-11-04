@@ -25,6 +25,21 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     }
 
+    /**
+     * Called when RecyclerView needs a new RecyclerView.ViewHolder of the given type to represent
+     * an item.
+     *
+     * This new ViewHolder should be constructed with a new View that can represent the items of
+     * the given type. You can either create a new View manually or inflate it from an XML layout file.
+     *
+     * The new ViewHolder will be used to display items of the adapter using
+     * onBindViewHolder(ViewHolder, int, List). Since it will be re-used to display different items
+     * in the data set, it is a good idea to cache references to sub views of the View to avoid
+     * unnecessary findViewById(int) calls.
+     * @param parent The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The view type of the new View.
+     * @return A new ViewHolder that holds a View of the given view type.
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,6 +50,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     }
 
+    /**
+     * This method internally calls to update the RecyclerView.ViewHolder contents with the item at
+     * the given position and also sets up some private fields to be used by RecyclerView.
+     * @param holder A ViewHolder that holds a View of the given view type.
+     * @param position item at the given position
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String name = userList.get(position).getFirstName() + " " + userList.get(position).getLastName();
@@ -47,6 +68,10 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     }
 
+    /**
+     * Gets the count of an user list
+     * @return the number of users in a list
+     */
     @Override
     public int getItemCount() {
 
@@ -54,6 +79,9 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
     }
 
+    /**
+     * Constructor of an user list class adapter.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         View mView;

@@ -27,12 +27,21 @@ public class OwnershipRecordViewHolder extends RecyclerView.ViewHolder {
     private FirebaseFirestore db;
     private Context ctx;
 
+    /**
+     * Describes an item view and metadata about ownership record item view within the RecyclerView.
+     * @param itemView The view type of this View
+     */
     public OwnershipRecordViewHolder(@NonNull View itemView) {
         super(itemView);
         mView = itemView;
         initialiseDB();
     }
 
+    /**
+     * Bind UI components in layouts to data sources using a declarative format.
+     * @param ctx a handler in the system, it provides access to resources, databases, preferences, etc.
+     * @param record ownership record of an item
+     */
     public void bind(Context ctx, OwnershipRecord record){
         this.ctx = ctx;
         TextView textViewName = mView.findViewById(R.id.textViewName);
