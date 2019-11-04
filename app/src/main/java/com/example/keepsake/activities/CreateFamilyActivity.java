@@ -36,8 +36,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +60,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
     // Search user Pop-up
     private Dialog myDialog;
     private TextView searchBar;
-    private ImageButton searchButton;
     private RecyclerView userView;
     private ProgressBar progressBar;
     private Handler handler;
@@ -76,7 +78,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
         myDialog.setContentView(R.layout.activity_add_user_popup);
         
         searchBar = myDialog.findViewById(R.id.editTextSearch);
-        searchButton = myDialog.findViewById(R.id.imageButtonSearch);
         userView = myDialog.findViewById(R.id.recyclerViewUsers);
         progressBar = myDialog.findViewById(R.id.progressBar);
 
@@ -101,17 +102,6 @@ public class CreateFamilyActivity extends AppCompatActivity {
         userView.setLayoutManager(new LinearLayoutManager(this));
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
-
-
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                setLoading(true);
-                String query =  searchBar.getText().toString();
-                firebaseUserSearch(query);
-            }
-        });
-
 
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
@@ -200,13 +190,11 @@ public class CreateFamilyActivity extends AppCompatActivity {
                 put(FirebaseFamilyAdapter.NAME_FIELD, name);
             }};
 
-            OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
+            OnSuccessListener listener = new OnSuccessListener<DocumentReference>() {
                 @Override
-                public void onSuccess(DocumentSnapshot snapshot ) {
-                    if (snapshot.exists()) {
+                public void onSuccess(DocumentReference document ) {
                         // Task completed successfully
-                        addMembersToFamily(snapshot.getId());
-                    }
+                        addMembersToFamily(document.getId());
                 }
             };
 

@@ -34,8 +34,8 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/AcceptMembers"
                 android:background="@android:color/transparent"
+                android:text="@string/AcceptMembers"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,12 +58,34 @@
                 app:layout_constraintEnd_toEndOf="@id/memberRequestPage"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/memberRequestPage"
-                tools:context=".activities.FamilyMemberPageActivity">
+                tools:context=".activities.FamilyMemberPageActivity"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/editTextSearchMembers"
+                    android:layout_width="353dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="34dp"
+                    android:layout_marginRight="34dp"
+                    android:autofillHints="FamilyId"
+                    android:background="@drawable/custom_input_field"
+                    android:ems="10"
+                    android:fontFamily="@font/advent_pro_semibold"
+                    android:hint="Search family"
+                    android:inputType="textPersonName"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/member_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="529dp"
+                    android:layout_below="@+id/editTextSearchMembers"
+                    android:layout_marginTop="5dp"></androidx.recyclerview.widget.RecyclerView>
             </RelativeLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

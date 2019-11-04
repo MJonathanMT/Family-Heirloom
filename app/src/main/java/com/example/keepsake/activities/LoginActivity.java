@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.keepsake.R;
@@ -23,11 +24,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
-public class NewLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private final String TAG = "New Login";
 
-    EditText mEmail, mPassword;
-    Button buttonRedirect;
+    private EditText mEmail, mPassword;
+    private Button buttonLogin;
+    private TextView textViewForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,10 @@ public class NewLoginActivity extends AppCompatActivity {
     public void bindViews(){
         mEmail = findViewById(R.id.mEmail);
         mPassword = findViewById(R.id.mPassword);
-        buttonRedirect = findViewById(R.id.buttonToLogIn);
+        buttonLogin = findViewById(R.id.buttonToLogIn);
+        textViewForgotPassword = findViewById(R.id.textViewForgotPassword);
 
-        buttonRedirect.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = Objects.requireNonNull(mEmail.getText()).toString().trim();
@@ -51,12 +54,12 @@ public class NewLoginActivity extends AppCompatActivity {
 
                 // Check if email input is empty
                 if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(NewLoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter Email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 // Check if password input is empty
                 if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(NewLoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Please Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -73,6 +76,13 @@ public class NewLoginActivity extends AppCompatActivity {
             }
         });
 
+        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openResetPasswordActivity();
+            }
+        });
+
         ImageView buttonBackToMain = findViewById(R.id.backarrow);
 
         buttonBackToMain.setOnClickListener(new View.OnClickListener() {
@@ -83,12 +93,11 @@ public class NewLoginActivity extends AppCompatActivity {
         });
     }
 
-    public void openUserProfileActivity(){
-        startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
+    public void openResetPasswordActivity(){
+        startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
     }
 
-    // Redirect to signup page
-    public void openSignUpPageActivity(View view) {
-        startActivity(new Intent(getApplicationContext(), SignUpPageActivity.class));
+    public void openUserProfileActivity(){
+        startActivity(new Intent(getApplicationContext(), UserProfileActivity.class));
     }
 }

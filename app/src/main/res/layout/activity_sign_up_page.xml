@@ -61,7 +61,8 @@
         <EditText
             android:id="@+id/mFirstname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_input_field"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPersonName" />
@@ -73,8 +74,9 @@
         <EditText
             android:id="@+id/mLastname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:autofillHints="Last Name"
+            android:background="@drawable/custom_input_field"
             android:ems="10"
             android:hint="@string/LastName"
             android:inputType="textPersonName" />
@@ -86,8 +88,9 @@
         <EditText
             android:id="@+id/mEmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:autofillHints="Email"
+            android:background="@drawable/custom_input_field"
             android:ems="10"
             android:hint="@string/Email"
             android:inputType="textEmailAddress" />
@@ -99,8 +102,9 @@
         <EditText
             android:id="@+id/mPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:autofillHints="Password"
+            android:background="@drawable/custom_input_field"
             android:ems="10"
             android:hint="@string/EnterPassword"
             android:inputType="textPassword" />
@@ -112,8 +116,9 @@
         <EditText
             android:id="@+id/mConfirmPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:autofillHints="Password"
+            android:background="@drawable/custom_input_field"
             android:ems="10"
             android:hint="@string/ConfirmPassword"
             android:inputType="textPassword" />
@@ -122,14 +127,14 @@
 
     <Button
         android:id="@+id/buttonFamilySetup"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="162dp"
         android:layout_marginLeft="162dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
-        android:background="@drawable/custom_button"
+        android:background="@drawable/custom_login"
         android:text="Continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

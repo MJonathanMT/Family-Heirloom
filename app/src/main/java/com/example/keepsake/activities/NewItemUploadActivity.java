@@ -293,6 +293,7 @@ public class NewItemUploadActivity extends AppCompatActivity {
                         OnSuccessListener itemUploadListener = new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference docRef) {
+                                item.setItemID(docRef.getId());
                                 addOwnershipRecord(item);
                                 addToUserItemsCollection(item.getItemID());
                                 openUserProfileActivity();
