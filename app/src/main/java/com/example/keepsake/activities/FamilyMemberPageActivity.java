@@ -39,6 +39,13 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+/***
+ * This activity page views all the
+ * members of the current userSession the user is in
+ * You would be able to search who is in the family group through the search bar
+ * If you're an admin of the group would be able to manage the
+ * joinRequests of the familyGroup or invite people to the group.
+ */
 public class FamilyMemberPageActivity extends AppCompatActivity {
     private final String TAG = "Family Members";
 
@@ -52,6 +59,12 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
     private User user;
     private String familyID;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +77,11 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
 
     }
 
+    /***
+     * This function creates an empty arrayList for
+     * all the users to be filled in and also connects
+     * the member_list to the posts
+     */
     private void createMemberView(){
         userList = new ArrayList<>();
         userListAdapter = new UserListAdapter(userList);
@@ -74,7 +92,11 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         posts.setAdapter(userListAdapter);
     }
 
-
+    /***
+     * This function creates a user class that could be accessed in this activity.
+     * It pulls data off the currentUser that is logged-in
+     * and creates an instance of a User class of the currentUser
+     */
     private void createUserClass(){
         // create a user class for the current user
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
@@ -97,6 +119,10 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function checks if the current user is the admin of the current familyGroup(familyID)
+     * @param familyID the current familyGroup the user is in
+     */
     private void checkAdmin(String familyID){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -110,6 +136,10 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         FirebaseFamilyAdapter.getAdminDocument(this, familyID, userID, listener);
     }
 
+    /***
+     * This function updates the changes made on the memberList
+     * by calling the loadMembers function.
+     */
     private void memberViewUpdate(){
         final ArrayList<String> acceptedFamilyGroups = new ArrayList<>();
         // get all the items relevant to the current user
@@ -130,6 +160,10 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         FirebaseUserAdapter.getFamilyDocument(this, user.getUserID(), familyID, listener);
     }
 
+    /***
+     * This function loads all the members of the current familyGroup
+     * and calling addUserToView to load the view
+     */
     public void loadMembers(){
         EventListener<QuerySnapshot> listener = new EventListener<QuerySnapshot>() {
             @Override
@@ -156,6 +190,10 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         FirebaseFamilyAdapter.getMembersCollection(this, familyID, listener);
     }
 
+    /***
+     * Adds the userID to the view of this activity.
+     * @param userID userID of a user
+     */
     public void addUserToView(String userID){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -171,6 +209,11 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function creates a navigation bar on the current activity you are on
+     * The purpose of the navigation bar is to be able to
+     * access the main pages of the application from this activity.
+     */
     public void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.familyMembersLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -227,6 +270,10 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     private void bingViews(){
         buttonMemberRequestPage = findViewById(R.id.memberRequestPage);
 
@@ -245,31 +292,56 @@ public class FamilyMemberPageActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function redirects the current Intent to the AccountSettingsActivity
+     * and starts the next activity.
+     */
     private void openAccountSettingsActivity() {
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
     private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the MemberRequestActivity
+     * and starts the next activity.
+     */
     public void openMemberRequestActivity(){
         Intent intent = new Intent(this, MemberRequestActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the ViewFamilyItemsActivity
+     * and starts the next activity.
+     */
     public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the FamilyMemberPageActivity
+     * and starts the next activity.
+     */
     public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function connects the functionality of a button to access the navigation bar.
+     * @param item top right button on the action bar to access view
+     * @return the view of the navigation bar
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

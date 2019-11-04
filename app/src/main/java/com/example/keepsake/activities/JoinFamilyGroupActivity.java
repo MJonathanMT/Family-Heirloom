@@ -32,6 +32,11 @@ import com.google.firebase.firestore.Query;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * This activity is where you have chosen to join an existing familyGroup
+ * When you finish an action in this activity, a joinRequest will be send to the familyGroup.
+ * You will be accept in the familyGroup if the admin of the group accepts you.
+ */
 public class JoinFamilyGroupActivity extends AppCompatActivity {
     private final String TAG = "Join Family";
 
@@ -41,6 +46,12 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
     private Handler handler;
     private String userID = FirebaseAuthAdapter.getCurrentUserID();
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +62,12 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
 
     }
 
+
+    /***
+     * This function searches the familyGroup database
+     * for name (strings) that matches with the queryString
+     * @param queryString the input string the user typed in
+     */
     public void firebaseFamilySearch(String queryString) {
         String parsedQuery = queryString.trim();
 
@@ -110,12 +127,20 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         adapter.onDataChanged();
     }
 
+    /***
+     * this function manages three functions which acts upon the familyID
+     * @param familyID the ID of the familyGroup
+     */
     public void sendFamilyRequest(String familyID){
         createJoinRequest(familyID);
         createUserFamilyGroup(familyID);
         createUserSession(familyID);
     }
 
+    /***
+     * this function sends a joinRequest to the familyGroup(familyID)
+     * @param familyID the ID of the familyGroup
+     */
     public void createJoinRequest(String familyID){
         Map<String, String> dataJoinRequest = new HashMap<String, String>() {{
             put(FirebaseFamilyAdapter.EXISTS_FIELD, "1");
@@ -124,6 +149,12 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         FirebaseFamilyAdapter.createJoinRequestDocument(this, familyID, userID, dataJoinRequest);
     }
 
+    /***
+     * this function creates a familyGroup with the familyID
+     * and adds it the currentUser sending the joinRequest.
+     * the accepted_field will be set to 0 until the admin accepts you
+     * @param familyID the ID of the familyGroup
+     */
     public void createUserFamilyGroup(String familyID){
         Map<String, String> dataFamilyGroup = new HashMap<String, String>() {{
             put(FirebaseUserAdapter.ACCEPTED_FIELD, "0");
@@ -132,10 +163,19 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         FirebaseUserAdapter.createFamilyDocument(this, userID, familyID, dataFamilyGroup);
     }
 
+    /***
+     * Changes the current userSession to the familyID
+     * You wont be able to see any items until the admin accepts you
+     * @param familyID the ID of the familyGroup
+     */
     public void createUserSession(String familyID){
         FirebaseUserAdapter.updateDocument(this, userID, FirebaseUserAdapter.USER_SESSION_FIELD, familyID);
     }
 
+    /***
+     * this function populates the pop up view of the search bar
+     * @param userID ID of the user
+     */
     public void populateFamilyView(String userID){
         final Query query = FirebaseUserAdapter.queryFamilies(this, userID);
 
@@ -199,6 +239,10 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         adapter.onDataChanged();
     }
 
+    /***
+     * This function provides the progress bar of the action being done
+     * @param isLoading boolean if the action is still loading
+     */
     public void setLoading(final boolean isLoading) {
         handler.post(new Runnable() {
             @Override
@@ -213,6 +257,10 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         searchBar = findViewById(R.id.editTextSearch);
         progressBar = findViewById(R.id.progressBar);
@@ -243,6 +291,10 @@ public class JoinFamilyGroupActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function redirects the current Intent to the RequestFamilyGroupActivity
+     * and starts the next activity.
+     */
     public void openRequestFamilyGroupActivity() {
         Intent intent = new Intent(this, RequestFamilyGroupActivity.class);
         startActivity(intent);
