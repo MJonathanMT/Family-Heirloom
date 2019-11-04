@@ -39,6 +39,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+/***
+ * This activity displays all the items
+ * in the currentUser's userSession(familyGroup)
+ */
 public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsListAdapter.OnNoteListener {
     private final String TAG = "Family Items";
 
@@ -49,6 +53,12 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
     private RecyclerView posts;
     private User currentUser;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +71,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         bindViews();
     }
 
+    /***
+     * This function creates a user class that could be accessed in this activity.
+     * It pulls data off the currentUser that is logged-in
+     * and creates an instance of a User class of the currentUser
+     */
     private void createUserClass(){
         // create a user class for the current user
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
@@ -84,6 +99,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function checks whether the currentUser is a member of the familyGroup
+     * and is already accepted by an admin.
+     * Only then, it will call loadItems function
+     */
     private void loadFamilyItemViews(){
         // get all the items relevant to the current user
         if(currentUser.getUserSession() != null) {
@@ -105,6 +125,10 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         }
     }
 
+    /***
+     * this function loads all the items that is
+     * under the currentUser's userSession(familyID)
+     */
     private void loadItems(){
         EventListener<QuerySnapshot> listener = new EventListener<QuerySnapshot>() {
             @Override
@@ -157,6 +181,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         FirebaseItemAdapter.queryFamilyItems(this, currentUser.getUserSession(), listener);
     }
 
+    /***
+     * This function creates the adapter
+     * and connects the posts with the recycler viewer
+     * It also connects the adapter with the recyclerViewer.
+     */
     private void createFamilyItemView(){
         itemsListAdapter = new ItemsListAdapter(itemList, this);
 
@@ -167,6 +196,11 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         itemsListAdapter.notifyDataSetChanged();
     }
 
+    /***
+     * This function creates a navigation bar on the current activity you are on
+     * The purpose of the navigation bar is to be able to
+     * access the main pages of the application from this activity.
+     */
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.viewFamilyItemsDrawer);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -224,26 +258,47 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
         });
     }
 
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
     private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the ViewFamilyItemsActivity
+     * and starts the next activity.
+     */
     public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the FamilyMemberPageActivity
+     * and starts the next activity.
+     */
     public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function connects the functionality of a button to access the navigation bar.
+     * @param item top right button on the action bar to access view
+     * @return the view of the navigation bar
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     private void bindViews(){
 
         Button buttonSettings = findViewById(R.id.buttonSettings);
@@ -263,16 +318,30 @@ public class ViewFamilyItemsActivity extends AppCompatActivity implements ItemsL
             }
         });
     }
+
+    /***
+     * This function redirects the current Intent to the AccountSettingsActivity
+     * and starts the next activity.
+     */
     private void openAccountSettingsActivity() {
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the NewItemUploadActivity
+     * and starts the next activity.
+     */
     private void openNewItemUploadActivity() {
         Intent intent = new Intent(this, NewItemUploadActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function will redirect the user to
+     * the view item page of the item on the position in the adapter
+     * @param position index position in the adapter
+     */
     @Override
     public void onNoteClick(int position) {
         String nextItemView = itemList.get(position).getItemID();
