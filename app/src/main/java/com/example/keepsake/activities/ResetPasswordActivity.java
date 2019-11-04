@@ -8,17 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.keepsake.R;
-import com.example.keepsake.database.firebaseAdapter.FirebaseAdapter;
 import com.example.keepsake.database.firebaseAdapter.FirebaseAuthAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
@@ -28,6 +23,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
     Button buttonResetPassword;
     TextInputEditText mEmail;
 
+    /**
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +36,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
         bindViews();
     }
 
+    /**
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         buttonResetPassword = findViewById(R.id.buttonResetPassword);
         mEmail = findViewById(R.id.mEmail);
 
+        // Button reset password
         buttonResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +74,12 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This function redirects the current Intent to the MainActivity
+     * and starts the next activity.
+     */
     public void openMainActivity(){
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
     }
-
-
 }

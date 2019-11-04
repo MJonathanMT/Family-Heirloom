@@ -36,6 +36,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.firebase.ui.firestore.SnapshotParser;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
@@ -44,6 +45,13 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/***
+ * This activity page is the page in the application
+ * where you can create a new familyGroup collection in the database.
+ * You are then the only Admin of the group.
+ * As the admin you have rights to all access of the group.
+ * You can accept/reject joinRequest and invite others to your familyGroup
+ */
 public class CreateFamilyActivity extends AppCompatActivity {
     private final String TAG = "Create Family";
 
@@ -57,11 +65,16 @@ public class CreateFamilyActivity extends AppCompatActivity {
     // Search user Pop-up
     private Dialog myDialog;
     private TextView searchBar;
-    private ImageButton searchButton;
     private RecyclerView userView;
     private ProgressBar progressBar;
     private Handler handler;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,11 +85,11 @@ public class CreateFamilyActivity extends AppCompatActivity {
         bindViews();
     }
 
+
     public void showAddMemberPopup(View v) {
         myDialog.setContentView(R.layout.activity_add_user_popup);
         
         searchBar = myDialog.findViewById(R.id.editTextSearch);
-        searchButton = myDialog.findViewById(R.id.imageButtonSearch);
         userView = myDialog.findViewById(R.id.recyclerViewUsers);
         progressBar = myDialog.findViewById(R.id.progressBar);
 
@@ -102,21 +115,16 @@ public class CreateFamilyActivity extends AppCompatActivity {
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
 
-
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                setLoading(true);
-                String query =  searchBar.getText().toString();
-                firebaseUserSearch(query);
-            }
-        });
-
-
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
 
+    /***
+     * This function takes in the string the user typed in the pop up bar
+     * and passes the string into the fireBase data and produce a
+     * list of all the similar username corresponding to the string
+     * @param queryString The string entered by the current user
+     */
     public void firebaseUserSearch(String queryString){
         ArrayList<String> parsedQuery = parseQuery(queryString);
 
@@ -190,6 +198,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
 
     }
 
+
     public void createFamilyEntry() {
         familyName = findViewById(R.id.editText_enter_family_id);
 
@@ -200,13 +209,11 @@ public class CreateFamilyActivity extends AppCompatActivity {
                 put(FirebaseFamilyAdapter.NAME_FIELD, name);
             }};
 
-            OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
+            OnSuccessListener listener = new OnSuccessListener<DocumentReference>() {
                 @Override
-                public void onSuccess(DocumentSnapshot snapshot ) {
-                    if (snapshot.exists()) {
+                public void onSuccess(DocumentReference document ) {
                         // Task completed successfully
-                        addMembersToFamily(snapshot.getId());
-                    }
+                        addMembersToFamily(document.getId());
                 }
             };
 
@@ -216,6 +223,7 @@ public class CreateFamilyActivity extends AppCompatActivity {
             Toast.makeText(CreateFamilyActivity.this, "Invalid Family ID", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public void addMembersToFamily(final String familyID) {
         final String adminID = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -309,12 +317,16 @@ public class CreateFamilyActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createFamilyEntry();
-                openFamilyHomepageActivity(v);
+                openMyProfileActivity(v);
             }
         });
     }
 
-    public void openFamilyHomepageActivity(View v) {
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
+    public void openMyProfileActivity(View v) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }

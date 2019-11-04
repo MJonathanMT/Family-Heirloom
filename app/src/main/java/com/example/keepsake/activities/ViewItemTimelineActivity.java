@@ -18,13 +18,23 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.Query;
 
+/***
+ * This activity shows all the past and current owner of
+ * the current item being selected.
+ * This information is stored on "ownershipRecords" inside item database
+ */
 public class ViewItemTimelineActivity extends AppCompatActivity {
     private final String TAG = "View Timeline";
 
     private String itemID;
     private RecyclerView viewOwnershipRecord;
 
-    //todo(naverill) ensure edit button can only be seen by users who own the item
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +46,11 @@ public class ViewItemTimelineActivity extends AppCompatActivity {
         bindViews();
     }
 
+    /**
+     * this function will load/display all the
+     * owners that have owned this item
+     * @param itemID ID of the item that is being viewed
+     */
     public void loadItemTimeline(final String itemID){
         Query query = FirebaseItemAdapter.queryOwnershipRecordCollection(this, itemID);
 
@@ -73,6 +88,10 @@ public class ViewItemTimelineActivity extends AppCompatActivity {
         adapter.onDataChanged();
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         viewOwnershipRecord = findViewById(R.id.recyclerViewRecord);
         viewOwnershipRecord.setHasFixedSize(true);
@@ -85,7 +104,10 @@ public class ViewItemTimelineActivity extends AppCompatActivity {
         }
     }
 
-
+    /***
+     * This function redirects the current Intent to the ViewItemActivity
+     * and starts the next activity.
+     */
     public final void openViewItemActivity() {
         Intent intent = new Intent(this, ViewItemActivity.class);
         startActivity(intent);

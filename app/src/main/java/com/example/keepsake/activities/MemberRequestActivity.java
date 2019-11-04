@@ -46,6 +46,12 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+/***
+ * This activity shows the list of the joinRequest that the
+ * current familyGroup has.
+ * Only the Admin of the familyGroup can have access to this page
+ * and accept/decline users to the group
+ */
 public class MemberRequestActivity extends AppCompatActivity implements MemberRequestListAdapter.OnNoteListener {
 
     private static final String TAG = "Member Requests";
@@ -67,6 +73,12 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
     private ProgressBar progressBar;
     private Handler handler;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +89,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
 
     }
 
+    /***
+     * This function changes between 2 view which is
+     * the memberRequest and the searchView bar
+     * @param showRequests boolean to determine to show the memberRequest or not.
+     */
     public void switchView(final boolean showRequests){
         handler.post(new Runnable() {
             @Override
@@ -94,6 +111,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         });
     }
 
+    /***
+     * This function updates the changes made on the memberRequestList
+     * by creating an eventListener and
+     * setting the memberRequestListAdapter to the requestView
+     */
     private void memberRequestViewUpdate(){
         requestView = findViewById(R.id.recyclerViewRequests);
         requestView.setHasFixedSize(true);
@@ -129,6 +151,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         requestView.setAdapter(memberRequestListAdapter);
     }
 
+    /***
+     * This function loads the information of the userID and
+     * takes data from the fireBase database.
+     * @param userID ID of the user.
+     */
     private void loadUserInfo(String userID){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -151,7 +178,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
     }
 
 
-
+    /***
+     * This function creates a user class that could be accessed in this activity.
+     * It pulls data off the currentUser that is logged-in
+     * and creates an instance of a User class of the currentUser
+     */
     private void createUserClass(){
         // create a user class for the current user
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
@@ -176,6 +207,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * this function is called when the admin clicks the accept button.
+     * It will accept the user on the position in the adapter.
+     * @param position the index position of the adapter.
+     */
     @Override
     public void onAcceptClick(int position) {
         // Add current userId to family_group's members
@@ -188,7 +224,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         memberRequestListAdapter.notifyDataSetChanged();
         memberRequestListAdapter.notifyItemRemoved(position);
     }
-
+    /***
+     * this function is called when the admin clicks the reject button.
+     * It will reject the user on the position in the adapter.
+     * @param position the index position of the adapter.
+     */
     @Override
     public void onDeclineClick(int position) {
         final String userID = memberRequestsList.get(position).getUserID();
@@ -201,6 +241,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         memberRequestListAdapter.notifyDataSetChanged();
     }
 
+    /***
+     * this function will add the new userID to
+     * the list of members inside the familyGroup
+     * @param userID ID of the new user.
+     */
     public void addMemberToFamilyGroup(String userID){
         Map data = new HashMap<String, String>() {{
             put(FirebaseFamilyAdapter.EXISTS_FIELD, "1");
@@ -211,6 +256,11 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
 
     }
 
+    /***
+     * This function searches the user database
+     * for name (strings) that matches with the queryString
+     * @param queryString the input string the user typed in
+     */
     public void firebaseUserSearch(String queryString){
         ArrayList<String> parsedQuery = parseQuery(queryString);
 
@@ -284,6 +334,12 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
 
     }
 
+    /***
+     * this function parses the query given on " " (blank spaces)
+     * and returns the parsedQuery
+     * @param query the initial string passed to the function
+     * @return the modified/parsed query
+     */
     public ArrayList<String> parseQuery(String query){
         String[] splitQuery =  query.split(" ");
         ArrayList<String> parsedQuery = new ArrayList<>();
@@ -295,6 +351,10 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         return parsedQuery;
     }
 
+    /***
+     * Accepts the userID and set their accepted_field to 1.
+     * @param userID ID of the user applying to the familyGroup
+     */
     public void acceptUser(String userID) {
         Map data = new HashMap<String, String>() {{
             put(FirebaseUserAdapter.ACCEPTED_FIELD, "1");
@@ -303,6 +363,10 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         FirebaseUserAdapter.createFamilyDocument(this, userID, familyID, data);
     }
 
+    /***
+     * This function provides the progress bar of the action being done
+     * @param isLoading boolean if the action is still loading
+     */
     public void setLoading(final boolean isLoading) {
         handler.post(new Runnable() {
             @Override
@@ -314,6 +378,10 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
         });
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     public void bindViews(){
         scrollViewRequests = findViewById(R.id.scrollViewRequests);
         scrollViewUsers = findViewById(R.id.scrollViewUsers);
@@ -359,10 +427,5 @@ public class MemberRequestActivity extends AppCompatActivity implements MemberRe
             public void afterTextChanged(Editable editable) {
             }
         });
-    }
-
-    private void openFamilyMemberPageActivity() {
-        Intent intent = new Intent(this, FamilyMemberPageActivity.class);
-        startActivity(intent);
     }
 }

@@ -64,6 +64,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/***
+ * This activity page is the page in the application
+ * where you can edit the information of the item you're viewing
+ * This page is only accessible if you are the current owner of
+ * the item you are viewing
+ */
 public class EditItemActivity extends AppCompatActivity {
     private final String TAG = "Edit Item";
 
@@ -88,6 +94,12 @@ public class EditItemActivity extends AppCompatActivity {
     private String itemPrivacy = "O";
     private String familyID;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +114,10 @@ public class EditItemActivity extends AppCompatActivity {
         loadItemInfo();
     }
 
+    /***
+     * This function pulls data of the current item you are viewing from the fireStore data.
+     * It then displays the existing data of the item on the activity page.
+     */
     public void loadItemInfo(){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -144,6 +160,10 @@ public class EditItemActivity extends AppCompatActivity {
         FirebaseItemAdapter.getDocument(this, itemID, listener);
     }
 
+    /***
+     * This function connects the three possible privacy settings and populates the privacyAdapter
+     * which is then set to be the data for the spinnerPrivacy.
+     */
     public void populatePrivacyLevelSpinner(){
         ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacyLevels));
@@ -163,6 +183,7 @@ public class EditItemActivity extends AppCompatActivity {
 
         spinnerPrivacy.setAdapter(privacyAdapter);
     }
+
 
     public void populateFamilyGroupSpinner(){
         Query query = FirebaseUserAdapter.queryAcceptedFamilies(this, userID);
@@ -298,6 +319,9 @@ public class EditItemActivity extends AppCompatActivity {
         openViewItemActivity();
     }
 
+    /***
+     * Allows an user to choose an image via gallery
+     */
     private void chooseImage() {
         try {
             Intent intent = new Intent();
@@ -309,7 +333,11 @@ public class EditItemActivity extends AppCompatActivity {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
+    /***
+    * Get the file extension of a file
+    * @param uri uniform resource identifies for publicly-accessible resource
+    * @return the extension of the file
+    */
     private String getExtension(Uri uri) {
         try {
             ContentResolver contentResolver = getContentResolver();

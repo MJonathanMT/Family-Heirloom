@@ -13,11 +13,20 @@ import com.example.keepsake.database.firebaseSnapshot.User;
 public class UserViewHolder extends RecyclerView.ViewHolder {
     private View mView;
 
+    /**
+     * Describes an item view and metadata about user item view within the RecyclerView.
+     * @param itemView
+     */
     public UserViewHolder(@NonNull View itemView) {
         super(itemView);
         mView = itemView;
     }
 
+    /**
+     * Bind UI components in layouts to data sources using a declarative format.
+     * @param ctx a handler in the system, it provides access to resources, databases, preferences, etc.
+     * @param user details of an user
+     */
     public void bind(Context ctx, User user){
         String name = user.getFirstName() + " " + user.getLastName();
         String username = user.getUsername();

@@ -54,7 +54,7 @@
     <string name="PhotoOption">Take photo/ Add picture from gallery</string>
 
     <!--Request Join Family Group-->
-    <string name="RequestSent">Request Sent to Family ID</string>
+    <string name="RequestSent">REQUEST SENT</string>
     <string name="EmailConfirmation">Check your email for confirmation</string>
     <string name="Continue">Continue</string>
 

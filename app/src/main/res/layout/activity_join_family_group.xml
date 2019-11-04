@@ -50,6 +50,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="0dp"
                 android:layout_weight="1"
+                android:background="@drawable/custom_input_field"
                 android:capitalize="words"
                 android:drawableEnd="@color/common_google_signin_btn_text_light_default"
                 android:fontFamily="sans-serif-thin"

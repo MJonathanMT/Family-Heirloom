@@ -49,6 +49,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/***
+ * This activity page is the page in the application
+ * where you can change the owner of the item you're currently viewing.
+ * After finishing this action, you would not be able to edit the same item
+ * as you do not own it anymore.
+ */
 public class ChangeItemOwnerActivity extends AppCompatActivity {
     private final String TAG = "Change Owner";
 
@@ -69,12 +75,16 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
     // search dialog
     private Dialog dialog;
     private TextView searchBar;
-    private ImageButton searchButton;
     private RecyclerView userView;
     private ProgressBar progressBar;
     private Handler handler;
 
-
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +101,10 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         populatePrivacyLevels();
     }
 
+    /***
+     * This function connects the data from fireStore to the user class
+     * It takes in the current user's data and creates an instance of the User class for it
+     */
     public void populateUserDetails(){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -109,6 +123,10 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function connects the three possible privacy settings and populates the privacyAdapter
+     * which is then set to be the data for the spinnerPrivacy.
+     */
     public void populatePrivacyLevels(){
         ArrayAdapter<String> privacyAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.privacyLevels));
@@ -127,11 +145,16 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         spinnerPrivacy.setAdapter(privacyAdapter);
     }
 
+    /***
+     * This function creates a pop up search function that allows
+     * the current user to search for any user in the database
+     * When the current user types in the username of another user,
+     * it'll then call the firebaseUserSearch to search the database.
+     */
     public void openUserSearchPopup(){
         dialog.setContentView(R.layout.activity_add_user_popup);
 
         searchBar = dialog.findViewById(R.id.editTextSearch);
-        searchButton = dialog.findViewById(R.id.imageButtonSearch);
         userView = dialog.findViewById(R.id.recyclerViewUsers);
         progressBar = dialog.findViewById(R.id.progressBar);
 
@@ -157,20 +180,17 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
 
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                setLoading(true);
-                String query =  searchBar.getText().toString();
-                firebaseUserSearch(query);
-            }
-        });
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
 
     }
 
+    /***
+     * This function takes in the string the user typed in the pop up bar
+     * and passes the string into the fireBase data and produce a
+     * list of all the similar username corresponding to the string
+     * @param queryString The string entered by the current user
+     */
     public void firebaseUserSearch(String queryString){
         ArrayList<String> parsedQuery = parseQuery(queryString);
 
@@ -242,6 +262,10 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         adapter.onDataChanged();
     }
 
+    /***
+     * This is the main function that helps call other
+     * function to manage the ownership transfer of the items
+     */
     public void handleUpdateOwnership(){
         if(newOwner == null){
             Toast.makeText(ChangeItemOwnerActivity.this, "No user selected", Toast.LENGTH_SHORT).show();
@@ -251,6 +275,9 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         transferOwnership();
     }
 
+    /***
+     * This function add
+     */
     public void createOwnerShipRecord(){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -364,6 +391,10 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
     public void openMyProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
