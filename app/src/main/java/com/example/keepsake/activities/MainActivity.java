@@ -28,14 +28,17 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "Main";
 
-    TextView forgotPassword;
     Button buttonLogIn, buttonSignUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        forgotPassword = findViewById(R.id.buttonForgotPassword);
+
+        bindViews();
+    }
+
+    public void bindViews(){
         buttonSignUp = findViewById(R.id.buttonSignUp);
         buttonLogIn = findViewById(R.id.buttonToLogin);
 
@@ -44,13 +47,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 openLoginPageActivity(v);
 
-            }
-        });
-
-        forgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
             }
         });
 
@@ -77,6 +73,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLoginPageActivity(View view){
-        startActivity(new Intent(getApplicationContext(), NewLoginActivity.class));
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 }

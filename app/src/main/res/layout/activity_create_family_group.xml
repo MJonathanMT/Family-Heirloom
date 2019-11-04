@@ -12,23 +12,25 @@
         android:id="@+id/addMemberButton"
         android:layout_width="53dp"
         android:layout_height="56dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="168dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#00FFFFFF"
         android:src="@android:drawable/ic_menu_add"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id" />
 
     <TextView
         android:id="@+id/user_header_welcome_message"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="188dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/advent_pro_semibold"
         android:text="Add Member"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/addMemberButton"
+        app:layout_constraintTop_toBottomOf="@+id/editText_enter_family_id" />
 
     <ScrollView
         android:id="@+id/scrollViewMember"
@@ -66,15 +68,16 @@
 
     <EditText
         android:id="@+id/editText_enter_family_id"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
+        android:layout_width="277dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="8dp"
         android:autofillHints="FamilyId"
+        android:background="@drawable/custom_input_field"
         android:ems="10"
         android:fontFamily="@font/advent_pro_semibold"
         android:hint="@string/EnterFamilyId"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Text_View_join_existing_family" />
 

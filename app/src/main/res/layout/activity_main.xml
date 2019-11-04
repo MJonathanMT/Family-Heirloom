@@ -58,8 +58,6 @@
         android:textColor="#FF000000"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonForgotPassword"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonToLogin"
         app:layout_constraintVertical_bias="1.0" />
@@ -81,24 +79,6 @@
         app:layout_constraintHorizontal_bias="0.255"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <Button
-        android:id="@+id/buttonForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="12dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:fontFamily="@font/sf_pro_display_regular"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="Forgot Password?"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimaryGreen"
-        android:textSize="17dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonToLogin"
-        tools:background="@android:color/transparent" />
 
     <Button
         android:id="@+id/buttonSignUp"

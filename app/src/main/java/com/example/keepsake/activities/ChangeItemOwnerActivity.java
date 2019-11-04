@@ -69,7 +69,6 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
     // search dialog
     private Dialog dialog;
     private TextView searchBar;
-    private ImageButton searchButton;
     private RecyclerView userView;
     private ProgressBar progressBar;
     private Handler handler;
@@ -131,7 +130,6 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.activity_add_user_popup);
 
         searchBar = dialog.findViewById(R.id.editTextSearch);
-        searchButton = dialog.findViewById(R.id.imageButtonSearch);
         userView = dialog.findViewById(R.id.recyclerViewUsers);
         progressBar = dialog.findViewById(R.id.progressBar);
 
@@ -156,15 +154,6 @@ public class ChangeItemOwnerActivity extends AppCompatActivity {
         userView.setLayoutManager(new LinearLayoutManager(this));
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.GONE);
-
-        searchButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                setLoading(true);
-                String query =  searchBar.getText().toString();
-                firebaseUserSearch(query);
-            }
-        });
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();

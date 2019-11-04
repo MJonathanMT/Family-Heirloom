@@ -7,6 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".activities.NewItemUploadActivity">
 
+    <ImageButton
+        android:id="@+id/imageButtonUploadImage3"
+        android:layout_width="53dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/image_circ"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="0.296"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        android:translationZ="1dp"/>
+
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="203dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/custom_signup"
+        android:text="@string/upload"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="0.914" />
+
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
@@ -52,7 +91,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/itemName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/custom_input_field"
                 android:hint="@string/itemname" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,7 +110,7 @@
                 android:layout_width="401dp"
                 android:layout_height="80dp"
                 android:hint="@string/itemdescription" />
-            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/spinnerPrivacy"
@@ -78,21 +118,5 @@
             android:layout_height="50dp" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/uploadBtn"
-        android:layout_width="203dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="52dp"
-        android:background="@drawable/custom_button"
-        android:text="@string/upload"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
