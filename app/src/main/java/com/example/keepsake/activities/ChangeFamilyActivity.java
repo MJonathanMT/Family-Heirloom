@@ -40,7 +40,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
+/***
+ * This activity page is the page in the application
+ * where you can change the current user's userSession.
+ * the currentUser's userSession will change
+ * what you will be able to see in the ViewFamilyItemActivity
+ */
 public class ChangeFamilyActivity extends AppCompatActivity {
     private final String TAG = "Change Family";
 
@@ -53,6 +58,12 @@ public class ChangeFamilyActivity extends AppCompatActivity {
     private Button buttonChange;
     private ActionBarDrawerToggle drawerToggle;
 
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +75,10 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         populateFamilyGroupSpinner();
     }
 
+    /***
+     * This function connects the data from fireStore to the application spinner.
+     * It takes in the current user's family groups and populates the familyGroupSpinner data
+     */
     public void populateFamilyGroupSpinner(){
         final ArrayList<Family> familyList = new ArrayList<>();
 
@@ -95,6 +110,11 @@ public class ChangeFamilyActivity extends AppCompatActivity {
 
     }
 
+    /***
+     * This function creates the spinner adapter for the application.
+     * It connects the data produced by the populateFamilyGroupSpinner to the spinner in the xml page.
+     * @param familyList data produced by the populateFamilyGroupSpinner function
+     */
     public void createFamilySpinner(ArrayList<Family> familyList){
 
         ArrayAdapter<Family> familyAdapter = new ArrayAdapter<Family>(this, R.layout.family_list_layout, familyList){
@@ -172,10 +192,18 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * Set the this activity's familyID to the new familyID
+     * @param familyID the new familyID
+     */
     private void setFamilyID(String familyID){
         this.familyID = familyID;
     }
 
+    /***
+     * This function updates the current user's
+     * userSession to the selected familyID within the spinner.
+     */
     public void updateUserSession(){
         int index = ((ArrayAdapter) spinnerFamilyGroup.getAdapter()).getPosition(new Family("", familyID));
         spinnerFamilyGroup.setSelection(index, true);
@@ -200,10 +228,20 @@ public class ChangeFamilyActivity extends AppCompatActivity {
 
     }
 
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
     public void openMyProfileActivity(){
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
+
+    /***
+     * This function creates a navigation bar on the current activity you are on
+     * The purpose of the navigation bar is to be able to
+     * access the main pages of the application from this activity.
+     */
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.changeFamilyDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -260,6 +298,11 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function creates a user class that could be accessed in this activity.
+     * It pulls data off the currentUser that is logged-in
+     * and creates an instance of a User class of the currentUser
+     */
     private void createUserClass(){
         // create a user class for the current user
         OnSuccessListener listener  = new OnSuccessListener<DocumentSnapshot>() {
@@ -276,6 +319,10 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     private void bindViews(){
         spinnerFamilyGroup = findViewById(R.id.changeCurrentFamilySpinner);
 
@@ -297,25 +344,47 @@ public class ChangeFamilyActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function connects the functionality of a button to access the navigation bar.
+     * @param item top right button on the action bar to access view
+     * @return the view of the navigation bar
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
+
+    /***
+     * This function redirects the current Intent to the userProfileActivity
+     * and starts the next activity.
+     */
     private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the ViewFamilyItemsActivity
+     * and starts the next activity.
+     */
     public void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the FamilyMemberPageActivity
+     * and starts the next activity.
+     */
     public void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the AccountSettingsActivity
+     * and starts the next activity.
+     */
     private void openAccountSettingsActivity() {
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
