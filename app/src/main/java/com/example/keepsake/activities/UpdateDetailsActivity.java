@@ -48,6 +48,10 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.util.HashMap;
 import java.util.Objects;
 
+/***
+ * This activity shows the page when you want to
+ * update your own user information
+ */
 public class UpdateDetailsActivity extends AppCompatActivity {
     private final String TAG = "Update Profile";
 
@@ -60,7 +64,12 @@ public class UpdateDetailsActivity extends AppCompatActivity {
     private ImageView imgView;
     private Uri mImageUri;
     private ActionBarDrawerToggle drawerToggle;
-
+    /***
+     * This function is where you initialize your activity.
+     * When Activity is started, onCreate() method will be called
+     * Acts as a main function to call the other functions
+     * @param savedInstanceState is a non-persistent, dynamic data in onSaveInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +82,10 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         bindViews();
     }
 
+    /***
+     * this function pulls data from the fireBase database
+     * and loads it into an instance of the User class
+     */
     public void loadUserInfo(){
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -88,7 +101,12 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
-    // Updates user profile information
+    /***
+     * this function updates the userProfile information with the new information
+     * @param firstname user's new firstName
+     * @param lastname user's new lastName
+     * @param email user's new Email
+     */
     private void updateProfile(String firstname, String lastname, String email) {
         HashMap<String, String> data = new HashMap<String, String>() {{
             put(FirebaseUserAdapter.FIRST_NAME_FIELD, firstname);
@@ -99,7 +117,9 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         FirebaseUserAdapter.updateDocument(this, userID, data);
     }
 
-    // Get file extension of the file selected
+    /***
+     * file extension of the file selected
+     */
     private String getExtension(Uri uri) {
         try {
             ContentResolver contentResolver = getContentResolver();
@@ -112,7 +132,9 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         return null;
     }
 
-    // Updates user profile photo
+    /***
+     * Updates user profile photo
+     */
     private void uploadImage() {
         if(mImageUri != null) {
             String imagePath = System.currentTimeMillis()+"."+getExtension(mImageUri);
@@ -135,7 +157,9 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         }
     }
 
-    // Activity to check result of uploading
+    /***
+     * this function checks the result of uploading.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -149,6 +173,11 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /***
+     * This function creates a user class that could be accessed in this activity.
+     * It pulls data off the currentUser that is logged-in
+     * and creates an instance of a User class of the currentUser
+     */
     private void createUserClass(){
         // create a user class for the current user
         OnSuccessListener listener = new OnSuccessListener<DocumentSnapshot>() {
@@ -165,11 +194,20 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         FirebaseUserAdapter.getDocument(this, userID, listener);
     }
 
+    /***
+     * This function connects the functionality of a button to access the navigation bar.
+     * @param item top right button on the action bar to access view
+     * @return the view of the navigation bar
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return drawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
+    /***
+     * This function sets all the OnClickListeners on the existing buttons within the activity.
+     * It makes all the buttons clickable and redirects the user the the specific activity.
+     */
     private void bindViews(){
 
         buttonSaveChanges = findViewById(R.id.buttonSaveChanges);
@@ -238,6 +276,11 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function creates a navigation bar on the current activity you are on
+     * The purpose of the navigation bar is to be able to
+     * access the main pages of the application from this activity.
+     */
     private void createNavBar(){
         DrawerLayout drawerLayout = findViewById(R.id.updateDetailsDrawerLayout);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Open, R.string.Close);
@@ -295,27 +338,46 @@ public class UpdateDetailsActivity extends AppCompatActivity {
         });
     }
 
+    /***
+     * This function redirects the current Intent to the ViewFamilyItemsActivity
+     * and starts the next activity.
+     */
     private void openViewFamilyItemsActivity() {
         Intent intent = new Intent(this, ViewFamilyItemsActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the FamilyMemberPageActivity
+     * and starts the next activity.
+     */
     private void openFamilyMemberPageActivity() {
         Intent intent = new Intent(this, FamilyMemberPageActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the UserProfileActivity
+     * and starts the next activity.
+     */
     private void openProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
-    // Redirect user to user profile page
+    /***
+     * This function redirects the current Intent to the UserProfileActivity
+     * and starts the next activity.
+     */
     private void openHomePageActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 
+    /***
+     * This function redirects the current Intent to the AccountSettingsActivity
+     * and starts the next activity.
+     */
     private void openAccountSettingsActivity() {
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
